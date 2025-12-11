@@ -151,7 +151,7 @@ export function WhyBano() {
             Tại sao chọn BANO
           </span>
           <h2 className="text-3xl md:text-4xl font-bold">
-            Điều khiến Bano <span className="text-gradient">khác biệt</span> và được <span className="text-gradient">doanh nghiệp lựa chọn</span>
+            Điều khiến Bano <span className="text-gradient text-2xl md:text-3xl lg:text-4xl">khác biệt</span> và được doanh nghiệp <span className="text-gradient text-2xl md:text-3xl lg:text-4xl">lựa chọn</span>
           </h2>
         </div>
       </ScrollReveal>
@@ -183,7 +183,7 @@ export function WhyBano() {
                   <CardVisual type={reason.visual} color={reason.color} />
                 </div>
 
-                <span className="text-4xl font-bold text-muted/20 mb-2">0{reason.id}</span>
+                <span className="text-5xl text-right font-bold text-bano-green mt-2 mb-5">0{reason.id}</span>
 
                 <h3 className="text-lg font-bold mb-2 group-hover:text-bano-green transition-colors leading-tight">
                   {reason.title}

@@ -1,6 +1,7 @@
 # Hướng Dẫn Setup Google Search Console - Từng Bước
 
 ## Mục đích
+
 Setup Google Search Console để yêu cầu Google re-index website với metadata mới và theo dõi hiệu suất SEO.
 
 ---
@@ -15,6 +16,7 @@ Setup Google Search Console để yêu cầu Google re-index website với metad
 ## BƯỚC 2: Thêm Property (Website)
 
 ### 2.1. Chọn loại property
+
 - Trên trang chủ Google Search Console, click **"Add Property"** (Thêm thuộc tính)
 - Chọn **"URL prefix"** (Tiền tố URL) - đây là cách đơn giản nhất
 - Nhập URL: `https://banoas.com`
@@ -27,6 +29,7 @@ Google sẽ hiển thị các phương thức xác minh. Chọn một trong các
 #### **CÁCH 1: HTML Tag (Khuyến nghị - Dễ nhất)**
 
 1. Google sẽ cung cấp một đoạn code HTML tag, ví dụ:
+
    ```html
    <meta name="google-site-verification" content="ABC123XYZ..." />
    ```
@@ -60,6 +63,7 @@ Google sẽ hiển thị các phương thức xác minh. Chọn một trong các
 ## BƯỚC 3: Sau khi xác minh thành công
 
 Sau khi xác minh thành công, bạn sẽ thấy dashboard của Google Search Console với:
+
 - Overview (Tổng quan)
 - Performance (Hiệu suất)
 - Coverage (Phạm vi)
@@ -87,6 +91,7 @@ Sau khi xác minh thành công, bạn sẽ thấy dashboard của Google Search 
 5. Google sẽ thêm URL vào hàng đợi để crawl lại
 
 **Lưu ý:**
+
 - Quá trình này có thể mất từ vài giờ đến vài ngày
 - Bạn có thể yêu cầu re-index tối đa 10 URL mỗi ngày
 - Nên yêu cầu re-index các trang quan trọng: `/`, `/services`, `/about`, `/contact`
@@ -96,11 +101,13 @@ Sau khi xác minh thành công, bạn sẽ thấy dashboard của Google Search 
 ## BƯỚC 6: Kiểm tra và Theo dõi
 
 ### 6.1. Kiểm tra URL đã được index chưa
+
 - Vào **"URL Inspection"**
 - Nhập URL cần kiểm tra
 - Xem trạng thái: "URL is on Google" = đã được index
 
 ### 6.2. Theo dõi Performance
+
 - Vào **"Performance"** để xem:
   - Số lượt hiển thị (Impressions)
   - Số lượt click (Clicks)
@@ -108,6 +115,7 @@ Sau khi xác minh thành công, bạn sẽ thấy dashboard của Google Search 
   - Vị trí trung bình (Average position)
 
 ### 6.3. Kiểm tra Coverage
+
 - Vào **"Coverage"** để xem:
   - Trang nào đã được index
   - Trang nào có lỗi
@@ -132,7 +140,8 @@ Nếu bạn muốn thay đổi title hoặc description trong tương lai:
 
 2. **Cache của Google**: Ngay cả sau khi re-index, Google vẫn có thể hiển thị cache cũ trong một thời gian. Điều này là bình thường.
 
-3. **Kiểm tra thực tế**: 
+3. **Kiểm tra thực tế**:
+
    - Mở trình duyệt ẩn danh (Incognito)
    - Tìm kiếm: `site:banoas.com`
    - Xem kết quả có cập nhật chưa
@@ -146,15 +155,18 @@ Nếu bạn muốn thay đổi title hoặc description trong tương lai:
 ## Troubleshooting (Xử lý sự cố)
 
 ### Vấn đề: Không thể xác minh
+
 - **Giải pháp**: Đảm bảo file HTML verification hoặc meta tag đã được deploy lên Vercel
 - Kiểm tra URL: `https://banoas.com` có load được không
 
 ### Vấn đề: Sitemap không được tìm thấy
+
 - **Giải pháp**: Kiểm tra `https://banoas.com/sitemap.xml` có truy cập được không
 - Đảm bảo file `sitemap.xml` nằm trong thư mục `public/`
 
 ### Vấn đề: URL không được index
-- **Giải pháp**: 
+
+- **Giải pháp**:
   - Kiểm tra `robots.txt` không chặn URL
   - Đảm bảo trang có nội dung và không bị lỗi 404
   - Yêu cầu re-index lại
@@ -177,7 +189,7 @@ Nếu bạn muốn thay đổi title hoặc description trong tương lai:
 ## Hỗ trợ
 
 Nếu gặp vấn đề, bạn có thể:
+
 1. Kiểm tra lại các bước trên
 2. Xem tài liệu chính thức: https://support.google.com/webmasters
 3. Kiểm tra console trong Google Search Console để xem lỗi cụ thể
-

@@ -98,15 +98,15 @@ export function LavoStory() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
             >
               <motion.h2
-                className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6"
+                className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.6 }}
                 whileHover={{ scale: 1.02 }}
               >
-                Vì sao một tập đoàn haircare hàng đầu lại chọn <br />
-                <span className="text-gradient">chuyển đổi số cùng Bano?</span>
+                Vì sao một tập đoàn haircare hàng đầu lại chọn
+                <span className="text-gradient"> chuyển đổi số cùng Bano?</span>
               </motion.h2>
               <motion.p
                 className="text-muted-foreground mb-8 leading-relaxed text-lg"

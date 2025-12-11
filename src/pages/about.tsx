@@ -3,7 +3,6 @@ import Lenis from "lenis"
 import { motion, useInView } from "framer-motion"
 import { ScrollReveal, StaggerContainer, StaggerItem } from "../components/scroll-reveal"
 import {
-  CheckCircle,
   Clock,
   TrendingDown,
   BarChart3,
@@ -131,7 +130,7 @@ export default function AboutPage() {
               <div className="space-y-4 text-xl text-muted-foreground mb-8">
                 <p>
                   Doanh nghiệp thất bại <span className="font-bold text-foreground">70%</span> khi triển khai công nghệ vì
-                  "mua công cụ" thay vì "xây chiến lược".
+                  mua công cụ thay vì xây chiến lược.
                 </p>
                 <p className="text-bano-green font-semibold">Bano sinh ra để làm ngược lại:</p>
                 <p>
@@ -215,7 +214,7 @@ export default function AboutPage() {
               Bano <span className="text-gradient">không</span> phải một đơn vị <span className="text-gradient">bán AI</span>
             </motion.h2>
             <motion.p
-              className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8"
+              className="text-2xl text-muted-foreground max-w-3xl mx-auto mb-8"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -280,7 +279,7 @@ export default function AboutPage() {
             })}
           </StaggerContainer>
 
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -321,7 +320,7 @@ export default function AboutPage() {
                 lạc hướng."
               </motion.p>
             </motion.div>
-          </motion.div>
+          </motion.div> */}
         </div>
       </section>
 
@@ -386,13 +385,13 @@ export default function AboutPage() {
             {[
               {
                 icon: Eye,
-                title: "Vision",
+                title: "Tầm nhìn",
                 description: "Trở thành đối tác AI hàng đầu giúp doanh nghiệp tăng trưởng đột phá bằng công nghệ thông minh.",
                 delay: 0.3,
               },
               {
                 icon: Target,
-                title: "Mission",
+                title: "Sứ mệnh",
                 description: "Biến công nghệ thành lợi thế cạnh tranh bằng cách đồng hành từ chẩn đoán → chiến lược → triển khai → kết quả.",
                 delay: 0.4,
               },
@@ -464,34 +463,6 @@ export default function AboutPage() {
 
       {/* SECTION 4 — Lợi Thế Cốt Lõi */}
       <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
-        {/* Animated background elements */}
-        <motion.div
-          className="absolute top-0 right-1/4 w-72 h-72 bg-bano-green/5 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.4, 1],
-            x: [0, 30, 0],
-            y: [0, -30, 0],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-0 left-1/3 w-96 h-96 bg-bano-navy/20 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            x: [0, -50, 0],
-            y: [0, 50, 0],
-          }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1.5,
-          }}
-        />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -560,6 +531,12 @@ export default function AboutPage() {
                       whileHover={{ x: "100%" }}
                       transition={{ duration: 0.8 }}
                     />
+                    <motion.h3
+                      className="text-5xl font-bold text-bano-green transition-colors absolute top-2 z-10"
+                      whileHover={{ scale: 1.05 }}
+                    >
+                      0{index + 1}
+                    </motion.h3>
                     <motion.div
                       className="w-16 h-16 rounded-2xl bg-bano-green/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-bano-green/20 transition-colors relative z-10"
                       whileHover={{
@@ -572,7 +549,7 @@ export default function AboutPage() {
                       <advantage.icon className="w-8 h-8 text-bano-green" />
                     </motion.div>
                     <motion.h3
-                      className="text-xl font-bold mb-3 group-hover:text-bano-green transition-colors relative z-10"
+                      className="text-xl font-bold mb-3 text-bano-green transition-colors relative z-10"
                       whileHover={{ scale: 1.05 }}
                     >
                       {advantage.title}

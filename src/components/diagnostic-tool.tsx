@@ -462,7 +462,7 @@ export function DiagnosticTool() {
 
                     {/* Industry Selector */}
                     <div className="space-y-2 relative overflow-visible">
-                      <label className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                      <label className="text-md font-medium text-muted-foreground flex items-center gap-2">
                         <span className="w-6 h-6 rounded-full bg-bano-green/20 flex items-center justify-center text-xs text-bano-green font-bold">
                           1
                         </span>
@@ -723,7 +723,7 @@ export function DiagnosticTool() {
                             <span className="text-bano-green font-bold text-2xl">{String(index + 1).padStart(2, '0')}</span>
                           </div>
                           {/* Connecting line to next phase */}
-                          {index < 2 && (
+                          {index < 3 && (
                             <div className="absolute left-1/2 top-16 -translate-x-1/2 w-0.5 h-28 bg-gradient-to-b from-bano-green/30 via-bano-green/20 to-transparent" />
                           )}
                         </div>
@@ -743,7 +743,7 @@ export function DiagnosticTool() {
                                   <p className="text-md text-muted-foreground">{item.action}</p>
                                 </div>
                                 {/* Result */}
-                                <div className="flex items-start gap-2 text-sm text-bano-green pl-3">
+                                <div className="flex items-start gap-2 text-md text-bano-green pl-3">
                                   <Shield className="w-4 h-4" />
                                   <span>{item.result}</span>
                                 </div>

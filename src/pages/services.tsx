@@ -67,7 +67,7 @@ const services = [
     ],
     highlight: "Giảm 40-60%",
     highlightLabel: "thời gian xử lý",
-    color: "#31B450",
+    color: "#D1F1EF",
   },
   {
     title: "Tự động hóa tích hợp AI",
@@ -318,7 +318,7 @@ export default function ServicesPage() {
               CÁCH TIẾP CẬN CHIẾN LƯỢC
             </span>
             <h2 className="text-3xl md:text-5xl font-bold">
-              Quy trình 4 bước
+              Quy trình <span className="text-gradient">4</span> bước
             </h2>
           </ScrollReveal>
 
@@ -326,7 +326,7 @@ export default function ServicesPage() {
           <div className="relative max-w-4xl mx-auto">
             {/* Vertical Line */}
             <div className="absolute left-1/2 top-17 bottom-17 opacity-100 w-px bg-border -translate-x-1/2 hidden md:block">
-              <motion.div className="w-full bg-bano-green origin-top" style={{ height: lineHeight }} />
+              <motion.div className="w-full bg-white origin-top" style={{ height: lineHeight }} />
             </div>
 
             {/* Steps */}
@@ -340,7 +340,7 @@ export default function ServicesPage() {
                   >
                     {/* Content */}
                     <div className={`flex-1 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                      <span className="text-bano-green text-sm font-medium">Bước {step.id}</span>
+                      <span className="text-bano-green text-lg font-medium">Bước {step.id}</span>
                       <h3 className="text-2xl md:text-3xl font-bold mb-2">{step.title}</h3>
                       <p className="text-muted-foreground">{step.description}</p>
                     </div>
@@ -472,7 +472,7 @@ export default function ServicesPage() {
               Tại sao chọn Bano
             </span>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Điều khiến Bano trở thành <span className="text-gradient">đối tác AI đáng tin cậy</span>
+              Điều khiến Bano trở thành <span className="text-gradient">đối tác đáng tin cậy</span>
             </h2>
             {/* <p className="text-muted-foreground max-w-2xl mx-auto">
               5 trụ cột tạo nên khác biệt của Bano cho doanh nghiệp của bạn
@@ -495,7 +495,7 @@ export default function ServicesPage() {
                   className="glass rounded-2xl p-6 h-full flex flex-col group hover:border-bano-green/50 transition-all relative overflow-hidden"
                 >
                   {/* Visual illustration based on type */}
-                  <div className="h-32 mb-4 rounded-xl bg-bano-navy/30 border border-white/5 flex items-center justify-center relative overflow-hidden">
+                  <div className="h-32 mb-4 rounded-xl flex items-center justify-center relative overflow-hidden">
                     {pillar.visual === "xray" && (
                       <div className="flex items-center gap-2">
                         <div className="flex flex-col gap-1">
@@ -639,10 +639,10 @@ export default function ServicesPage() {
 
                   {/* Icon and title */}
                   <div className="flex items-start gap-3 mb-3">
-                    <div className="w-10 h-10 rounded-xl bg-bano-green/20 flex items-center justify-center flex-shrink-0">
+                    {/* <div className="w-10 h-10 rounded-xl bg-bano-green/20 flex items-center justify-center flex-shrink-0">
                       <pillar.icon className="w-5 h-5 text-bano-green" />
-                    </div>
-                    <div>
+                    </div> */}
+                    <div className="w-full text-center">
                       <h3 className="font-bold text-lg group-hover:text-bano-green transition-colors">
                         {pillar.title}
                       </h3>
@@ -651,7 +651,7 @@ export default function ServicesPage() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm text-muted-foreground leading-relaxed">{pillar.description}</p>
+                  <p className="text-sm text-justify text-muted-foreground leading-relaxed">{pillar.description}</p>
                 </motion.div>
               </StaggerItem>
             ))}
