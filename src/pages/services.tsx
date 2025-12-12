@@ -24,6 +24,8 @@ import {
   Crosshair,
   Timer,
   Puzzle,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react"
 import CTASection from "../components/cta-section"
 
@@ -153,6 +155,8 @@ export default function ServicesPage() {
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [scrollLeft, setScrollLeft] = useState(0)
+  const [showLeftArrow, setShowLeftArrow] = useState(false)
+  const [showRightArrow, setShowRightArrow] = useState(true)
 
   const { scrollYProgress } = useScroll({
     target: timelineRef,
@@ -185,6 +189,27 @@ export default function ServicesPage() {
     pillarsScrollRef.current.scrollLeft = scrollLeft - walk
   }
 
+  // Check scroll position and update arrow visibility
+  const checkScrollPosition = () => {
+    if (!pillarsScrollRef.current) return
+    const container = pillarsScrollRef.current
+    const { scrollLeft, scrollWidth, clientWidth } = container
+    
+    setShowLeftArrow(scrollLeft > 0)
+    setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 10) // 10px threshold
+  }
+
+  // Scroll handlers
+  const handleScrollLeft = () => {
+    if (!pillarsScrollRef.current) return
+    pillarsScrollRef.current.scrollBy({ left: -400, behavior: 'smooth' })
+  }
+
+  const handleScrollRight = () => {
+    if (!pillarsScrollRef.current) return
+    pillarsScrollRef.current.scrollBy({ left: 400, behavior: 'smooth' })
+  }
+
   // Mouse wheel horizontal scroll - prevent page scroll
   useEffect(() => {
     const scrollContainer = pillarsScrollRef.current
@@ -215,9 +240,14 @@ export default function ServicesPage() {
     }
 
     scrollContainer.addEventListener("wheel", handleWheel, { passive: false })
+    scrollContainer.addEventListener("scroll", checkScrollPosition)
+    
+    // Initial check
+    checkScrollPosition()
     
     return () => {
       scrollContainer.removeEventListener("wheel", handleWheel)
+      scrollContainer.removeEventListener("scroll", checkScrollPosition)
     }
   }, [])
 
@@ -479,15 +509,49 @@ export default function ServicesPage() {
             </p> */}
           </ScrollReveal>
 
-          <div 
-            ref={pillarsScrollRef}
-            onMouseDown={handleMouseDown}
-            onMouseLeave={handleMouseLeave}
-            onMouseUp={handleMouseUp}
-            onMouseMove={handleMouseMove}
-            className="pillars-scroll-container flex overflow-x-auto scrollbar-hide max-w-full gap-6 pb-6 cursor-grab active:cursor-grabbing"
-            style={{ scrollbarWidth: 'thin' }}
-          >
+          {/* Navigation Arrows with Scroll Container */}
+          <div className="relative flex items-center">
+            {/* Left Arrow */}
+            {showLeftArrow && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleScrollLeft}
+                className="absolute left-0 z-20 w-12 h-12 rounded-full glass border border-bano-green/30 bg-background/80 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-bano-green/10 hover:border-bano-green/50 transition-all group -translate-x-14"
+                aria-label="Scroll left"
+              >
+                <ChevronLeft className="w-6 h-6 text-bano-green group-hover:scale-110 transition-transform" />
+              </motion.button>
+            )}
+
+            {/* Right Arrow */}
+            {showRightArrow && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleScrollRight}
+                className="absolute right-0 z-20 w-12 h-12 rounded-full glass border border-bano-green/30 bg-background/80 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-bano-green/10 hover:border-bano-green/50 transition-all group translate-x-14"
+                aria-label="Scroll right"
+              >
+                <ChevronRight className="w-6 h-6 text-bano-green group-hover:scale-110 transition-transform" />
+              </motion.button>
+            )}
+
+            <div 
+              ref={pillarsScrollRef}
+              onMouseDown={handleMouseDown}
+              onMouseLeave={handleMouseLeave}
+              onMouseUp={handleMouseUp}
+              onMouseMove={handleMouseMove}
+              className="pillars-scroll-container flex overflow-x-auto scrollbar-hide max-w-full gap-6 pb-6 cursor-grab active:cursor-grabbing"
+              style={{ scrollbarWidth: 'thin' }}
+            >
             {trustPillars.map((pillar) => (
               <StaggerItem key={pillar.id} className="flex-shrink-0 w-full md:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)]">
                 <motion.div
@@ -655,6 +719,7 @@ export default function ServicesPage() {
                 </motion.div>
               </StaggerItem>
             ))}
+            </div>
           </div>
         </div>
       </section>

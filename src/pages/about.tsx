@@ -61,28 +61,59 @@ const coreAdvantages = [
   },
 ]
 
-// const team = [
-//   {
-//     name: "Nguyễn Minh Tuấn",
-//     role: "Founder",
-//     image: "/professional-asian-man-ceo-portrait.jpg",
-//   },
-//   {
-//     name: "Trần Thị Hương",
-//     role: "AI Engineer",
-//     image: "/professional-asian-woman-cto.png",
-//   },
-//   {
-//     name: "Lê Văn Hoàng",
-//     role: "Data Architect",
-//     image: "/professional-asian-man-ai-scientist-portrait.jpg",
-//   },
-//   {
-//     name: "Phạm Thị Mai",
-//     role: "Implementation Specialist",
-//     image: "/professional-asian-woman-project-manager-portrait.jpg",
-//   },
-// ]
+const team = [
+  {
+    name: "Nguyễn Minh Tuấn",
+    role: "Founder",
+    image: "/volunteer1.JPG",
+  },
+  {
+    name: "Trần Thị Hương",
+    role: "AI Engineer",
+    image: "/volunteer2.JPG",
+  },
+  {
+    name: "Lê Văn Hoàng",
+    role: "Data Architect",
+    image: "/volunteer3.JPG",
+  },
+  {
+    name: "Phạm Thị Mai",
+    role: "Implementation Specialist",
+    image: "/volunteer4.JPG",
+  },
+  {
+    name: "Hoạt động 5",
+    role: "Team Activity",
+    image: "/daily1.jpg",
+  },
+  {
+    name: "Hoạt động 6",
+    role: "Team Activity",
+    image: "/daily2.JPG",
+  },
+  {
+    name: "Hoạt động 7",
+    role: "Team Activity",
+    image: "/daily3.jpg",
+  },
+  {
+    name: "Hoạt động 8",
+    role: "Team Activity",
+    image: "/daily4.jpg",
+  },
+]
+
+const activityTexts = [
+  {
+    title: "Hoạt động nhóm",
+    description: "Chúng tôi thường xuyên tổ chức các hoạt động team building và workshop để nâng cao kỹ năng và gắn kết đội ngũ.",
+  },
+  {
+    title: "Sự kiện & Hội thảo",
+    description: "Bano tham gia và tổ chức nhiều sự kiện công nghệ, chia sẻ kiến thức và kinh nghiệm với cộng đồng.",
+  },
+]
 
 export default function AboutPage() {
   useEffect(() => {
@@ -152,7 +183,7 @@ export default function AboutPage() {
             >
               <div className="aspect-square rounded-3xl overflow-hidden">
                 <img
-                  src="/diverse-team-working-on-ai-technology-in-modern-of.jpg"
+                  src="/about_image.jpg"
                   alt="BANO Team"
                   className="w-full h-full object-cover"
                 />
@@ -580,17 +611,17 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 5 — Team */}
-      {/* <section className="py-12 sm:py-16 md:py-24 relative">
+      <section className="py-12 sm:py-16 md:py-24 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/20 to-background" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="text-center mb-12 sm:mb-16">
             <h2 className="text-3xl md:text-5xl font-bold">
-              Những con người đằng sau BANO-ER
+              Những hoạt động tại BANO
             </h2>
           </ScrollReveal>
 
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {team.map((member, index) => (
               <StaggerItem key={index}>
                 <motion.div whileHover={{ y: -8 }} className="group cursor-pointer">
@@ -607,9 +638,115 @@ export default function AboutPage() {
                 </motion.div>
               </StaggerItem>
             ))}
-          </StaggerContainer>
+          </StaggerContainer> */}
+
+          <div className="space-y-12 md:space-y-16">
+            {/* First group: 4 images forming a square + text on the right */}
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-10 gap-6 md:gap-8">
+              {/* Image grid 2x2 */}
+              <div className="md:col-span-4 grid grid-cols-2 gap-4 md:gap-6">
+                {team.slice(0, 4).map((member, index) => (
+                  <StaggerItem key={index}>
+                    <motion.div 
+                      whileHover={{ y: -8, scale: 1.02 }} 
+                      className="group cursor-pointer"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <div className="aspect-square rounded-2xl overflow-hidden relative">
+                        <img
+                          src={member.image || "/placeholder.svg"}
+                          alt={member.name}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                    </motion.div>
+                  </StaggerItem>
+                ))}
+              </div>
+              
+              {/* Text content on the right */}
+              <StaggerItem className="flex flex-col justify-center md:col-span-6">
+                <motion.div
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                  className="space-y-4"
+                >
+                  <h3 className="text-2xl md:text-3xl font-bold text-bano-green">
+                    Hoạt động tình nguyện tại Bano
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    WITH BANO, WE CONNECT HEARTS
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Không chỉ trong công việc, tại BANO AI chúng tôi tin rằng sự kết nối từ trái tim sẽ làm nên những điều ý nghĩa nhất.
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Hành trình đến thăm và sẻ chia cùng các em nhỏ tại Trung tâm nuôi dạy trẻ mồ côi là cơ hội để mỗi thành viên BANO AI lan tỏa yêu thương, mang niềm vui và hy vọng đến những trái tim bé nhỏ. Cùng nhau, chúng ta kết nối những nhịp đập - để yêu thương được lan tỏa và niềm vui được nhân lên.
+                  </p>
+                </motion.div>
+              </StaggerItem>
+            </StaggerContainer>
+
+            {/* Second group: 4 images forming a square + text on the right */}
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-10 gap-6 md:gap-8">
+              {/* Image grid 2x2 */}
+              <div className="md:col-span-4 grid grid-cols-2 gap-4 md:gap-6">
+                {team.slice(4, 8).map((member, index) => (
+                  <StaggerItem key={index + 4}>
+                    <motion.div 
+                      whileHover={{ y: -8, scale: 1.02 }} 
+                      className="group cursor-pointer"
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: index * 0.1 }}
+                    >
+                      <div className="aspect-square rounded-2xl overflow-hidden relative">
+                        <img
+                          src={member.image || "/placeholder.svg"}
+                          alt={member.name}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-102"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                      </div>
+                    </motion.div>
+                  </StaggerItem>
+                ))}
+              </div>
+              
+              {/* Text content on the right */}
+              <StaggerItem className="flex flex-col justify-center md:col-span-6">
+                <motion.div
+                  initial={{ opacity: 0, x: 30 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4, duration: 0.6 }}
+                  className="space-y-4"
+                >
+                  <h3 className="text-2xl md:text-3xl font-bold text-bano-green">
+                    Khoảnh khắc daily meet sôi nổi
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    BANO TALK | WEEKLY MEET
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Một cuộc họp “đậm chất BANO” - nơi mọi ý tưởng được bật lên, mọi quan điểm được lắng nghe và… tiếng cười thì không bao giờ thiếu
+                  </p>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Ở BANO, họp không chỉ để trao đổi công việc, mà còn để kết nối, chia sẻ và cùng nhau tạo nên những điều lớn lao hơn mỗi ngày
+                  </p>
+                </motion.div>
+              </StaggerItem>
+            </StaggerContainer>
+          </div>
         </div>
-      </section> */}
+      </section>
 
       {/* SECTION 6 — CTA */}
       <CTASection

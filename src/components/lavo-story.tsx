@@ -57,7 +57,7 @@ export function LavoStory() {
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <motion.img
-                  src="/diverse-team-working-on-ai-technology-in-modern-of.jpg"
+                  src="/case Lavo.jpeg"
                   alt="Lavo Case Study"
                   className="w-full h-full object-cover"
                   whileHover={{ scale: 1.15 }}

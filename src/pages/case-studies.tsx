@@ -12,7 +12,7 @@ const caseStudies = [
     title: "Xây dựng hệ thống AI Marketing Automation",
     client: "LAVO",
     industry: "Marketing",
-    image: "/diverse-team-working-on-ai-technology-in-modern-of.jpg",
+    image: "/case Lavo.jpeg",
     blogId: "lavo",
     description:
       "Bano giúp LAVO hợp nhất dữ liệu từ nhiều nguồn, phân loại khách hàng bằng AI và tự động gợi ý chiến dịch marketing. Nhờ đó, doanh nghiệp tăng hiệu suất vận hành, tối ưu chi phí quảng cáo và hiểu rõ hơn hành vi khách hàng. Case study cho thấy cách dữ liệu được chuyển hóa thành hành động cụ thể để cải thiện hiệu quả kinh doanh.",
