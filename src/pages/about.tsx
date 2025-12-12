@@ -104,16 +104,16 @@ const team = [
   },
 ]
 
-const activityTexts = [
-  {
-    title: "Hoạt động nhóm",
-    description: "Chúng tôi thường xuyên tổ chức các hoạt động team building và workshop để nâng cao kỹ năng và gắn kết đội ngũ.",
-  },
-  {
-    title: "Sự kiện & Hội thảo",
-    description: "Bano tham gia và tổ chức nhiều sự kiện công nghệ, chia sẻ kiến thức và kinh nghiệm với cộng đồng.",
-  },
-]
+// const activityTexts = [
+//   {
+//     title: "Hoạt động nhóm",
+//     description: "Chúng tôi thường xuyên tổ chức các hoạt động team building và workshop để nâng cao kỹ năng và gắn kết đội ngũ.",
+//   },
+//   {
+//     title: "Sự kiện & Hội thảo",
+//     description: "Bano tham gia và tổ chức nhiều sự kiện công nghệ, chia sẻ kiến thức và kinh nghiệm với cộng đồng.",
+//   },
+// ]
 
 export default function AboutPage() {
   useEffect(() => {
