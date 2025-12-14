@@ -159,9 +159,6 @@ export default function ServicesPage() {
   const [showRightArrow, setShowRightArrow] = useState(true)
   
   // Random backgrounds for each section
-  const timelineBg = useRandomBackground()
-  const servicesBg = useRandomBackground()
-  const pillarsBg = useRandomBackground()
 
   const { scrollYProgress } = useScroll({
     target: timelineRef,
@@ -347,7 +344,6 @@ export default function ServicesPage() {
 
       {/* Strategic Approach - Timeline */}
       <section className="py-16 sm:py-20 md:py-28 relative" ref={timelineRef}>
-        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(timelineBg, 0.4)} />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal className="text-center mb-20">
             <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
@@ -403,7 +399,6 @@ export default function ServicesPage() {
 
       {/* Core Services - Completely redesigned with new content */}
       <section className="py-16 sm:py-20 md:py-28 relative">
-        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(servicesBg, 0.4)} />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/10 to-background" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -487,7 +482,6 @@ export default function ServicesPage() {
 
       {/* Why Trust Bano - 5 Pillars */}
       <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(pillarsBg, 0.4)} />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/5 to-background" />
 
         {/* Background decorative elements */}

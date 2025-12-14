@@ -53,8 +53,6 @@ const freeResources = [
 
 export default function CaseStudiesPage() {
   const heroBg = useRandomBackground()
-  const caseStudiesBg = useRandomBackground()
-  const resourcesBg = useRandomBackground()
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -199,7 +197,6 @@ export default function CaseStudiesPage() {
 
       {/* SECTION 2 — Case Study Dạng Slide */}
       <section className="py-16 sm:py-20 md:py-28 relative">
-        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(caseStudiesBg, 0.4)} />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <StaggerContainer className="space-y-32" staggerDelay={0.2}>
             {caseStudies.map((study, index) => {
@@ -376,7 +373,6 @@ export default function CaseStudiesPage() {
 
       {/* SECTION 3 — Tài Nguyên Miễn Phí */}
       <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(resourcesBg, 0.4)} />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-12 sm:mb-16"

@@ -1,7 +1,6 @@
 import { motion } from "framer-motion"
 import { ScrollReveal, StaggerContainer, StaggerItem } from "./scroll-reveal"
 import { Brain, Eye, MessageSquare, Cog } from "lucide-react"
-import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 
 const capabilities = [
   {
@@ -31,11 +30,8 @@ const capabilities = [
 ]
 
 export function TechCapabilities() {
-  const bgImage = useRandomBackground()
-
   return (
     <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
-      <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(bgImage, 0.4)} />
       {/* Background decoration */}
       <div className="absolute inset-0 grid-pattern opacity-20" />
 

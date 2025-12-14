@@ -3,14 +3,10 @@ import { ScrollReveal } from "./scroll-reveal";
 import { Button } from "./button";
 import { scrollToTop } from "../utils/scroll-helper";
 import { Link } from "wouter";
-import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper";
 
 const CTASection = ({ title, description, buttonText, buttonLink }: { title: string, description: string, buttonText: string, buttonLink: string }) => {
-    const bgImage = useRandomBackground()
-    
     return (
         <section className="py-16 sm:py-20 md:py-28 relative">
-            <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(bgImage, 0.5)} />
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                 <ScrollReveal>
                     <div className="glass rounded-3xl p-8 sm:p-12 md:p-16 text-center relative overflow-hidden">

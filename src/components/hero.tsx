@@ -41,6 +41,8 @@ export function Hero() {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(bgImage, 0.6)} />
       <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-bano-navy/60 to-black/80" />
+      <div className="hero-gradient absolute inset-0" />
+      <div className="grid-pattern absolute inset-0 opacity-30" />  
 
       {/* Content */}
       {/* <div className="absolute inset-0 flex items-center justify-center z-10">
