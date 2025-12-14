@@ -4,9 +4,7 @@ const backgrounds = [
   "/bg1.JPG",
   "/bg2.JPG",
   "/bg3.JPG",
-  "/bg4.JPG",
-  "/bg5.JPG",
-  "/bg6.JPG",
+  "/bg4.JPG"
 ]
 
 /**
