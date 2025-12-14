@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import { Button } from "./button"
 import { ArrowRight } from "lucide-react"
+import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 
 export function Hero() {
   const headlineWords = "Mọi tăng trưởng đều bắt đầu từ việc nhìn rõ vấn đề.".split(" ")
@@ -34,15 +35,12 @@ export function Hero() {
     },
   }
 
+  const bgImage = useRandomBackground()
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Dark Background with Gradient/Neon Accent */}
-      {/* <div className="absolute inset-0 bg-gradient-to-br from-black via-bano-navy to-black">
-        
-        <div className="absolute inset-0 bg-gradient-to-br from-transparent via-bano-green/5 to-transparent opacity-50" />
-        
-        <div className="grid-pattern absolute inset-0 opacity-10" />
-      </div> */}
+      <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(bgImage, 0.6)} />
+      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-bano-navy/60 to-black/80" />
 
       {/* Content */}
       {/* <div className="absolute inset-0 flex items-center justify-center z-10">

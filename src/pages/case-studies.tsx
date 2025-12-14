@@ -5,6 +5,7 @@ import { StaggerContainer, StaggerItem } from "../components/scroll-reveal"
 import { Button } from "../components/button"
 import { ArrowRight, Download, FileText, BookOpen, Map, Calendar, Mail, CheckCircle } from "lucide-react"
 import CTASection from "../components/cta-section"
+import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 import { Link } from "wouter"
 import { scrollToTop } from "../utils/scroll-helper"
 
@@ -51,6 +52,10 @@ const freeResources = [
 ]
 
 export default function CaseStudiesPage() {
+  const heroBg = useRandomBackground()
+  const caseStudiesBg = useRandomBackground()
+  const resourcesBg = useRandomBackground()
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 0.8,
@@ -73,17 +78,9 @@ export default function CaseStudiesPage() {
 
       {/* SECTION 1 — Hero */}
       <section className="min-h-[70vh] flex items-center justify-center pt-20 sm:pt-24 relative overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="/image_2025-12-05_11-59-56.webP"
-            alt="Services Hero Background"
-            className="absolute inset-0 w-full h-full object-cover hq-image"
-            loading="eager"
-            fetchPriority="high"
-          />
-          <div className="hero-gradient absolute inset-0" />
-          <div className="grid-pattern absolute inset-0 opacity-30" />
-        </div>
+        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(heroBg, 0.5)} />
+        <div className="hero-gradient absolute inset-0" />
+        <div className="grid-pattern absolute inset-0 opacity-30" />
         {/* Animated background elements */}
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <motion.div
@@ -202,6 +199,7 @@ export default function CaseStudiesPage() {
 
       {/* SECTION 2 — Case Study Dạng Slide */}
       <section className="py-16 sm:py-20 md:py-28 relative">
+        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(caseStudiesBg, 0.4)} />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <StaggerContainer className="space-y-32" staggerDelay={0.2}>
             {caseStudies.map((study, index) => {
@@ -378,6 +376,7 @@ export default function CaseStudiesPage() {
 
       {/* SECTION 3 — Tài Nguyên Miễn Phí */}
       <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(resourcesBg, 0.4)} />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-12 sm:mb-16"

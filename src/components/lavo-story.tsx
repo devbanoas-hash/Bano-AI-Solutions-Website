@@ -6,6 +6,7 @@ import { StaggerItem } from "./scroll-reveal"
 import { Button } from "./button"
 import { ArrowRight } from "lucide-react"
 import { scrollToTop } from "../utils/scroll-helper"
+import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 
 export function LavoStory() {
   const ref = useRef(null)
@@ -35,8 +36,11 @@ export function LavoStory() {
   //   }
   // }
 
+  const bgImage = useRandomBackground()
+
   return (
     <section className="py-28 md:py-32 relative">
+      <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(bgImage, 0.4)} />
       <div className="container mx-auto px-6">
         <StaggerItem>
           <motion.div

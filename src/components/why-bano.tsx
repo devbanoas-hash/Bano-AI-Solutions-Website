@@ -6,6 +6,7 @@ import { motion } from "framer-motion"
 import { ScrollReveal } from "./scroll-reveal"
 import { Search, Target, Puzzle, Scale, Rocket } from "lucide-react"
 // import { scrollToTop } from "../utils/scroll-helper"
+import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 
 const reasons = [
   {
@@ -148,8 +149,11 @@ export function WhyBano() {
     }
   }, [])
 
+  const bgImage = useRandomBackground()
+
   return (
     <section ref={sectionRef} className="py-16 sm:py-20 md:py-28 relative" id="why-bano-section">
+      <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(bgImage, 0.4)} />
       <ScrollReveal className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-3 block">

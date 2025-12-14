@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ScrollReveal } from "./scroll-reveal"
 import { Button } from "./button"
+import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 import {
   ChevronDown,
   Building2,
@@ -407,8 +408,11 @@ export function DiagnosticTool() {
     setPhone("")
   }
 
+  const bgImage = useRandomBackground()
+
   return (
     <section className="py-16 sm:py-24 md:py-32 relative overflow-hidden">
+      <div className="absolute inset-0" style={getRandomBackgroundStyle(bgImage, 0.5)} />
       <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/30 to-background" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(49,180,80,0.15)_0%,_transparent_70%)]" />
 

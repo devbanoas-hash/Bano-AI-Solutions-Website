@@ -7,6 +7,7 @@ import { ScrollReveal } from "../components/scroll-reveal"
 import { Button } from "../components/button"
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle, Building2, Loader2, AlertCircle } from "lucide-react"
 import { FaHandPointRight } from "react-icons/fa"
+import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 // import emailjs from "@emailjs/browser"
 
 const officeLocations = [
@@ -46,6 +47,10 @@ export default function ContactPage() {
   const [error, setError] = useState<string | null>(null)
   const [activeLocation, setActiveLocation] = useState("hq")
   const currentLocation = officeLocations.find((loc) => loc.id === activeLocation) || officeLocations[0]
+  
+  const heroBg = useRandomBackground()
+  const contactBg = useRandomBackground()
+  const mapBg = useRandomBackground()
 
   // Initialize EmailJS
   // useEffect(() => {
@@ -133,20 +138,10 @@ export default function ContactPage() {
 
   return (
     <div className="relative">
-      {/* Background at root level */}
-      <div className="absolute inset-0 -z-10 opacity-50">
-        <img
-          src="/image_2025-12-05_11-58-03.webp"
-          alt="Contact Background"
-          className="absolute inset-0 w-full h-full object-cover hq-image"
-          loading="eager"
-          fetchPriority="high"
-        />
-        <div className="hero-gradient absolute inset-0" />
-      </div>
-
       {/* Hero */}
       <section className="min-h-[50vh] flex items-center justify-center pt-20 sm:pt-24 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(heroBg, 0.5)} />
+        <div className="hero-gradient absolute inset-0" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -428,7 +423,9 @@ export default function ContactPage() {
       </section>
 
       {/* Map Placeholder */}
-      <ScrollReveal className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
+      <section className="py-12 sm:py-16 relative">
+        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(mapBg, 0.4)} />
+        <ScrollReveal className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
         <div className="text-center mb-8">
           <h3 className="text-3xl md:text-5xl font-bold mb-2">
             <span className="text-gradient">Văn phòng của chúng tôi</span>
@@ -495,6 +492,7 @@ export default function ContactPage() {
           </div>
         </div>
       </ScrollReveal>
+      </section>
     </div>
   )
 }

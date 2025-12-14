@@ -14,6 +14,7 @@ import {
   Target,
 } from "lucide-react"
 import CTASection from "../components/cta-section"
+import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 
 const valueCommitments = [
   {
@@ -116,6 +117,11 @@ const team = [
 // ]
 
 export default function AboutPage() {
+  const section1Bg = useRandomBackground()
+  const section2Bg = useRandomBackground()
+  const section3Bg = useRandomBackground()
+  const section4Bg = useRandomBackground()
+
   useEffect(() => {
     const lenis = new Lenis({
       duration: 0.8,
@@ -135,19 +141,10 @@ export default function AboutPage() {
 
   return (
     <div className="py-24 relative">
-      <div className="absolute inset-0 -z-10 opacity-30">
-        <img
-          src="/image_2025-12-05_11-58-50.webp"
-          alt="About Background"
-          className="absolute inset-0 w-full h-full object-cover hq-image"
-          loading="eager"
-          fetchPriority="high"
-        />
-        <div className="hero-gradient absolute inset-0" />
-      </div>
-
       {/* SECTION 1 — Lý Do Chúng Tôi Tồn Tại */}
       <section className="min-h-[70vh] flex items-center justify-center pt-20 sm:pt-24 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(section1Bg, 0.5)} />
+        <div className="hero-gradient absolute inset-0" />
         <div className="absolute inset-0 grid-pattern opacity-20" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -196,6 +193,7 @@ export default function AboutPage() {
 
       {/* SECTION 2 — Cam Kết Giá Trị Của Bano */}
       <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(section2Bg, 0.4)} />
         {/* Animated background */}
         <motion.div
           className="absolute top-0 right-0 w-96 h-96 bg-bano-green/5 rounded-full blur-3xl"
@@ -358,6 +356,7 @@ export default function AboutPage() {
 
       {/* SECTION 3 — Vision / Mission */}
       <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(section3Bg, 0.4)} />
         <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/20 to-background" />
         {/* Animated orbs */}
         <motion.div
@@ -495,6 +494,7 @@ export default function AboutPage() {
 
       {/* SECTION 4 — Lợi Thế Cốt Lõi */}
       <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(section4Bg, 0.4)} />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -613,6 +613,10 @@ export default function AboutPage() {
 
       {/* SECTION 5 — Team */}
       <section className="py-12 sm:py-16 md:py-24 relative">
+        {(() => {
+          const bgImage = useRandomBackground()
+          return <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(bgImage, 0.4)} />
+        })()}
         <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/20 to-background" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
