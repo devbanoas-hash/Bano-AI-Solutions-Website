@@ -302,7 +302,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6"
+            className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6"
           >
             Giải pháp AI end-to-end <br/> thiết kế theo đúng bài toán của doanh nghiệp bạn
           </motion.h1>
@@ -353,7 +353,7 @@ export default function ServicesPage() {
             <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
               CÁCH TIẾP CẬN CHIẾN LƯỢC
             </span>
-            <h2 className="text-2xl md:text-4xl font-bold">
+            <h2 className="text-2xl font-bold">
               Quy trình <span className="text-gradient">4</span> bước
             </h2>
           </ScrollReveal>
@@ -411,7 +411,7 @@ export default function ServicesPage() {
             <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
               Dịch vụ chính
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+            <h2 className="text-2xl font-bold mb-4">
               3 DÒNG DỊCH VỤ CỐT LÕI
             </h2>
             {/* <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -499,7 +499,7 @@ export default function ServicesPage() {
             <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
               Tại sao chọn Bano
             </span>
-            <h2 className="text-2xl md:text-3xl font-bold mb-4">
+            <h2 className="text-2xl font-bold mb-4">
               Điều khiến Bano trở thành <span className="text-gradient">đối tác đáng tin cậy</span>
             </h2>
             {/* <p className="text-muted-foreground max-w-2xl mx-auto">

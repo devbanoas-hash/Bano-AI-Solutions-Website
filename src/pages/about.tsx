@@ -9,9 +9,10 @@ import {
   Search,
   Rocket,
   DollarSign,
-  TrendingUp,
+  // TrendingUp,
   Eye,
   Target,
+  Scale,
 } from "lucide-react"
 import CTASection from "../components/cta-section"
 import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
@@ -39,28 +40,28 @@ const valueCommitments = [
   },
 ]
 
-const coreAdvantages = [
-  {
-    icon: Search,
-    title: "Chẩn đoán chiến lược sâu",
-    description: "Phân tích toàn diện để hiểu rõ nhu cầu và thách thức của doanh nghiệp",
-  },
-  {
-    icon: Rocket,
-    title: "Quick Win trong 90 ngày",
-    description: "Kết quả nhanh chóng, giá trị ngay từ những tuần đầu tiên",
-  },
-  {
-    icon: DollarSign,
-    title: "Chi phí tối ưu",
-    description: "Giải pháp phù hợp cho cả SME & Enterprise",
-  },
-  {
-    icon: TrendingUp,
-    title: "Giải pháp mở rộng",
-    description: "Theo tốc độ phát triển doanh nghiệp",
-  },
-]
+// const coreAdvantages = [
+//   {
+//     icon: Search,
+//     title: "Chẩn đoán chiến lược sâu",
+//     description: "Phân tích toàn diện để hiểu rõ nhu cầu và thách thức của doanh nghiệp",
+//   },
+//   {
+//     icon: Rocket,
+//     title: "Quick Win trong 90 ngày",
+//     description: "Kết quả nhanh chóng, giá trị ngay từ những tuần đầu tiên",
+//   },
+//   {
+//     icon: DollarSign,
+//     title: "Chi phí tối ưu",
+//     description: "Giải pháp phù hợp cho cả SME & Enterprise",
+//   },
+//   {
+//     icon: TrendingUp,
+//     title: "Giải pháp mở rộng",
+//     description: "Theo tốc độ phát triển doanh nghiệp",
+//   },
+// ]
 
 const team = [
   {
@@ -153,7 +154,7 @@ export default function AboutPage() {
               <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
                 Lý Do Chúng Tôi Tồn Tại
               </span>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
                 Chiến lược trước <br /> <span className="text-gradient">Công nghệ sau</span>
               </h1>
               <div className="space-y-4 text-xl text-muted-foreground mb-8">
@@ -235,7 +236,7 @@ export default function AboutPage() {
               Cam Kết Giá Trị
             </motion.span> */}
             <motion.h2
-              className="text-3xl md:text-5xl font-bold mb-6"
+              className="text-2xl font-bold mb-6"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -402,7 +403,7 @@ export default function AboutPage() {
               Vision & Mission
             </motion.span> */}
             <motion.h2
-              className="text-3xl md:text-5xl font-bold mb-12"
+              className="text-2xl font-bold mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -493,116 +494,80 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 4 — Lợi Thế Cốt Lõi */}
-      <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
+      <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
         <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(section4Bg, 0.4)} />
+        <ScrollReveal className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-3 block">
+              Lợi thế cốt lõi
+            </span>
+            <h2 className="text-2xl font-bold">
+              Điều khiến Bano <span className="text-gradient">khác biệt</span> và được doanh nghiệp <span className="text-gradient">lựa chọn</span>
+            </h2>
+          </div>
+        </ScrollReveal>
 
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <motion.div
-            className="text-center mb-12 sm:mb-16"
-            initial={{ opacity: 0, y: -30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
-          >
-            {/* <motion.span
-              className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              Lợi Thế Cốt Lõi
-            </motion.span> */}
-            <motion.h2
-              className="text-3xl md:text-5xl font-bold"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-            >
-              Điều làm nên <span className="text-gradient">khác biệt</span>
-            </motion.h2>
-          </motion.div>
-
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" staggerDelay={0.12}>
-            {coreAdvantages.map((advantage, index) => {
+        {/* Cards Section */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mt-12 sm:mt-16 md:mt-24">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" staggerDelay={0.15}>
+            {[
+              {
+                id: 1,
+                icon: Search,
+                title: "Chẩn đoán chiến lược",
+                image: "/Kim - 7.png",
+                description: "X-ray doanh nghiệp, highlight các điểm nghẽn từ đỏ → vàng → xanh. Hiểu rõ vấn đề trước khi giải quyết.",
+                color: "#31B450",
+              },
+              {
+                id: 2,
+                icon: Target,
+                title: "Lộ trình Quick Win 90 ngày",
+                image: "/Kim - 8.png",
+                description: "Roadmap 3 giai đoạn (30 – 60 – 90) với từng milestone rõ ràng. Kết quả đo lường được.",
+                color: "#D1F1EF",
+              },
+              {
+                id: 4,
+                icon: Scale,
+                title: "Tối ưu chi phí, hiệu quả cao",
+                image: "/Kim - 10.png",
+                description: "Chi phí nhỏ — Hiệu quả lớn. Tối ưu nguồn lực với open-source & cloud thông minh.",
+                color: "#C5CAD4",
+              },
+              {
+                id: 5,
+                icon: Rocket,
+                title: "Mở rộng theo tốc độ doanh nghiệp",
+                image: "/Kim - 11.png",
+                description: "Phát triển theo scale: Startup → SME → Enterprise. Kiến trúc sẵn sàng tăng trưởng.",
+                color: "#31B450",
+              },
+            ].map((reason, index) => {
               const cardRef = useRef(null)
               const isInView = useInView(cardRef, { once: true, margin: "-50px" })
 
               return (
-                <StaggerItem key={index}>
+                <StaggerItem key={reason.id}>
                   <motion.div
                     ref={cardRef}
-                    initial={{ opacity: 0, y: 60, rotate: index % 2 === 0 ? -5 : 5 }}
-                    animate={isInView ? { opacity: 1, y: 0, rotate: 0 } : {}}
+                    initial={{ opacity: 0, y: 50, scale: 0.9 }}
+                    animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                    whileHover={{ scale: 1.02 }}
                     transition={{
                       delay: index * 0.1,
-                      duration: 0.7,
-                      type: "spring",
-                      stiffness: 100,
+                      duration: 0.6,
+                      ease: [0.25, 0.46, 0.45, 0.94]
                     }}
-                    whileHover={{
-                      y: -15,
-                      scale: 1.05,
-                      rotate: index % 2 === 0 ? 2 : -2,
-                      boxShadow: "0 20px 60px rgba(49, 180, 80, 0.2)",
-                    }}
-                    className="glass rounded-2xl p-8 h-full text-center group hover:border-bano-green/50 transition-all relative overflow-hidden"
+                    className="cursor-pointer rounded-2xl flex flex-col gap-4 group hover:border-bano-green/50 transition-all duration-500"
                   >
-                    {/* Animated gradient overlay */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-bano-green/0 via-bano-green/5 to-bano-green/0"
-                      initial={{ opacity: 0 }}
-                      whileHover={{ opacity: 1 }}
-                      transition={{ duration: 0.3 }}
-                    />
-                    {/* Shimmer effect */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-bano-green/10 to-transparent"
-                      initial={{ x: "-100%" }}
-                      whileHover={{ x: "100%" }}
-                      transition={{ duration: 0.8 }}
-                    />
-                    <motion.h3
-                      className="text-5xl font-bold text-bano-green transition-colors absolute top-2 z-10"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      0{index + 1}
-                    </motion.h3>
-                    <motion.div
-                      className="w-16 h-16 rounded-2xl bg-bano-green/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-bano-green/20 transition-colors relative z-10"
-                      whileHover={{
-                        scale: 1.25,
-                        rotate: [0, -10, 10, -10, 0],
-                        boxShadow: "0 0 40px rgba(49, 180, 80, 0.6)",
-                      }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <advantage.icon className="w-8 h-8 text-bano-green" />
-                    </motion.div>
-                    <motion.h3
-                      className="text-xl font-bold mb-3 text-bano-green transition-colors relative z-10"
-                      whileHover={{ scale: 1.05 }}
-                    >
-                      {advantage.title}
-                    </motion.h3>
-                    <motion.p
-                      className="text-muted-foreground text-sm relative z-10"
-                      initial={{ opacity: 0 }}
-                      animate={isInView ? { opacity: 1 } : {}}
-                      transition={{ delay: index * 0.1 + 0.3 }}
-                    >
-                      {advantage.description}
-                    </motion.p>
-                    {/* Number badge */}
-                    <motion.div
-                      className="absolute top-4 right-4 w-8 h-8 rounded-full bg-bano-green/20 flex items-center justify-center text-xs font-bold text-bano-green opacity-0 group-hover:opacity-100 transition-opacity"
-                      initial={{ scale: 0 }}
-                      whileHover={{ scale: 1, rotate: 360 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      {index + 1}
-                    </motion.div>
+                    <span className="text-3xl font-bold group-hover:text-bano-green transition-colors">0{reason.id}</span>
+
+                    <img src={reason.image} alt={reason.title} className="w-full h-auto object-cover rounded-xl" />
+
+                    <h3 className="text-lg font-bold text-bano-green transition-colors leading-tight">
+                      {reason.title}
+                    </h3>
                   </motion.div>
                 </StaggerItem>
               )
@@ -621,7 +586,7 @@ export default function AboutPage() {
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold">
+            <h2 className="text-2xl font-bold">
               Những hoạt động tại BANO
             </h2>
           </ScrollReveal>

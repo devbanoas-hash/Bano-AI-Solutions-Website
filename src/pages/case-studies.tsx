@@ -286,7 +286,7 @@ export default function CaseStudiesPage() {
                         {study.client}
                       </motion.p>
                       <motion.h2
-                        className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6"
+                        className="text-2xl font-bold mb-6"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -395,7 +395,7 @@ export default function CaseStudiesPage() {
               Tài Nguyên Miễn Phí
             </motion.span>
             <motion.h2
-              className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4"
+              className="text-2xl font-bold mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

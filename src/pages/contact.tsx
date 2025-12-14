@@ -155,7 +155,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl font-bold mb-6"
+            className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6"
           >
             Tư vấn 60 phút
             <br />
@@ -426,7 +426,7 @@ export default function ContactPage() {
         <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(mapBg, 0.4)} />
         <ScrollReveal className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
         <div className="text-center mb-8">
-          <h3 className="text-3xl md:text-5xl font-bold mb-2">
+          <h3 className="text-2xl font-bold mb-2">
             <span className="text-gradient">Văn phòng của chúng tôi</span>
           </h3>
           <p className="text-muted-foreground">Ghé thăm chúng tôi tại một trong các địa điểm</p>
