@@ -118,9 +118,10 @@ const team = [
 export default function AboutPage() {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.8,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      wheelMultiplier: 1.2,
     })
 
     function raf(time: number) {

@@ -6,7 +6,7 @@ import { cn } from "../lib/utils"
 interface ButtonProps {
   children: ReactNode
   variant?: "primary" | "secondary" | "outline" | "ghost"
-  size?: "sm" | "md" | "lg"
+  size?: "xs" | "sm" | "md" | "lg"
   className?: string
   onClick?: () => void
   type?: "button" | "submit"
@@ -35,9 +35,10 @@ export function Button({
   }
 
   const sizes = {
-    sm: "px-4 py-2 text-sm",
-    md: "px-6 py-3 text-base",
-    lg: "px-8 py-4 text-lg",
+    xs: "px-4 py-2 text-xs h-8",
+    sm: "px-6 py-3 text-base h-12",
+    md: "px-8 py-4 text-base h-14",
+    lg: "px-10 py-5 text-lg h-16",
   }
 
   const buttonContent = (

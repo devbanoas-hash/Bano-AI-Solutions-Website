@@ -53,7 +53,7 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" onClick={scrollToTop} className="flex items-center gap-2">
             <motion.div whileHover={{ scale: 1.05 }} className="flex items-center gap-2">
-              <img src="Vector Smart Object.png" alt="BANO" className="h-10" />
+              <img src="Vector Smart Object.png" alt="BANO" className="h-12 md:h-14" />
             </motion.div>
           </Link>
 
@@ -155,7 +155,7 @@ export function Navbar() {
                 transition={{ delay: 0.4 }}
                 className="mt-4"
               >
-                <Button variant="primary" size="sm">
+                <Button variant="primary" size="xs" href="/contact" onClick={handleNavClick}>
                   Nhận tư vấn miễn phí
                 </Button>
               </motion.div>

@@ -2,7 +2,6 @@ import { useEffect } from "react"
 import Lenis from "lenis"
 import { motion } from "framer-motion"
 import { ArrowLeft, Calendar, Clock } from "lucide-react"
-import { Button } from "../components/button"
 import { scrollToTop } from "../utils/scroll-helper"
 import CTASection from "../components/cta-section"
 import { Link } from "wouter"
@@ -28,7 +27,7 @@ const blogPosts: Record<string, {
     client: "LAVO",
     date: "15 Tháng 12, 2024",
     readTime: "8 phút đọc",
-    image: "/diverse-team-working-on-ai-technology-in-modern-of.jpg",
+    image: "/Lavo.png",
     chunks: [
       {
         type: "text",
@@ -36,7 +35,7 @@ const blogPosts: Record<string, {
       },
       {
         type: "image",
-        imageUrl: "/diverse-team-working-on-ai-technology-in-modern-of.jpg",
+        imageUrl: "/Lavo.png",
         imageAlt: "LAVO AI Marketing Automation"
       },
       {
@@ -121,9 +120,10 @@ export default function BlogPage({ params }: BlogPageProps = {}) {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.8,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      wheelMultiplier: 1.2,
     })
 
     function raf(time: number) {
@@ -153,22 +153,21 @@ export default function BlogPage({ params }: BlogPageProps = {}) {
   return (
     <div className="relative">
       {/* Back Button */}
-      <section className="pt-24">
+      <section className="pt-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <Button
-              variant="outline"
-              size="sm"
-              href="/case-studies"
+            <Link
               onClick={scrollToTop}
+              href="/case-studies"
+              className="cursor-pointer w-fit flex items-center gap-2 bg-bano-green text-white px-4 py-2 rounded-full"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Quay lại
-            </Button>
+            </Link>
           </motion.div>
         </div>
       </section>

@@ -18,7 +18,6 @@ import {
   Database,
   BarChart3,
   TrendingUp,
-  Zap,
   Expand,
   PiggyBank,
   Crosshair,
@@ -253,9 +252,10 @@ export default function ServicesPage() {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.8,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      wheelMultiplier: 1.2,
     })
 
     function raf(time: number) {
@@ -274,7 +274,7 @@ export default function ServicesPage() {
       <section className="min-h-[80vh] flex items-center justify-center pt-20 sm:pt-24 relative overflow-hidden py-12 sm:py-16">
         <div className="absolute inset-0">
           <img
-            src="/image_2025-12-05_11-57-00.webp"
+            src="/bg5.JPG"
             alt="Services Hero Background"
             className="absolute inset-0 w-full h-full object-cover hq-image"
             loading="eager"
@@ -297,7 +297,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-2xl md:text-4xl lg:text-5xl font-bold mb-6"
+            className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6"
           >
             Giải pháp AI end-to-end <br/> thiết kế theo đúng bài toán của doanh nghiệp bạn
           </motion.h1>
@@ -341,13 +341,13 @@ export default function ServicesPage() {
       </section>
 
       {/* Strategic Approach - Timeline */}
-      <section className="py-12 sm:py-16 md:py-24 relative" ref={timelineRef}>
+      <section className="py-16 sm:py-20 md:py-28 relative" ref={timelineRef}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal className="text-center mb-20">
             <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
               CÁCH TIẾP CẬN CHIẾN LƯỢC
             </span>
-            <h2 className="text-3xl md:text-5xl font-bold">
+            <h2 className="text-2xl md:text-4xl font-bold">
               Quy trình <span className="text-gradient">4</span> bước
             </h2>
           </ScrollReveal>
@@ -371,8 +371,8 @@ export default function ServicesPage() {
                     {/* Content */}
                     <div className={`flex-1 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
                       <span className="text-bano-green text-lg font-medium">Bước {step.id}</span>
-                      <h3 className="text-2xl md:text-3xl font-bold mb-2">{step.title}</h3>
-                      <p className="text-muted-foreground">{step.description}</p>
+                      <h3 className="text-xl md:text-2xl font-bold mb-2">{step.title}</h3>
+                      <p className="text-muted-foreground text-base">{step.description}</p>
                     </div>
 
                     {/* Icon */}
@@ -396,7 +396,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Core Services - Completely redesigned with new content */}
-      <section className="py-12 sm:py-16 md:py-24 relative">
+      <section className="py-16 sm:py-20 md:py-28 relative">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/10 to-background" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -404,7 +404,7 @@ export default function ServicesPage() {
             <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
               Dịch vụ chính
             </span>
-            <h2 className="text-2xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               3 DÒNG DỊCH VỤ CỐT LÕI
             </h2>
             {/* <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -428,13 +428,13 @@ export default function ServicesPage() {
                   <span className="text-5xl text-muted-foreground font-bold group-hover:text-bano-green ml-auto mb-2">0{index + 1}</span>
 
                   <div className="mb-4">
-                    <h3 className="text-2xl font-bold mb-1 group-hover:text-bano-green transition-colors">
+                    <h3 className="text-xl font-bold mb-1 group-hover:text-bano-green transition-colors">
                       {service.title}
                     </h3>
-                    <span className="text-sm text-muted-foreground">{service.subtitle}</span>
+                    <span className="text-base text-muted-foreground">{service.subtitle}</span>
                   </div>
 
-                  <p className="text-muted-foreground mb-4 flex-grow">{service.description}</p>
+                  <p className="text-muted-foreground mb-4 flex-grow text-base">{service.description}</p>
 
                   {/* Features list */}
                   <ul className="space-y-4 mb-6">
@@ -456,21 +456,11 @@ export default function ServicesPage() {
                             }}
                           />
                         </div>
-                        <span className="text-sm font-medium">{feature.text}</span>
+                        <span className="text-base font-medium">{feature.text}</span>
                       </li>
                     ))}
                   </ul>
 
-                  {/* Highlight stat */}
-                  <div className="px-3 py-2 rounded-2xl bg-bano-green/10 border border-bano-green/20 mb-6">
-                    <div className="flex items-center gap-3">
-                      <Zap className="w-6 h-6 text-bano-green" />
-                      <div>
-                        <span className="text-lg font-bold text-bano-green">{service.highlight}</span>
-                        <span className="text-sm text-muted-foreground ml-2">{service.highlightLabel}</span>
-                      </div>
-                    </div>
-                  </div>
 
                   <Button
                     variant="outline"
@@ -489,7 +479,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Why Trust Bano - 5 Pillars */}
-      <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
+      <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/5 to-background" />
 
         {/* Background decorative elements */}
@@ -501,7 +491,7 @@ export default function ServicesPage() {
             <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
               Tại sao chọn Bano
             </span>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold mb-4">
               Điều khiến Bano trở thành <span className="text-gradient">đối tác đáng tin cậy</span>
             </h2>
             {/* <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -715,7 +705,7 @@ export default function ServicesPage() {
                   </div>
 
                   {/* Description */}
-                  <p className="text-sm text-justify text-muted-foreground leading-relaxed">{pillar.description}</p>
+                  {/* <p className="text-sm text-justify text-muted-foreground leading-relaxed">{pillar.description}</p> */}
                 </motion.div>
               </StaggerItem>
             ))}
@@ -727,8 +717,8 @@ export default function ServicesPage() {
       {/* CTA */}
       <CTASection 
         title="Sẵn sàng bắt đầu hành trình AI?"
-        description="Đặt lịch tư vấn miễn phí 60 phút với chuyên gia BANO để khám phá tiềm năng AI cho doanh nghiệp bạn."
-        buttonText="Đặt lịch tư vấn miễn phí"
+        description="Nhận tư vấn miễn phí với chuyên gia BANO để khám phá tiềm năng AI cho doanh nghiệp bạn."
+        buttonText="Nhận tư vấn miễn phí"
         buttonLink="/contact"
       />
     </div>

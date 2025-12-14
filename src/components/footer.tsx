@@ -16,7 +16,7 @@ export function Footer() {
           {/* Brand */}
           <ScrollReveal>
             <div className="flex items-center gap-2 mb-6">
-              <img src="Vector Smart Object.png" alt="BANO" className="h-10" />
+              <img src="Vector Smart Object.png" alt="BANO" className="h-15" />
             </div>
             <p className="text-muted-foreground mb-6 leading-relaxed">
               Architecting Your Competitive Edge. Human-centered AI solutions for Vietnamese enterprises.

@@ -5,6 +5,8 @@ import { StaggerContainer, StaggerItem } from "../components/scroll-reveal"
 import { Button } from "../components/button"
 import { ArrowRight, Download, FileText, BookOpen, Map, Calendar, Mail, CheckCircle } from "lucide-react"
 import CTASection from "../components/cta-section"
+import { Link } from "wouter"
+import { scrollToTop } from "../utils/scroll-helper"
 
 const caseStudies = [
   {
@@ -12,7 +14,7 @@ const caseStudies = [
     title: "Xây dựng hệ thống AI Marketing Automation",
     client: "LAVO",
     industry: "Marketing",
-    image: "/case Lavo.jpeg",
+    image: "/Lavo.png",
     blogId: "lavo",
     description:
       "Bano giúp LAVO hợp nhất dữ liệu từ nhiều nguồn, phân loại khách hàng bằng AI và tự động gợi ý chiến dịch marketing. Nhờ đó, doanh nghiệp tăng hiệu suất vận hành, tối ưu chi phí quảng cáo và hiểu rõ hơn hành vi khách hàng. Case study cho thấy cách dữ liệu được chuyển hóa thành hành động cụ thể để cải thiện hiệu quả kinh doanh.",
@@ -51,9 +53,10 @@ const freeResources = [
 export default function CaseStudiesPage() {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 0.8,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
+      wheelMultiplier: 1.2,
     })
 
     function raf(time: number) {
@@ -132,7 +135,7 @@ export default function CaseStudiesPage() {
             initial={{ opacity: 0, y: 50, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
             transition={{ delay: 0.3, duration: 1, ease: [0.25, 0.4, 0.25, 1] }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold"
+            className="text-3xl md:text-5xl lg:text-6xl font-bold"
           >
             <motion.span
               initial={{ opacity: 0, x: -30 }}
@@ -198,7 +201,7 @@ export default function CaseStudiesPage() {
       </section>
 
       {/* SECTION 2 — Case Study Dạng Slide */}
-      <section className="py-12 sm:py-16 md:py-24 relative">
+      <section className="py-16 sm:py-20 md:py-28 relative">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <StaggerContainer className="space-y-32" staggerDelay={0.2}>
             {caseStudies.map((study, index) => {
@@ -245,7 +248,7 @@ export default function CaseStudiesPage() {
                           initial={{ opacity: 0 }}
                           whileHover={{ opacity: 1 }}
                         />
-                        <motion.div
+                        {/* <motion.div
                           className="absolute bottom-6 left-6"
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
@@ -258,7 +261,7 @@ export default function CaseStudiesPage() {
                           >
                             {study.industry}
                           </motion.span>
-                        </motion.div>
+                        </motion.div> */}
                         <motion.div
                           className="absolute inset-0 border-2 border-bano-green/0 rounded-3xl"
                           whileHover={{ borderColor: "rgba(34, 197, 94, 0.5)" }}
@@ -295,7 +298,7 @@ export default function CaseStudiesPage() {
                         {study.title}
                       </motion.h2>
                       <motion.p
-                        className="text-muted-foreground mb-8 leading-relaxed text-lg"
+                        className="text-muted-foreground mb-8 leading-relaxed text-base"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -312,10 +315,20 @@ export default function CaseStudiesPage() {
                         transition={{ delay: 0.7, duration: 0.6 }}
                       >
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                          <Button variant="primary" href={`/blog/${study.blogId}`}>
+                          {/* <Button variant="primary" href={`/blog/${study.blogId}`}>
                             Xem chi tiết
                             <ArrowRight className="w-4 h-4" />
-                          </Button>
+                          </Button> */}
+                          <Link
+                            onClick={scrollToTop}
+                            href={`/blog/${study.blogId}`}
+                            className="cursor-pointer flex items-center gap-2 bg-bano-green text-white font-medium px-4 py-2 rounded-full"
+                          >
+                            {/* <Button variant="primary" size="sm"> */}
+                              Xem chi tiết
+                              <ArrowRight className="w-4 h-4 font-medium" />
+                            {/* </Button> */}
+                          </Link>
                         </motion.div>
                       </motion.div>
                     </motion.div>
@@ -364,7 +377,7 @@ export default function CaseStudiesPage() {
       </section>
 
       {/* SECTION 3 — Tài Nguyên Miễn Phí */}
-      <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
+      <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-12 sm:mb-16"
@@ -383,7 +396,7 @@ export default function CaseStudiesPage() {
               Tài Nguyên Miễn Phí
             </motion.span>
             <motion.h2
-              className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4"
+              className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -453,18 +466,15 @@ export default function CaseStudiesPage() {
                       </motion.div>
                       <div className="flex-1 relative z-10">
                         <motion.h3
-                          className="font-semibold mb-1 group-hover:text-bano-green transition-colors"
+                          className="font-semibold mb-1 group-hover:text-bano-green transition-colors text-base"
                           whileHover={{ scale: 1.02 }}
                         >
                           {resource.title}
                         </motion.h3>
                       </div>  
-                      <motion.div
-                        whileHover={{ scale: 1.2, rotate: -15 }}
-                        transition={{ type: "spring", stiffness: 400 }}
-                      >
+                      <div>
                         <Download className="w-5 h-5 text-muted-foreground group-hover:text-bano-green transition-colors relative z-10" />
-                      </motion.div>
+                      </div>
                     </motion.div>
                   )
                 })}
@@ -634,20 +644,10 @@ function FreeResourceForm() {
         whileTap={{ scale: 0.98 }}
       >
         <Button type="submit" variant="primary" className="w-full cursor-pointer" size="sm">
-          <motion.span
-            className="flex items-center justify-center"
-            animate={{
-              x: [0, 5, 0],
-            }}
-            transition={{
-              duration: 1.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
+          <span className="flex items-center justify-center">
             <Mail className="w-5 h-5 mr-2" />
             Nhận tài liệu miễn phí
-          </motion.span>
+          </span>
         </Button>
       </motion.div>
 

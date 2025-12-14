@@ -36,7 +36,7 @@ export function LavoStory() {
   // }
 
   return (
-    <section className="py-24 relative">
+    <section className="py-28 md:py-32 relative">
       <div className="container mx-auto px-6">
         <StaggerItem>
           <motion.div
@@ -57,7 +57,7 @@ export function LavoStory() {
                 transition={{ type: "spring", stiffness: 300, damping: 20 }}
               >
                 <motion.img
-                  src="/case Lavo.jpeg"
+                  src="/Lavo.png"
                   alt="Lavo Case Study"
                   className="w-full h-full object-cover"
                   whileHover={{ scale: 1.15 }}
@@ -75,12 +75,12 @@ export function LavoStory() {
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
                 >
-                  <motion.span
+                  {/* <motion.span
                     className="px-4 py-2 rounded-full bg-bano-green/20 backdrop-blur-sm text-bano-green text-sm font-medium border border-bano-green/30"
                     whileHover={{ scale: 1.1, backgroundColor: "rgba(34, 197, 94, 0.3)" }}
                   >
                     Haircare
-                  </motion.span>
+                  </motion.span> */}
                 </motion.div>
                 <motion.div
                   className="absolute inset-0 border-2 border-bano-green/0 rounded-3xl"
@@ -98,18 +98,17 @@ export function LavoStory() {
               transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
             >
               <motion.h2
-                className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6"
+                className="text-2xl md:text-3xl lg:text-3xl font-bold mb-6"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.6 }}
                 whileHover={{ scale: 1.02 }}
               >
-                Vì sao một tập đoàn haircare hàng đầu lại chọn
-                <span className="text-gradient"> chuyển đổi số cùng Bano?</span>
+                Chuyển đổi số thành công cho tập đoàn Haircare hàng đầu
               </motion.h2>
               <motion.p
-                className="text-muted-foreground mb-8 leading-relaxed text-lg"
+                className="text-muted-foreground mb-8 leading-relaxed text-base"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}

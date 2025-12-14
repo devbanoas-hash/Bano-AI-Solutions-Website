@@ -424,10 +424,10 @@ export function DiagnosticTool() {
               Công cụ chẩn đoán AI miễn phí
               <Zap className="w-4 h-4" />
             </motion.span>
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
+            <h2 className="text-2xl md:text-4xl font-bold mb-6">
               Khám phá tiềm năng AI cho <span className="text-gradient">doanh nghiệp bạn</span>
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-base max-w-2xl mx-auto">
               Chọn ngành nghề và nỗi đau của bạn, chúng tôi sẽ gợi ý lộ trình AI phù hợp nhất
             </p>
           </div>

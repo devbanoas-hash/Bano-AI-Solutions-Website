@@ -5,29 +5,33 @@ import { Brain, Eye, MessageSquare, Cog } from "lucide-react"
 const capabilities = [
   {
     icon: Brain,
+    image: "tech1.png",
     title: "Data Science",
-    description: "Dự báo - phân khúc - ra quyết định bằng dữ liệu.Giúp doanh nghiệp nhìn thấy điều mà mắt thường không thấy.",
+    description: "Phân tích chuyên sâu, dự báo chính xác, thúc đẩy quyết định bằng dữ liệu.",
   },
   {
     icon: Eye,
+    image: "tech2.png",
     title: "Computer Vision",
-    description: "Nhận diện hình ảnh - OCR - kiểm soát chất lượng tự động trong sản xuất & bán lẻ.",
+    description: "Tự động nhận diện hình ảnh, OCR và kiểm soát chất lượng sản phẩm.",
   },
   {
     icon: MessageSquare,
-    title: "Larger Language Models (LLMs)",
-    description: "Tự động hóa bán hàng - marketing - chăm sóc khách hàng bằng AI hiểu được ngôn ngữ Việt.",
+    image: "tech3.png",
+    title: "Large Language Models (LLMs)",
+    description: "Tự động hóa bán hàng, Marketing và Chăm sóc khách hàng.",
   },
   {
     icon: Cog,
-    title: "Automation (RPA + Workflow)",
-    description: "Loại bỏ các công việc lặp lại → giảm sai sót → đội ngũ tập trung vào việc quan trọng.",
+    image: "tech4.png",
+    title: "Automation",
+    description: "Tự động hóa các quy trình nghiệp vụ lặp lại.",
   }
 ]
 
 export function TechCapabilities() {
   return (
-    <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
+    <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 grid-pattern opacity-20" />
 
@@ -45,19 +49,21 @@ export function TechCapabilities() {
           {capabilities.map((capability, index) => (
             <StaggerItem key={index}>
               <motion.div
-                whileHover={{ y: -8, scale: 1.02 }}
+                whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
-                className="glass rounded-2xl p-8 h-full group hover:border-bano-green/50 cursor-pointer"
+                className="rounded-2xl h-full group hover:border-bano-green/50 cursor-pointer"
               >
-                <div className="w-14 h-14 rounded-xl bg-bano-green/10 flex items-center justify-center mb-6 group-hover:bg-bano-green/20 transition-colors">
+                {/* <div className="w-14 h-14 rounded-xl bg-bano-green/10 flex items-center justify-center mb-6 group-hover:bg-bano-green/20 transition-colors">
                   <capability.icon className="w-7 h-7 text-bano-green" />
-                </div>
+                </div> */}
+
+                <img src={capability.image} alt={capability.title} className="rounded-xl mb-6 transition-transform" />
 
                 <h3 className="text-xl font-bold mb-3 group-hover:text-bano-green transition-colors">
                   {capability.title}
                 </h3>
 
-                <p className="text-muted-foreground leading-relaxed">{capability.description}</p>
+                <p className="text-muted-foreground leading-relaxed text-base">{capability.description}</p>
 
                 {/* <motion.div className="mt-6 flex items-center gap-2 text-bano-green opacity-0 group-hover:opacity-100 transition-opacity">
                   <span className="text-sm font-medium">Tìm hiểu thêm</span>
