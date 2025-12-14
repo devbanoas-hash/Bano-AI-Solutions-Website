@@ -49,7 +49,6 @@ export default function ContactPage() {
   const currentLocation = officeLocations.find((loc) => loc.id === activeLocation) || officeLocations[0]
   
   const heroBg = useRandomBackground()
-  const contactBg = useRandomBackground()
   const mapBg = useRandomBackground()
 
   // Initialize EmailJS

@@ -5,10 +5,14 @@ import { Link } from "wouter"
 import { ScrollReveal } from "./scroll-reveal"
 import { Mail, Phone, MapPin, Linkedin, Facebook, Youtube } from "lucide-react"
 import { scrollToTop } from "../utils/scroll-helper"
+import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 
 export function Footer() {
+  const bgImage = useRandomBackground()
+  
   return (
     <footer className="relative pt-12 sm:pt-16 md:pt-24 pb-8 border-t border-border">
+      <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(bgImage, 0.4)} />
       <div className="absolute inset-0 bg-gradient-to-t from-bano-navy/30 to-transparent" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
