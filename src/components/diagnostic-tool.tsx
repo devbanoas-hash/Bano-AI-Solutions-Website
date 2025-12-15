@@ -446,7 +446,7 @@ export function DiagnosticTool() {
                 transition={{ duration: 0.5 }}
                 className="relative overflow-visible"
               >
-                <div className="animated-border max-w-2xl mx-auto rounded-3xl float-effect overflow-visible">
+                <div className="animated-border max-w-6xl mx-auto rounded-3xl float-effect overflow-visible">
                   <div className="glass rounded-3xl p-6 sm:p-8 md:p-10 space-y-6 relative overflow-visible z-[2]">
                     <div className="relative text-center pb-4 border-b border-bano-green/20">
                       <motion.div

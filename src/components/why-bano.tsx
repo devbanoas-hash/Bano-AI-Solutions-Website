@@ -13,46 +13,50 @@ const reasons = [
     icon: Search,
     title: "Chẩn đoán chiến lược",
     image: "/Kim - 7.png",
-    description:
-      "X-ray doanh nghiệp, highlight các điểm nghẽn từ đỏ → vàng → xanh. Hiểu rõ vấn đề trước khi giải quyết.",
+    description: "Bắt đầu bằng chẩn đoán sâu về quy trình & dữ liệu",
     color: "#31B450",
     visual: "chart", // X-ray business chart
+    highlighted: false,
   },
   {
     id: 2,
     icon: Target,
-    title: "Lộ trình Quick Win 90 ngày",
+    title: "Lộ trình Win Quick",
     image: "/Kim - 8.png",
-    description: "Roadmap 3 giai đoạn (30 – 60 – 90) với từng milestone rõ ràng. Kết quả đo lường được.",
+    description: "Giải quyết bài toán trong ngắn hạn.",
     color: "#D1F1EF",
     visual: "roadmap", // 3-phase roadmap
+    highlighted: true, // Purple border
   },
   {
     id: 3,
     icon: Puzzle,
     title: "Hạ tầng AI linh hoạt",
     image: "/Kim - 9.png",
-    description: "Plugin/module kết nối trực tiếp vào hệ thống hiện tại: ERP, POS, CRM. Không cần thay đổi toàn bộ.",
+    description: "Tích hợp các module AI thông minh vào hệ thống hiện có",
     color: "#DBEDE2",
     visual: "modules", // Plugin system
+    highlighted: false,
   },
   {
     id: 4,
     icon: Scale,
-    title: "Tối ưu chi phí, hiệu quả cao",
+    title: "Tối ưu chi phí",
     image: "/Kim - 10.png",
-    description: "Chi phí nhỏ — Hiệu quả lớn. Tối ưu nguồn lực với open-source & cloud thông minh.",
+    description: "Chi phí thấp - Hiệu quả cao",
     color: "#C5CAD4",
     visual: "compare", // Cost comparison
+    highlighted: false,
   },
   {
     id: 5,
     icon: Rocket,
-    title: "Mở rộng theo tốc độ doanh nghiệp",
+    title: "Mở rộng theo doanh nghiệp",
     image: "/Kim - 11.png",
-    description: "Phát triển theo scale: Startup → SME → Enterprise. Kiến trúc sẵn sàng tăng trưởng.",
+    description: "Phát triển theo mô hình phù hợp",
     color: "#31B450",
     visual: "scale", // Scale illustration
+    highlighted: false,
   },
 ]
 
@@ -152,57 +156,107 @@ export function WhyBano() {
     <section ref={sectionRef} className="py-16 sm:py-20 md:py-28 relative" id="why-bano-section">
       <ScrollReveal className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-3 block">
-            Tại sao chọn BANO
-          </span>
-          <h2 className="text-3xl font-bold">
-            Điều khiến Bano <span className="text-gradient">khác biệt</span> và được doanh nghiệp <span className="text-gradient">lựa chọn</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-12">
+            <span className="text-white">Điểm khác biệt của </span>
+            <span className="text-bano-green">Bano</span>
           </h2>
         </div>
       </ScrollReveal>
 
-      {/* Cards Section */}
-      <div ref={sectionRef}>
-        <div className="flex items-center mt-12 sm:mt-16 md:mt-24 overflow-x-auto pb-4 md:pb-0 scrollbar-hide">
-          <div className="flex gap-4 mx-auto min-w-max md:min-w-0">
-            {reasons.map((reason) => (
-              <motion.div
-                key={reason.id}
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                whileHover={{ scale: 1.02 }}
-                viewport={{ once: true, margin: "-50px" }}
-                className="flex-shrink-0 cursor-pointer w-[280px] sm:w-[300px] md:w-[280px] h-auto min-h-[200px] rounded-2xl flex flex-col gap-4 group hover:border-bano-green/50 transition-all duration-500"
-              >
-                {/* <div className={`flex items-center justify-between ${index !== 3 ? 'mb-3' : ''}`}>
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center transition-transform duration-500 group-hover:scale-110"
-                    style={{ backgroundColor: `${reason.color}20` }}
-                  >
-                    <reason.icon className="w-5 h-5" style={{ color: reason.color }} />
-                  </div>
-                  <CardVisual type={reason.visual} color={reason.color} />
-                </div> */}
-
-                <span className="text-3xl font-bold group-hover:text-bano-green transition-colors">0{reason.id}</span>
-
-                <img src={reason.image} alt={reason.title} className="w-full h-auto object-cover rounded-xl" />
-
-                <h3 className="text-lg font-bold text-bano-green transition-colors leading-tight">
-                  {reason.title}
+      {/* Cards Section - Grid Layout: 2 cards top row, 3 cards bottom row */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-15 gap-6 max-w-7xl mx-auto">
+          {/* Top Row - Card 01 (spans 3 columns) */}
+          <motion.div
+            key={reasons[0].id}
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            whileHover={{ scale: 1.02 }}
+            viewport={{ once: true, margin: "-50px" }}
+            className="cursor-pointer rounded-2xl overflow-hidden relative group hover:border-bano-green/50 transition-all duration-500 md:col-span-9 border border-border/50"
+          >
+            <img 
+              src={reasons[0].image} 
+              alt={reasons[0].title} 
+              className="w-full h-full object-cover absolute inset-0" 
+            />
+            {/* Gradient overlay for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+            {/* Content overlay */}
+            <div className="relative z-10 p-6 h-full flex flex-col justify-between min-h-[300px]">
+              <span className="text-3xl font-bold text-bano-green">0{reasons[0].id}</span>
+              <div className="mt-auto">
+                <h3 className="text-lg font-bold text-bano-green transition-colors leading-tight mb-2">
+                  {reasons[0].title}
                 </h3>
+                <p className="text-sm text-white/90 leading-relaxed">
+                  {reasons[0].description}
+                </p>
+              </div>
+            </div>
+          </motion.div>
 
-                {/* <motion.div
-                  className="w-full h-0.5 bg-muted rounded-full overflow-hidden mt-4"
-                  initial={{ scaleX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  transition={{ delay: 0.3 + index * 0.15, duration: 0.5 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                >
-                  <div className="h-full rounded-full" style={{ backgroundColor: reason.color, width: "100%" }} />
-                </motion.div> */}
-              </motion.div>
-            ))}
+          {/* Top Row - Card 02 (spans 3 columns, highlighted) */}
+          <motion.div
+            key={reasons[1].id}
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            whileHover={{ scale: 1.02 }}
+            viewport={{ once: true, margin: "-50px" }}
+            className="cursor-pointer rounded-2xl overflow-hidden relative group hover:border-green-500 transition-all duration-500 md:col-span-6"
+          >
+            <img 
+              src={reasons[1].image} 
+              alt={reasons[1].title} 
+              className="w-full h-full object-cover absolute inset-0" 
+            />
+            {/* Gradient overlay for better text readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+            {/* Content overlay */}
+            <div className="relative z-10 p-6 h-full flex flex-col justify-between min-h-[300px]">
+              <span className="text-3xl font-bold text-bano-green">0{reasons[1].id}</span>
+              <div className="mt-auto">
+                <h3 className="text-lg font-bold text-bano-green transition-colors leading-tight mb-2">
+                  {reasons[1].title}
+                </h3>
+                <p className="text-sm text-white/90 leading-relaxed">
+                  {reasons[1].description}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Bottom Row - Cards 03, 04, 05 (each spans 2 columns) */}
+          {reasons.slice(2).map((reason) => (
+            <motion.div
+              key={reason.id}
+              initial={{ opacity: 0, y: 50, scale: 0.9 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              whileHover={{ scale: 1.02 }}
+              viewport={{ once: true, margin: "-50px" }}
+              className="cursor-pointer rounded-2xl overflow-hidden relative group hover:border-bano-green/50 transition-all duration-500 md:col-span-5 border border-border/50"
+            >
+              <img 
+                src={reason.image} 
+                alt={reason.title} 
+                className="w-full h-full object-cover absolute inset-0" 
+              />
+              {/* Gradient overlay for better text readability */}
+              <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
+              {/* Content overlay */}
+              <div className="relative z-10 p-6 h-full flex flex-col justify-between min-h-[300px]">
+                <span className="text-3xl font-bold text-bano-green">0{reason.id}</span>
+                <div className="mt-auto">
+                  <h3 className="text-lg font-bold text-bano-green transition-colors leading-tight mb-2">
+                    {reason.title}
+                  </h3>
+                  <p className="text-sm text-white/90 leading-relaxed">
+                    {reason.description}
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          ))}
 
             {/* Final CTA Card - Also made smaller */}
             {/* <Link href="/services" className="block" onClick={scrollToTop}>
@@ -223,7 +277,6 @@ export function WhyBano() {
             </Link> */}
           </div>
         </div>
-      </div>
     </section>
   )
 }
