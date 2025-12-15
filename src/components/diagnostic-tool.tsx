@@ -424,7 +424,7 @@ export function DiagnosticTool() {
               Công cụ chẩn đoán AI miễn phí
               <Zap className="w-4 h-4" />
             </motion.span>
-            <h2 className="text-2xl font-bold mb-6">
+            <h2 className="text-3xl font-bold mb-6">
               Khám phá tiềm năng AI cho <span className="text-gradient">doanh nghiệp bạn</span>
             </h2>
             <p className="text-muted-foreground text-base max-w-2xl mx-auto">

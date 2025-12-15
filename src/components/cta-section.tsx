@@ -13,7 +13,7 @@ const CTASection = ({ title, description, buttonText, buttonLink }: { title: str
                         <div className="absolute inset-0 bg-gradient-to-br from-bano-green/10 to-transparent" />
 
                         <div className="relative z-10">
-                            <h2 className="text-2xl font-bold mb-6">{title}</h2>
+                            <h2 className="text-3xl font-bold mb-6">{title}</h2>
                             <p className="text-muted-foreground mx-auto mb-8 text-base">
                                 {description}
                             </p>

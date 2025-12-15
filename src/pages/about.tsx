@@ -232,7 +232,7 @@ export default function AboutPage() {
               Cam Kết Giá Trị
             </motion.span> */}
             <motion.h2
-              className="text-2xl font-bold mb-6"
+              className="text-3xl font-bold mb-6"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -241,7 +241,7 @@ export default function AboutPage() {
               Bano <span className="text-gradient">không</span> phải một đơn vị <span className="text-gradient">bán AI</span>
             </motion.h2>
             <motion.p
-              className="text-2xl text-muted-foreground max-w-3xl mx-auto mb-8"
+              className="text-base text-muted-foreground max-w-3xl mx-auto mb-8"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
@@ -398,7 +398,7 @@ export default function AboutPage() {
               Vision & Mission
             </motion.span> */}
             <motion.h2
-              className="text-2xl font-bold mb-12"
+              className="text-3xl font-bold mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -456,7 +456,7 @@ export default function AboutPage() {
                     <item.icon className="w-8 h-8 text-bano-green" />
                   </motion.div>
                   <motion.h3
-                    className="text-2xl font-bold mb-4 group-hover:text-bano-green transition-colors relative z-10"
+                    className="text-xl font-bold mb-4 group-hover:text-bano-green transition-colors relative z-10"
                     whileHover={{ scale: 1.05 }}
                   >
                     {item.title}
@@ -495,7 +495,7 @@ export default function AboutPage() {
             <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-3 block">
               Lợi thế cốt lõi
             </span>
-            <h2 className="text-2xl font-bold">
+            <h2 className="text-3xl font-bold">
               Điều khiến Bano <span className="text-gradient">khác biệt</span> và được doanh nghiệp <span className="text-gradient">lựa chọn</span>
             </h2>
           </div>
@@ -510,7 +510,7 @@ export default function AboutPage() {
                 icon: Search,
                 title: "Chẩn đoán chiến lược",
                 image: "/Kim - 7.png",
-                description: "X-ray doanh nghiệp, highlight các điểm nghẽn từ đỏ → vàng → xanh. Hiểu rõ vấn đề trước khi giải quyết.",
+                description: "Chiến lược toàn diện để hiểu rõ nhu cầu và thách thức của doanh nghiệp",
                 color: "#31B450",
               },
               {
@@ -518,23 +518,23 @@ export default function AboutPage() {
                 icon: Target,
                 title: "Lộ trình Quick Win 90 ngày",
                 image: "/Kim - 8.png",
-                description: "Roadmap 3 giai đoạn (30 – 60 – 90) với từng milestone rõ ràng. Kết quả đo lường được.",
+                description: "Kết quả nhanh chóng, giá trị trao ngay từ những tuần đầu tiên",
                 color: "#D1F1EF",
               },
               {
-                id: 4,
+                id: 3,
                 icon: Scale,
                 title: "Tối ưu chi phí, hiệu quả cao",
                 image: "/Kim - 10.png",
-                description: "Chi phí nhỏ — Hiệu quả lớn. Tối ưu nguồn lực với open-source & cloud thông minh.",
+                description: "Giải pháp phù hợp cho cả SME & Enterprise",
                 color: "#C5CAD4",
               },
               {
-                id: 5,
+                id: 4,
                 icon: Rocket,
                 title: "Mở rộng theo tốc độ doanh nghiệp",
                 image: "/Kim - 11.png",
-                description: "Phát triển theo scale: Startup → SME → Enterprise. Kiến trúc sẵn sàng tăng trưởng.",
+                description: "Phù hợp với tốc độ phát triển doanh nghiệp",
                 color: "#31B450",
               },
             ].map((reason, index) => {
@@ -562,6 +562,8 @@ export default function AboutPage() {
                     <h3 className="text-lg font-bold text-bano-green transition-colors leading-tight">
                       {reason.title}
                     </h3>
+
+                    <p className="text-muted-foreground text-base">{reason.description}</p>
                   </motion.div>
                 </StaggerItem>
               )
@@ -576,8 +578,8 @@ export default function AboutPage() {
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="text-center mb-12 sm:mb-16">
-            <h2 className="text-2xl font-bold">
-              Những hoạt động tại BANO
+            <h2 className="text-3xl font-bold">
+              Những <span className="text-gradient">hoạt động</span> tại <span className="text-gradient">BANO</span>
             </h2>
           </ScrollReveal>
 
@@ -604,7 +606,7 @@ export default function AboutPage() {
             {/* First group: 4 images forming a square + text on the right */}
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-10 gap-6 md:gap-8">
               {/* Image grid 2x2 */}
-              <div className="md:col-span-4 grid grid-cols-2 gap-4 md:gap-6">
+              <div className="md:col-span-3 grid grid-cols-2 gap-4 md:gap-6">
                 {team.slice(0, 4).map((member, index) => (
                   <StaggerItem key={index}>
                     <motion.div 
@@ -629,7 +631,7 @@ export default function AboutPage() {
               </div>
               
               {/* Text content on the right */}
-              <StaggerItem className="flex flex-col justify-center md:col-span-6">
+              <StaggerItem className="flex flex-col justify-center md:col-span-7">
                 <motion.div
                   initial={{ opacity: 0, x: 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -637,7 +639,7 @@ export default function AboutPage() {
                   transition={{ delay: 0.4, duration: 0.6 }}
                   className="space-y-4"
                 >
-                  <h3 className="text-2xl md:text-3xl font-bold text-bano-green">
+                  <h3 className="text-2xl font-bold text-bano-green">
                     Hoạt động tình nguyện tại Bano
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -656,7 +658,7 @@ export default function AboutPage() {
             {/* Second group: 4 images forming a square + text on the right */}
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-10 gap-6 md:gap-8">
               {/* Image grid 2x2 */}
-              <div className="md:col-span-4 grid grid-cols-2 gap-4 md:gap-6">
+              <div className="md:col-span-3 grid grid-cols-2 gap-4 md:gap-6">
                 {team.slice(4, 8).map((member, index) => (
                   <StaggerItem key={index + 4}>
                     <motion.div 
@@ -681,7 +683,7 @@ export default function AboutPage() {
               </div>
               
               {/* Text content on the right */}
-              <StaggerItem className="flex flex-col justify-center md:col-span-6">
+              <StaggerItem className="flex flex-col justify-center md:col-span-7">
                 <motion.div
                   initial={{ opacity: 0, x: 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -689,7 +691,7 @@ export default function AboutPage() {
                   transition={{ delay: 0.4, duration: 0.6 }}
                   className="space-y-4"
                 >
-                  <h3 className="text-2xl md:text-3xl font-bold text-bano-green">
+                  <h3 className="text-2xl font-bold text-bano-green">
                     Khoảnh khắc daily meet sôi nổi
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">

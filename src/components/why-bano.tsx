@@ -155,7 +155,7 @@ export function WhyBano() {
           <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-3 block">
             Tại sao chọn BANO
           </span>
-          <h2 className="text-2xl font-bold">
+          <h2 className="text-3xl font-bold">
             Điều khiến Bano <span className="text-gradient">khác biệt</span> và được doanh nghiệp <span className="text-gradient">lựa chọn</span>
           </h2>
         </div>

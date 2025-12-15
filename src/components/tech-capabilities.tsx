@@ -40,7 +40,7 @@ export function TechCapabilities() {
           <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
             Năng lực công nghệ
           </span>
-          <h2 className="text-2xl font-bold mb-6">
+          <h2 className="text-3xl font-bold mb-6">
             Công nghệ AI <span className="text-gradient">toàn diện</span>
           </h2>
         </ScrollReveal>
