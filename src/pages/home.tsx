@@ -67,6 +67,23 @@ export default function Home() {
 
   return (
     <div className="relative">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Video with Overlay */}
+        <div className="absolute inset-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover"
+          >
+            {/* <source src="/BREAKING NEWS_ Trump Announces He Is Releasing 'All Of The Kennedy Files' Tomorrow.mp4" type="video/mp4" /> */}
+            <source src="IMG_0565.webm" type="video/webm" />
+          </video>
+          {/* <div className="hero-gradient absolute inset-0" />
+          <div className="grid-pattern absolute inset-0 opacity-30" /> */}
+        </div>
+      </section>
       <Hero />
       <WhyBano />
       <DiagnosticToolTest />
