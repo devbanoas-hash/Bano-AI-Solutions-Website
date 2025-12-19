@@ -27,14 +27,16 @@ export function useRandomBackground(): string {
 
 /**
  * Get a random background image and return it as a style object
+ * @param bgImage - Background image path
  * @param opacity - Optional opacity for overlay (default: 0.3)
  * @returns Style object with background image
  */
-export function getRandomBackgroundStyle(bgImage: string) {
+export function getRandomBackgroundStyle(bgImage: string, opacity?: number) {
   return {
     backgroundImage: `url(${bgImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
+    opacity: opacity ?? 0.3,
   }
 }
