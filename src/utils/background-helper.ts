@@ -30,9 +30,9 @@ export function useRandomBackground(): string {
  * @param opacity - Optional opacity for overlay (default: 0.3)
  * @returns Style object with background image
  */
-export function getRandomBackgroundStyle(bgImage: string, opacity: number = 0.3) {
+export function getRandomBackgroundStyle(bgImage: string) {
   return {
-    backgroundImage: `linear-gradient(rgba(10, 13, 20, ${opacity}), rgba(10, 13, 20, ${opacity})), url(${bgImage})`,
+    backgroundImage: `url(${bgImage})`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",

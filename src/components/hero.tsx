@@ -6,8 +6,6 @@ import { ArrowRight } from "lucide-react"
 import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 
 export function Hero() {
-  const headlineWords = "Mọi tăng trưởng đều bắt đầu từ việc nhìn rõ vấn đề.".split(" ")
-
   const containerVariants = {
     hidden: {},
     visible: {
@@ -39,16 +37,17 @@ export function Hero() {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(bgImage, 0.6)} />
-      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-bano-navy/60 to-black/80" />
-      <div className="hero-gradient absolute inset-0" />
-      <div className="grid-pattern absolute inset-0 opacity-30" />  
+      <div className="absolute inset-0" style={getRandomBackgroundStyle(bgImage)} />
+      {/* Bottom opacity gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent" />
+      {/* <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-bano-navy/60 to-black/80" /> */}
+      {/* <div className="hero-gradient absolute inset-0" /> */}
+      {/* <div className="grid-pattern absolute inset-0 opacity-30" />   */}
 
       {/* Content */}
-      <div className="absolute inset-0 flex items-center justify-center z-10">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-8xl">
-          <div className="w-full lg:w-1/2">
-            
+      <div className="absolute inset-0 flex flex-col justify-end py-24 z-10">
+        <div className="flex flex-col gap-15 container mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-8xl">
+          <div className="w-full border-b border-gray-500 pb-15">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -58,23 +57,18 @@ export function Hero() {
               <span className="w-2 h-2 bg-bano-green rounded-full animate-pulse" />
               <span className="text-xs sm:text-sm text-bano-green font-medium">Human-centered AI Solutions</span>
             </motion.div>
-
-            
             <motion.h1
               variants={containerVariants}
               initial="hidden"
               animate="visible"
               className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4 sm:mb-6 w-full"
             >
-              {headlineWords.map((word, index) => (
-                <motion.span
-                  key={index}
-                  variants={wordVariants}
-                  className="inline-block mr-[0.3em]"
-                >
-                  {index - 6 < 0 ? word : <span className="text-gradient">{word}</span>}
-                </motion.span>
-              ))}
+              <motion.span
+                variants={wordVariants}
+                className="inline-block mr-[0.3em]"
+              >
+                Đẩy mạnh chuyển đổi. <span className="text-gradient">Tư vấn chiến lược</span>
+              </motion.span>
             </motion.h1>
 
             
@@ -82,12 +76,11 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1, duration: 0.6 }}
-              className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mb-8 sm:mb-10"
+              className="text-base sm:text-lg md:text-lg max-w-6xl mb-8 sm:mb-10"
             >
-              Bano giúp doanh nghiệp nhìn thấy nguyên nhân gốc rễ khiến vận hành chậm lại và đưa ra giải pháp AI dành riêng cho doanh nghiệp của bạn.
+              Chúng tôi kiến tạo lợi thế cạnh tranh vượt trội thông qua chiến lược công nghệ được thiết kế riêng. <br /> Đúng quy trình, đúng thời điểm - giúp tinh gọn vận hành, loại bỏ rủi ro, và tăng tốc quyết định trong kinh doanh.
             </motion.p>
 
-            
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -95,16 +88,32 @@ export function Hero() {
               className="flex flex-col sm:flex-row gap-4"
             >
               <Button variant="primary" size="sm" href="/services">
-                Khám phá dịch vụ của BANO
+                Khám phá dịch vụ
                 <ArrowRight className="w-5 h-5" />
               </Button>
             </motion.div>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.2, duration: 0.6 }}
+            className="flex items-center gap-2 text-xl"
+          >
+            <motion.span>
+              Được tin cậy bởi tập đoàn hàng đầu Việt Nam
+            </motion.span>
+            <motion.span>
+              <img src="logo11.png" alt="Bano" className="w-10 h-10" />
+            </motion.span>
+          </motion.div>
         </div>
+
+        
       </div>
 
       {/* Scroll Indicator */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
@@ -121,7 +130,7 @@ export function Hero() {
             className="w-1.5 h-3 bg-bano-green rounded-full"
           />
         </motion.div>
-      </motion.div>
+      </motion.div> */}
     </section>
   )
 }

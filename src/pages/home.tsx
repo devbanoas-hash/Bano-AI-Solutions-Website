@@ -2,15 +2,18 @@ import { useEffect } from "react"
 import Lenis from "lenis"
 import { Hero } from "../components/hero"
 import { DiagnosticTool } from "../components/diagnostic-tool"
-import { LavoStory } from "../components/lavo-story"
 import { WhyBano } from "../components/why-bano"
 import { TechCapabilities } from "../components/tech-capabilities"
 import CTASection from "../components/cta-section"
+import DiagnosticToolTest from "../components/diagnostic-tool-test"
 // import { motion } from "framer-motion"
 // import { Button } from "../components/button"
 // import { ArrowRight } from "lucide-react"
 
 export default function Home() {
+  // Keep import warm for quick toggling / A-B testing without breaking `noUnusedLocals`
+  void DiagnosticTool
+
   // const headlineWords = "Mọi tăng trưởng đều bắt đầu từ việc nhìn rõ vấn đề.".split(" ")
 
   // const containerVariants = {
@@ -65,14 +68,13 @@ export default function Home() {
   return (
     <div className="relative">
       <Hero />
-      <DiagnosticTool />
-      <LavoStory />
       <WhyBano />
+      <DiagnosticToolTest />
       <TechCapabilities />
       <CTASection
-        title="Sẵn sàng để vận hành thông minh hơn?"
-        description="Nhận tư vấn miễn phí với chuyên gia BANO để khám phá tiềm năng AI cho doanh nghiệp bạn."
-        buttonText="Nhận tư vấn miễn phí"
+        title="Đặt lịch tư vấn chiến lược AI"
+        description="Trao đổi use case của doanh nghiệp bạn"
+        buttonText="Liên hệ ngay"
         buttonLink="/contact"
       />
     </div>

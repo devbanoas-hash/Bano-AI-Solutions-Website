@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -89,6 +92,7 @@
   --font-sans: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui,
     sans-serif;
   --font-mono: "JetBrains Mono", "JetBrains Mono Fallback", monospace;
+  --font-display: "Space Grotesk", "Space Grotesk Fallback", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -136,6 +140,20 @@
   --color-bano-grey: var(--bano-grey);
   --color-bano-mint: var(--bano-mint);
   --color-bano-water: var(--bano-water);
+
+  /* Custom timing functions */
+  --ease-morph: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Custom animations */
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-fast: float 3s ease-in-out infinite;
+  --animate-pulse-slow: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-pulse-fast: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-spin-slow: spin 8s linear infinite;
+  --animate-rise: rise 10s infinite linear;
+  --animate-fade-in: fadeIn 0.5s ease-out forwards;
 }
 
 @layer base {
@@ -170,7 +188,11 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* Glass Effect */
+/* ===========================
+   Glass Morphism Effects
+   =========================== */
+
+/* Original glass effect */
 .glass {
   background: rgba(26, 31, 46, 0.7);
   backdrop-filter: blur(20px);
@@ -178,13 +200,79 @@ html.lenis body {
   border: 1px solid rgba(72, 86, 132, 0.2);
 }
 
+/* Glass morph with glow - for buttons and modals */
+.glass-morph {
+  background: rgba(10, 13, 20, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(49, 180, 80, 0.4);
+  box-shadow: 0 0 50px rgba(49, 180, 80, 0.4);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Glass morph expanded state */
+.glass-morph.expanded {
+  background: rgba(10, 13, 20, 0.95);
+  box-shadow: 0 20px 100px -10px rgba(49, 180, 80, 0.3);
+  border-color: rgba(49, 180, 80, 0.2);
+}
+
+/* Glass card with gradient */
+.glass-card {
+  background: linear-gradient(145deg, rgba(49, 180, 80, 0.1) 0%, rgba(10, 13, 20, 0.6) 100%);
+  border: 1px solid rgba(49, 180, 80, 0.2);
+  transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+  background: rgba(49, 180, 80, 0.2);
+  border-color: rgba(49, 180, 80, 0.5);
+  box-shadow: 0 0 20px rgba(49, 180, 80, 0.2);
+}
+
+/* ===========================
+   Button Styles
+   =========================== */
+
+.btn-primary {
+  background: var(--bano-green);
+  color: #fff;
+  font-weight: 600;
+  border-radius: 9999px;
+  transition: all 0.3s;
+  box-shadow: 0 4px 15px rgba(49, 180, 80, 0.3);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--bano-green-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(49, 180, 80, 0.6);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #9ca3af;
+  border-radius: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
 /* Text Gradient */
 .text-gradient {
-  background: linear-gradient(
-    135deg,
-    var(--bano-green) 0%,
-    var(--bano-water) 100%
-  );
+  background: linear-gradient(135deg,
+      var(--bano-green) 0%,
+      var(--bano-water) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -192,12 +280,10 @@ html.lenis body {
 
 /* Hero gradient overlay */
 .hero-gradient {
-  background: linear-gradient(
-    180deg,
-    rgba(10, 13, 20, 0.3) 0%,
-    rgba(10, 13, 20, 0.8) 50%,
-    rgba(10, 13, 20, 1) 100%
-  );
+  background: linear-gradient(180deg,
+      rgba(10, 13, 20, 0.3) 0%,
+      rgba(10, 13, 20, 0.8) 50%,
+      rgba(10, 13, 20, 1) 100%);
 }
 
 /* Grid pattern */
@@ -219,7 +305,11 @@ html.lenis body {
   overflow: hidden;
 }
 
-/* Custom scrollbar */
+/* ===========================
+   Scrollbar Styles
+   =========================== */
+
+/* Custom scrollbar - default */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -237,13 +327,30 @@ html.lenis body {
   background: var(--bano-green);
 }
 
+/* Custom scrollbar - thin variant */
+.custom-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: var(--bano-green);
+  border-radius: 10px;
+}
+
 /* Selection */
 ::selection {
   background: var(--bano-green);
   color: white;
 }
 
-/* Add animated border and glow effects for DiagnosticTool */
+/* ===========================
+   Keyframe Animations
+   =========================== */
+
 @keyframes border-rotate {
   0% {
     --border-angle: 0deg;
@@ -255,6 +362,7 @@ html.lenis body {
 }
 
 @keyframes pulse-glow {
+
   0%,
   100% {
     opacity: 0.6;
@@ -278,13 +386,42 @@ html.lenis body {
 }
 
 @keyframes float {
+
   0%,
   100% {
     transform: translateY(0px);
   }
 
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-15px);
+  }
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(100vh) scale(0.5);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translateY(-20vh) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -294,18 +431,51 @@ html.lenis body {
   inherits: false;
 }
 
+/* ===========================
+   Animation Utility Classes
+   =========================== */
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-fast {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-pulse-fast {
+  animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
+.animate-rise {
+  animation: rise 10s infinite linear;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* ===========================
+   Animated Border Effects
+   =========================== */
+
 /* Double-line animated border effect */
 .animated-border {
   position: relative;
   background: linear-gradient(var(--background), var(--background)) padding-box,
-    conic-gradient(
-        from var(--border-angle),
-        rgba(49, 180, 80, 0.1) 0%,
-        var(--bano-green) 50%,
-        var(--bano-green-light) 95%,
-        white 100%
-      )
-      border-box;
+    conic-gradient(from var(--border-angle),
+      rgba(49, 180, 80, 0.1) 0%,
+      var(--bano-green) 50%,
+      var(--bano-green-light) 95%,
+      white 100%) border-box;
   border: 3px solid transparent;
   animation: border-rotate 6s linear infinite;
 }
@@ -315,13 +485,11 @@ html.lenis body {
   content: "";
   position: absolute;
   inset: -4px;
-  background: conic-gradient(
-    from var(--border-angle),
-    rgba(49, 180, 80, 0.1) 0%,
-    var(--bano-green) 50%,
-    var(--bano-green-light) 95%,
-    white 100%
-  );
+  background: conic-gradient(from var(--border-angle),
+      rgba(49, 180, 80, 0.1) 0%,
+      var(--bano-green) 50%,
+      var(--bano-green-light) 95%,
+      white 100%);
   border-radius: inherit;
   filter: blur(20px);
   opacity: 0.8;
@@ -329,24 +497,26 @@ html.lenis body {
   animation: border-rotate 6s linear infinite;
 }
 
-/* Remove inner secondary border line as we want a single continuous flow */
+/* Remove inner secondary border line */
 .animated-border::after {
   display: none;
 }
+
+/* ===========================
+   Effect Utility Classes
+   =========================== */
 
 .glow-pulse {
   animation: pulse-glow 3s ease-in-out infinite;
 }
 
 .shimmer-effect {
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(49, 180, 80, 0.1) 25%,
-    rgba(209, 241, 239, 0.2) 50%,
-    rgba(49, 180, 80, 0.1) 75%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(49, 180, 80, 0.1) 25%,
+      rgba(209, 241, 239, 0.2) 50%,
+      rgba(49, 180, 80, 0.1) 75%,
+      transparent 100%);
   background-size: 200% 100%;
   animation: shimmer 3s ease-in-out infinite;
 }
@@ -359,6 +529,10 @@ html.lenis body {
   box-shadow: 0 0 40px rgba(49, 180, 80, 0.3), 0 0 80px rgba(49, 180, 80, 0.15),
     0 0 120px rgba(209, 241, 239, 0.1), inset 0 0 60px rgba(49, 180, 80, 0.05);
 }
+
+/* ===========================
+   Corner Accent Effects
+   =========================== */
 
 .corner-accent::before,
 .corner-accent::after {
@@ -385,6 +559,10 @@ html.lenis body {
   border-top: none;
   border-bottom-right-radius: 24px;
 }
+
+/* ===========================
+   Scrollbar Hide Utilities
+   =========================== */
 
 /* Hide scrollbar for horizontal scroll on mobile */
 .scrollbar-hide {
@@ -423,6 +601,10 @@ html.lenis body {
   background: var(--bano-green);
 }
 
+/* ===========================
+   Image Quality
+   =========================== */
+
 /* High-quality image rendering */
 .hq-image {
   image-rendering: -webkit-optimize-contrast;
@@ -435,6 +617,10 @@ html.lenis body {
   -moz-osx-font-smoothing: grayscale;
   will-change: transform;
 }
+
+/* ===========================
+   Tech Capabilities
+   =========================== */
 
 /* Tech capabilities connection lines */
 .connection-line {
@@ -449,4 +635,20 @@ html.lenis body {
 
 .tech-hub-icon:hover {
   filter: drop-shadow(0 0 12px rgba(49, 180, 80, 1)) drop-shadow(0 0 24px rgba(49, 180, 80, 0.6));
+}
+
+/* ===========================
+   Transition Timing Functions
+   =========================== */
+
+.ease-morph {
+  transition-timing-function: cubic-bezier(0.68, -0.6, 0.32, 1.6);
+}
+
+.ease-smooth {
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ease-out-expo {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
 }
