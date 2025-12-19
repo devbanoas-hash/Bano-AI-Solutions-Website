@@ -68,9 +68,9 @@ const DiagnosticToolTest = () => {
     // Logic to determine Modal Size based on Step
     const getModalDimensions = () => {
         if (!isExpanded) {
-        // Button State - Slightly rounded square, White Glow, Standout
-        // Updated: Smaller size (200x56), Pure White Border, intense multi-layer glow
-        return 'w-[200px] h-[56px] rounded-full hover:scale-105 cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.5),0_0_40px_rgba(16,185,129,0.3)] border-2 border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.6),0_0_60px_rgba(16,185,129,0.8)] translate-y-[20vh]';
+            // Button State - Slightly rounded square, White Glow, Standout
+            // Updated: Smaller size (200x56), Pure White Border, intense multi-layer glow
+            return 'w-[200px] h-[56px] rounded-full hover:scale-105 cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.5),0_0_40px_rgba(16,185,129,0.3)] border-2 border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.6),0_0_60px_rgba(16,185,129,0.8)] translate-y-[20vh]';
         }
         
         if (userState.step === 4) {
@@ -83,7 +83,7 @@ const DiagnosticToolTest = () => {
     };
 
     return (
-        <div className="relative py-28 md:py-32 min-h-screen w-full bg-bano-bg overflow-visible font-sans selection:bg-emerald-500 selection:text-white">        
+        <div className="relative py-28 md:py-32 min-h-screen w-full overflow-visible font-sans selection:bg-emerald-500 selection:text-white">        
             {/* 1. Background Layer */}
             <Hero isExpanded={isExpanded} isHovered={isHovered} />
 
@@ -115,7 +115,7 @@ const DiagnosticToolTest = () => {
                 {/* The Morphing Card/Button */}
                 <div 
                     className={`
-                        glass-morph relative overflow-hidden pointer-events-auto flex flex-col transition-all duration-700 ease-morph
+                        relative overflow-hidden pointer-events-auto flex flex-col transition-all duration-700 ease-morph
                         ${getModalDimensions()}
                         ${!isExpanded ? 'bg-gradient-to-r from-emerald-500 to-emerald-400 backdrop-blur-xl' : ''} 
                         ${isStarting ? 'scale-90 brightness-150' : ''}

@@ -30,12 +30,12 @@ export function WhyBano() {
                 <div className="absolute -left-20 top-20 w-64 h-64 bg-bano-green/20 blur-[100px] rounded-full" />
                 
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
-                  <span className="text-white block">Tại sao chọn Bano</span>
+                  <span className="text-white block">Tại sao <span className="text-gradient">chọn Bano</span></span>
                   {/* <span className="text-white block">cốt lõi của</span>
                   <span className="text-bano-green">Bano</span> */}
                 </h2>
                 
-                <p className="mt-6 text-gray-400 text-lg max-w-sm">
+                <p className="mt-6 text-gray-400 text-lg max-w-lg">
                   Giải pháp chuyển đổi số toàn diện giúp doanh nghiệp tối ưu vận hành và bứt phá doanh thu.
                 </p>
 
@@ -64,7 +64,7 @@ export function WhyBano() {
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
                     {/* Số thứ tự */}
                     <div className="md:col-span-1">
-                      <span className="text-xl font-mono text-gray-500 group-hover:text-bano-green transition-colors">
+                      <span className="text-2xl text-gray-500 group-hover:text-bano-green transition-colors">
                         0{reason.id}.
                       </span>
                     </div>
@@ -75,7 +75,7 @@ export function WhyBano() {
                         {reason.title}
                       </h3>
                       
-                      <div className="space-y-4">
+                      <div className="space-y-4 text-justify">
                         <p className="text-gray-400 leading-relaxed text-base">
                           {reason.description1}
                         </p>
