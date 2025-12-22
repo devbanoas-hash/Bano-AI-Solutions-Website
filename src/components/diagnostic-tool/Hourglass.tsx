@@ -30,12 +30,12 @@ const Hourglass: React.FC = () => {
       </div>
 
       {/* Glow Effect */}
-      <div className="absolute inset-0 bg-emerald-500/20 blur-2xl rounded-full animate-pulse-glow"></div>
+      <div className="absolute inset-0 bg-green-500/20 blur-2xl rounded-full animate-pulse-glow"></div>
       
       {/* Particles around hourglass */}
       <div className="absolute w-full h-full animate-spin-slow">
         <div className="absolute top-0 left-1/2 w-1 h-1 bg-lime-400 rounded-full blur-[1px]"></div>
-        <div className="absolute bottom-0 left-1/2 w-1 h-1 bg-emerald-400 rounded-full blur-[1px]"></div>
+        <div className="absolute bottom-0 left-1/2 w-1 h-1 bg-green-400 rounded-full blur-[1px]"></div>
       </div>
     </div>
   );

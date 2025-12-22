@@ -72,13 +72,13 @@ export default function CaseStudiesPage() {
   }, [])
 
   return (
-    <div className="relative">
+    <div className="relative bg-black">
 
       {/* SECTION 1 — Hero */}
       <section className="min-h-[70vh] flex items-center justify-center pt-20 sm:pt-24 relative overflow-hidden">
         <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(heroBg, 0.5)} />
-        <div className="hero-gradient absolute inset-0" />
-        <div className="grid-pattern absolute inset-0 opacity-30" />
+        {/* <div className="hero-gradient absolute inset-0" />
+        <div className="grid-pattern absolute inset-0 opacity-30" /> */}
         {/* Animated background elements */}
         <div className="absolute inset-0 grid-pattern opacity-20" />
         <motion.div
@@ -150,7 +150,7 @@ export default function CaseStudiesPage() {
             </motion.span>
           </motion.h1>
 
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.9, duration: 0.6 }}
@@ -171,7 +171,7 @@ export default function CaseStudiesPage() {
                 }}
               />
             ))}
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* Scroll Indicator */}
@@ -436,9 +436,7 @@ export default function CaseStudiesPage() {
                         stiffness: 100,
                       }}
                       className="glass rounded-xl cursor-pointer p-6 flex items-center gap-4 group relative overflow-hidden border-2 border-transparent hover:border-bano-green/50 transition-all"
-                      whileHover={{
-                        scale: 1.02,
-                        x: 10,
+                      whileHover={{                      
                         boxShadow: "0 20px 40px rgba(34, 197, 94, 0.1)",
                       }}
                     >

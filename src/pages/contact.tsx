@@ -204,7 +204,7 @@ export default function ContactPage() {
                     <span className="text-gradient">Đăng ký tư vấn</span>
                   </motion.h3>
                   <motion.p
-                    className="text-muted-foreground text-sm mb-6 relative z-10"
+                    className="text-muted-foreground text-sm mb-3 relative z-10"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}

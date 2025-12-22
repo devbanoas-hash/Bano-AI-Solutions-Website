@@ -1,731 +1,224 @@
-"use client"
+import { useState, useEffect } from 'react';
+import Hero from './diagnostic-tool/Hero';
+import IndustrySelector from './diagnostic-tool/IndustrySelector';
+import PainPoints from './diagnostic-tool/PainPoints';
+import LeadForm from './diagnostic-tool/LeadForm';
+import Roadmap from './diagnostic-tool/Roadmap';
+import type { UserState, IndustryData } from './diagnostic-tool/types';
+import { industries } from '../constants/diagnostic.constant';
 
-import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { ScrollReveal } from "./scroll-reveal"
-import { Button } from "./button"
-import {
-  ChevronDown,
-  Sparkles,
-  ArrowRight,
-  Zap,
-  Check,
-  Shield,
-  // Shield,
-  // Dot
-} from "lucide-react"
-import { api } from "../configs/axios"
-import { industries } from "../constants/diagnostic.constant"
+const DiagnosticTool = () => {
+    const [userState, setUserState] = useState<UserState>({
+        step: 0,
+        selectedIndustryId: null,
+        confirmedPainPoints: [],
+        phoneNumber: '',
+        companyName: '',
+        companySize: '',
+    });
 
-interface RoadmapPhase {
-  title: string,
-  items: Array<{
-    action: string,
-    result: string
-  }>
-}
+    const [isExpanded, setIsExpanded] = useState(false);
+    const [showContent, setShowContent] = useState(false);
+    const [isHovered, setIsHovered] = useState(false); 
+    const [isStarting, setIsStarting] = useState(false);
 
-interface RoadmapData {
-  output: {
-    industry: string,
-    roadmap: {
-      phase_1: RoadmapPhase,
-      phase_2: RoadmapPhase,
-      phase_3: RoadmapPhase
-    }
-  }
-}
+    // Sync expansion state with step
+    useEffect(() => {
+        if (userState.step > 0) {
+            setIsExpanded(true);
+            setTimeout(() => setShowContent(true), 400); 
+        }
+        else {
+            setShowContent(false);
+            setTimeout(() => setIsExpanded(false), 200);
+        }
+    }, [userState.step]);
 
-// Loading steps with descriptions
-const loadingSteps = [
-  { text: "Đang phân tích ngành nghề của bạn...", progress: 20 },
-  { text: "Xử lý các điểm đau và thách thức...", progress: 40 },
-  { text: "AI đang tạo lộ trình tối ưu...", progress: 60 },
-  { text: "Tối ưu hóa chiến lược 3 giai đoạn...", progress: 80 },
-  { text: "Hoàn tất! Đang chuẩn bị kết quả...", progress: 100 },
-]
+    const getIndustryData = (id: string | null): IndustryData | undefined => {
+        return industries.find(ind => ind.id === id);
+    };
 
-function LoadingAnimation() {
-  const [currentStep, setCurrentStep] = useState(0)
-  const [progress, setProgress] = useState(0)
+    const currentIndustry = getIndustryData(userState.selectedIndustryId);
 
-  useEffect(() => {
-    const totalDuration = 4000 // 4 seconds total
-    const stepDuration = totalDuration / loadingSteps.length
+    // Handlers
+    const handleStart = () => {
+        setIsStarting(true);
+        setTimeout(() => {
+            setUserState((prev: UserState) => ({ ...prev, step: 1 }));
+            setIsStarting(false);
+        }, 300);
+    };
     
-    const interval = setInterval(() => {
-      setCurrentStep((prev) => {
-        const next = prev + 1
-        if (next >= loadingSteps.length) {
-          clearInterval(interval)
-          return prev
+    const handleIndustrySelect = (id: string, companyName: string, companySize: string) => setUserState((prev: UserState) => ({ ...prev, selectedIndustryId: id, companyName: companyName, companySize: companySize, step: 2 }));
+    const handleBackToIndustries = () => setUserState((prev: UserState) => ({ ...prev, selectedIndustryId: null, step: 1 }));
+    const handlePainPointConfirm = (points: string[]) => setUserState((prev: UserState) => ({ ...prev, confirmedPainPoints: points, step: 3 }));
+    const handleLeadSubmit = (phone: string) => setUserState((prev: UserState) => ({ ...prev, phoneNumber: phone, step: 4 }));
+    
+    const handleReset = () => {
+        setUserState({
+            step: 0,
+            selectedIndustryId: null,
+            confirmedPainPoints: [],
+            phoneNumber: '',
+            companyName: '',
+            companySize: '',
+        });
+    };
+
+    // Logic to determine Modal Size based on Step
+    const getModalDimensions = () => {
+        if (!isExpanded) {
+            // Button State - Slightly rounded square, White Glow, Standout
+            // Updated: Smaller size (200x56), Pure White Border, intense multi-layer glow
+            return 'w-[200px] h-[56px] rounded-full hover:scale-105 cursor-pointer shadow-[0_0_20px_rgba(16,185,129,0.5),0_0_40px_rgba(16,185,129,0.3)] border-2 border-white hover:shadow-[0_0_30px_rgba(255,255,255,0.6),0_0_60px_rgba(16,185,129,0.8)] translate-y-[20vh]';
         }
-        return next
-      })
-    }, stepDuration)
-
-    // Progress animation
-    const progressInterval = setInterval(() => {
-      setProgress((prev) => {
-        if (prev >= 100) {
-          clearInterval(progressInterval)
-          return 100
-        }
-        return prev + 2
-      })
-    }, totalDuration / 50)
-
-    return () => {
-      clearInterval(interval)
-      clearInterval(progressInterval)
-    }
-  }, [])
-
-  const currentStepData = loadingSteps[Math.min(currentStep, loadingSteps.length - 1)]
-  const displayProgress = Math.min(progress, currentStepData.progress)
-
-  return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      className="max-w-2xl mx-auto"
-    >
-      <div className="glass rounded-3xl p-8 sm:p-12 md:p-16 relative overflow-hidden">
-        {/* Animated background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-bano-green/10 via-bano-green/5 to-transparent opacity-50" />
-        <motion.div
-          animate={{
-            background: [
-              "radial-gradient(circle at 20% 50%, rgba(49, 180, 80, 0.2) 0%, transparent 50%)",
-              "radial-gradient(circle at 80% 50%, rgba(49, 180, 80, 0.2) 0%, transparent 50%)",
-              "radial-gradient(circle at 50% 80%, rgba(49, 180, 80, 0.2) 0%, transparent 50%)",
-              "radial-gradient(circle at 20% 50%, rgba(49, 180, 80, 0.2) 0%, transparent 50%)",
-            ],
-          }}
-          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0"
-        />
-
-        <div className="relative z-10">
-          {/* Icon with pulse animation */}
-          <div className="flex justify-center mb-8">
-            <motion.div
-              animate={{
-                scale: [1, 1.1, 1],
-                rotate: [0, 5, -5, 0],
-              }}
-              transition={{
-                scale: { duration: 2, repeat: Infinity },
-                rotate: { duration: 3, repeat: Infinity },
-              }}
-              className="relative"
-            >
-              <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-bano-green to-bano-green-dark flex items-center justify-center shadow-lg shadow-bano-green/30">
-                <Sparkles className="w-10 h-10 text-white" />
-              </div>
-              {/* Pulsing rings */}
-              {[...Array(3)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ scale: 0.8, opacity: 0.6 }}
-                  animate={{
-                    scale: [0.8, 1.5, 1.5],
-                    opacity: [0.6, 0, 0],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    delay: i * 0.3,
-                  }}
-                  className="absolute inset-0 rounded-2xl border-2 border-bano-green/30"
-                />
-              ))}
-            </motion.div>
-          </div>
-
-          {/* Title */}
-          <motion.h3
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-2xl md:text-3xl font-bold text-center mb-4"
-          >
-            AI đang phân tích và tạo lộ trình cho bạn
-          </motion.h3>
-
-          {/* Current step text */}
-          <AnimatePresence mode="wait">
-            <motion.p
-              key={currentStep}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.3 }}
-              className="text-center text-muted-foreground mb-8 text-lg"
-            >
-              {currentStepData.text}
-            </motion.p>
-          </AnimatePresence>
-
-          {/* Progress bar */}
-          <div className="mb-6">
-            <div className="h-3 bg-muted rounded-full overflow-hidden relative">
-              <motion.div
-                initial={{ width: 0 }}
-                animate={{ width: `${displayProgress}%` }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
-                className="h-full bg-gradient-to-r from-bano-green via-bano-green-dark to-bano-green rounded-full relative overflow-hidden"
-              >
-                {/* Shimmer effect */}
-                <motion.div
-                  animate={{
-                    x: ["-100%", "200%"],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
-                />
-              </motion.div>
-            </div>
-            <div className="flex justify-between items-center mt-2">
-              <span className="text-xs text-muted-foreground">Đang xử lý...</span>
-              <motion.span
-                key={displayProgress}
-                initial={{ scale: 1.2 }}
-                animate={{ scale: 1 }}
-                className="text-sm font-bold text-bano-green"
-              >
-                {Math.round(displayProgress)}%
-              </motion.span>
-            </div>
-          </div>
-
-          {/* Loading steps indicator */}
-          <div className="flex justify-center gap-2 mt-8">
-            {loadingSteps.map((_, index) => (
-              <motion.div
-                key={index}
-                initial={{ scale: 0.8, opacity: 0.3 }}
-                animate={{
-                  scale: index <= currentStep ? 1 : 0.8,
-                  opacity: index <= currentStep ? 1 : 0.3,
-                }}
-                transition={{ duration: 0.3 }}
-                className={`w-2 h-2 rounded-full ${
-                  index <= currentStep ? "bg-bano-green" : "bg-muted"
-                }`}
-              />
-            ))}
-          </div>
-
-          {/* Floating particles */}
-          {[...Array(6)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{
-                x: Math.random() * 400 - 200,
-                y: Math.random() * 200 - 100,
-                opacity: 0,
-              }}
-              animate={{
-                y: [null, Math.random() * -100 - 50],
-                opacity: [0, 0.6, 0],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: i * 0.5,
-              }}
-              className="absolute w-1 h-1 bg-bano-green rounded-full"
-              style={{
-                left: `${20 + i * 15}%`,
-                top: `${30 + (i % 3) * 20}%`,
-              }}
-            />
-          ))}
-        </div>
-      </div>
-    </motion.div>
-  )
-}
-
-export function DiagnosticTool() {
-  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null)
-  const [selectedPainPoints, setSelectedPainPoints] = useState<string[]>([])
-  const [isOtherSelected, setIsOtherSelected] = useState(false)
-  const [otherPainPoint, setOtherPainPoint] = useState("")
-  const [phone, setPhone] = useState("")
-  const [isIndustryOpen, setIsIndustryOpen] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-
-  const currentIndustry = industries.find((i) => i.id === selectedIndustry)
-  const [roadmapData, setRoadmapData] = useState<RoadmapData | null>(null)
-
-  const handlePainPointToggle = (painPoint: string) => {
-    if (selectedPainPoints.includes(painPoint)) {
-      setSelectedPainPoints(selectedPainPoints.filter((p) => p !== painPoint))
-    } else {
-      setSelectedPainPoints([...selectedPainPoints, painPoint])
-    }
-  }
-
-  const handleOtherToggle = () => {
-    setIsOtherSelected(!isOtherSelected)
-    if (isOtherSelected) {
-      setOtherPainPoint("")
-    }
-  }
-
-  const handleSubmit = async () => {
-    const hasPainPoints = selectedPainPoints.length > 0 || (isOtherSelected && otherPainPoint.trim())
-    if (selectedIndustry && hasPainPoints && phone) {
-      setIsLoading(true)
-      
-      // Create dummy JSON data
-      const submissionData = {
-        timestamp: new Date().toISOString(),
-        industry: {
-          id: selectedIndustry,
-          name: currentIndustry?.name || null
-        },
-        painPoints: {
-          selected: selectedPainPoints,
-          other: isOtherSelected && otherPainPoint.trim() ? otherPainPoint.trim() : null,
-          totalCount: selectedPainPoints.length + (isOtherSelected && otherPainPoint.trim() ? 1 : 0)
-        },
-        contact: {
-          phone: phone
-        },
-        metadata: {
-          submittedAt: new Date().toLocaleString("vi-VN"),
-          userAgent: typeof window !== "undefined" ? window.navigator.userAgent : null
-        }
-      }
-
-      try {
-        // Minimum loading time to show beautiful animation (4 seconds)
-        const [response] = await Promise.all([
-          api.post('/', submissionData),
-          new Promise(resolve => setTimeout(resolve, 4000))
-        ])
         
-        const { data } = response
-        // Handle different possible response structures
-        if (data?.output) {
-          setRoadmapData(data)
-          setIsSubmitted(true)
-        } else if (data) {
-          // If response already has the structure we need
-          setRoadmapData({ output: data } as RoadmapData)
-          setIsSubmitted(true)
-        } else {
-          console.error('Invalid response structure:', data)
-          // Don't set isSubmitted if response is invalid
+        if (userState.step === 4) {
+            // Roadmap State
+            return 'w-[90vw] max-w-[1600px] rounded-3xl border-green-400/30';
         }
-      } catch (error) {
-        console.error('Error submitting form:', error)
-        // Don't set isSubmitted on error
-      } finally {
-        setIsLoading(false)
-      }
-    }
-  }
 
-  const handleReset = () => {
-    setIsSubmitted(false)
-    setSelectedIndustry(null)
-    setSelectedPainPoints([])
-    setIsOtherSelected(false)
-    setOtherPainPoint("")
-    setPhone("")
-  }
+        // Standard State (Selector, Form, etc.)
+        return 'w-[95%] max-w-2xl h-[85vh] max-h-[700px] rounded-3xl border border-bano-green shadow-[0_0_40px_rgba(49,180,80,0.3)] shadow-bano-green';
+    };
 
-  return (
-    <section className="py-16 sm:py-24 md:py-32 relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/30 to-background" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(49,180,80,0.15)_0%,_transparent_70%)]" />
+    return (
+        <div className="relative py-28 md:py-32 min-h-screen w-full overflow-visible selection:bg-bano-green selection:text-white">        
+            {/* 1. Background Layer */}
+            <Hero isExpanded={isExpanded} isHovered={isHovered} />
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <ScrollReveal>
-          <div className="text-center mb-16">
-            <motion.span
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-bano-green/10 border border-bano-green/30 text-bano-green text-sm font-semibold uppercase tracking-wider mb-6 shimmer-effect"
-            >
-              <Zap className="w-4 h-4" />
-              Công cụ chẩn đoán AI miễn phí
-              <Zap className="w-4 h-4" />
-            </motion.span>
-            <h2 className="text-3xl font-bold mb-6">
-              Khám phá tiềm năng AI cho <span className="text-gradient">doanh nghiệp bạn</span>
-            </h2>
-            <p className="text-muted-foreground text-base max-w-2xl mx-auto">
-              Chọn ngành nghề và nỗi đau của bạn, chúng tôi sẽ gợi ý lộ trình AI phù hợp nhất
-            </p>
-          </div>
-        </ScrollReveal>
-
-        <div className="mx-auto overflow-visible">
-          <AnimatePresence mode="wait">
-            {isLoading ? (
-              <LoadingAnimation />
-            ) : !isSubmitted ? (
-              <motion.div
-                key="form"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.5 }}
-                className="relative overflow-visible"
-              >
-                <div className="animated-border max-w-6xl mx-auto rounded-3xl float-effect overflow-visible">
-                  <div className="glass rounded-3xl p-6 sm:p-8 md:p-10 space-y-6 relative overflow-visible z-[2]">
-                    <div className="relative text-center pb-4 border-b border-bano-green/20">
-                      <motion.div
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY }}
-                        className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-bano-green to-bano-green-dark mb-4 shadow-lg shadow-bano-green/30"
-                      >
-                        <Sparkles className="w-8 h-8 text-white" />
-                      </motion.div>
-                      <h3 className="text-xl font-bold text-foreground">Bắt đầu chẩn đoán ngay</h3>
-                      <p className="text-sm text-muted-foreground mt-1">Hoàn toàn miễn phí, không ràng buộc</p>
+            {/* 2. Main Interaction Layer */}
+            <div className="relative z-10 flex items-center justify-center min-h-screen pointer-events-none">
+                
+                {/* NEW EXTERNAL CURSOR - Only visible when NOT expanded */}
+                {!isExpanded && (
+                    // Adjusted position: closer to button (-translate-x-[135px])
+                    <div className="absolute z-[60] top-1/2 left-1/2 -translate-x-[135px] translate-y-[20vh] pointer-events-none transition-all duration-500 ease-out opacity-100">
+                        {/* Adjusted Animation: cursor-click instead of float */}
+                        <div className="animate-cursor-click">
+                            {/* Modern Glow Cursor - Pointing towards the button (Right) */}
+                            <div className="relative transform rotate-[100deg]">                             
+                                {/* Outer Glow Layer */}
+                                <div className="absolute inset-0 bg-green-400 blur-[15px] opacity-40 rounded-full"></div>
+                                
+                                {/* Main Cursor Shape */}
+                                <svg width="42" height="42" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg" 
+                                    className="drop-shadow-[0_0_10px_rgba(16,185,129,0.8)] filter">
+                                    {/* Aerodynamic Arrow Shape */}
+                                    <path d="M4 4L38 18L22 22L18 38L4 4Z" fill="white" />
+                                </svg>
+                            </div>
+                        </div>
                     </div>
+                )}
 
-                    {/* Industry Selector */}
-                    <div className="space-y-2 relative overflow-visible">
-                      <label className="text-md font-medium text-muted-foreground flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-bano-green/20 flex items-center justify-center text-xs text-bano-green font-bold">
-                          1
+                {/* The Morphing Card/Button */}
+                <div 
+                    className={`
+                        relative overflow-hidden pointer-events-auto flex flex-col transition-all duration-700 ease-morph
+                        ${getModalDimensions()}
+                        ${!isExpanded ? 'bg-gradient-to-r from-green-500 to-green-400 backdrop-blur-xl' : ''} 
+                        ${isStarting ? 'scale-90 brightness-150' : ''}
+                    `}
+                    onClick={() => !isExpanded && handleStart()}
+                    onMouseEnter={() => !isExpanded && setIsHovered(true)}
+                    onMouseLeave={() => setIsHovered(false)}
+                >
+                    {/* Click Flash Effect */}
+                    <div className={`absolute inset-0 bg-white transition-opacity duration-300 pointer-events-none ${isStarting ? 'opacity-50' : 'opacity-0'}`}></div>
+
+                    {/* Button Specific Styling (Glows/Sheen) */}
+                    {!isExpanded && (
+                        <>
+                            {/* Stronger Internal Glow */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-white/40 to-green-500 opacity-100"></div>
+                            {/* Moving Glint */}
+                            <div className="absolute top-0 -left-[100%] w-[50%] h-full bg-gradient-to-r from-transparent via-white/70 to-transparent transform skew-x-12 animate-shine group-hover:animate-none"></div>
+                        </>
+                    )}
+                    
+                    {/* STATE 0: The "Create Roadmap" Button Content */}
+                    <div className={`
+                        absolute inset-0 flex items-center justify-center gap-3 transition-all duration-300
+                        ${isExpanded ? 'opacity-0 scale-75 pointer-events-none' : 'opacity-100 scale-100'}
+                    `}>
+                        <span className="text-lg font-bold tracking-widest text-white uppercase drop-shadow-[0_2px_2px_rgba(0,0,0,0.2)]">
+                            Tạo lộ trình
                         </span>
-                        Ngành nghề của bạn
-                      </label>
-                      <div className="relative z-[50]">
-                        <motion.button
-                          onClick={() => setIsIndustryOpen(!isIndustryOpen)}
-                          whileTap={{ scale: 0.99 }}
-                          whileHover={{ borderColor: "rgba(49, 180, 80, 0.5)" }}
-                          className="w-full p-3 rounded-xl bg-muted/80 border-2 border-border text-left flex items-center justify-between transition-all hover:bg-muted"
-                        >
-                          {currentIndustry ? (
-                            <span className="flex items-center text-sm gap-3">
-                              <currentIndustry.icon className="w-5 h-5 text-bano-green" />
-                              {currentIndustry.name}
-                            </span>
-                          ) : (
-                            <span className="text-muted-foreground">Chọn ngành nghề</span>
-                          )}
-                          <ChevronDown
-                            className={`w-5 h-5 transition-transform ${isIndustryOpen ? "rotate-180" : ""}`}
-                          />
-                        </motion.button>
-
-                        <AnimatePresence>
-                          {isIndustryOpen && (
-                            <motion.div
-                              initial={{ opacity: 0, y: -10, scale: 0.95 }}
-                              animate={{ opacity: 1, y: 0, scale: 1 }}
-                              exit={{ opacity: 0, y: -10, scale: 0.95 }}
-                              className="absolute top-full left-0 right-0 mt-2 bg-muted border-2 border-bano-green/30 rounded-xl overflow-hidden z-[9999] shadow-2xl shadow-bano-green/10"
-                            >
-                              {industries.map((industry, index) => (
-                                <motion.button
-                                  key={industry.id}
-                                  initial={{ opacity: 0, x: -10 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: index * 0.05 }}
-                                  whileHover={{ backgroundColor: "rgba(49, 180, 80, 0.15)" }}
-                                  onClick={() => {
-                                    setSelectedIndustry(industry.id)
-                                    setSelectedPainPoints([])
-                                    setIsOtherSelected(false)
-                                    setOtherPainPoint("")
-                                    setIsIndustryOpen(false)
-                                  }}
-                                  className="w-full cursor-pointer px-5 py-3 text-left flex items-center gap-3 transition-colors border-b border-border/50"
-                                >
-                                  <industry.icon className="w-5 h-5 text-bano-green" />
-                                  {industry.name}
-                                </motion.button>
-                              ))}
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
+                        {/* REMOVED INTERNAL MOUSE POINTER */}
                     </div>
 
-                    {/* Pain Point Checkboxes */}
-                    <AnimatePresence>
-                      {selectedIndustry && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="space-y-3 relative"
-                        >
-                          <label className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                            <span className="w-6 h-6 rounded-full bg-bano-green/20 flex items-center justify-center text-xs text-bano-green font-bold">
-                              2
-                            </span>
-                            Nỗi đau lớn nhất
-                          </label>
-                          <div className="space-y-2 pr-2">
-                            {currentIndustry?.painPoints.map((painPoint, index) => (
-                              <motion.label
-                                key={painPoint}
-                                initial={{ opacity: 0, x: -10 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: index * 0.05 }}
-                                className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border border-border/50 hover:bg-muted/80 hover:border-bano-green/30 cursor-pointer transition-all group"
-                              >
-                                <div className="relative flex items-center justify-center mt-0.5">
-                                  <input
-                                    type="checkbox"
-                                    checked={selectedPainPoints.includes(painPoint)}
-                                    onChange={() => handlePainPointToggle(painPoint)}
-                                    className="sr-only"
-                                  />
-                                  <div
-                                    className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                                      selectedPainPoints.includes(painPoint)
-                                        ? "bg-bano-green border-bano-green"
-                                        : "border-border group-hover:border-bano-green/50"
-                                    }`}
-                                  >
-                                    {selectedPainPoints.includes(painPoint) && (
-                                      <Check className="w-3.5 h-3.5 text-white" />
-                                    )}
-                                  </div>
-                                </div>
-                                <span className="text-sm text-foreground flex-1">{painPoint}</span>
-                              </motion.label>
-                            ))}
-                            {/* Other option */}
-                            <motion.label
-                              initial={{ opacity: 0, x: -10 }}
-                              animate={{ opacity: 1, x: 0 }}
-                              transition={{ delay: (currentIndustry?.painPoints.length || 0) * 0.05 }}
-                              className="flex items-start gap-3 p-3 rounded-lg bg-muted/50 border border-border/50 hover:bg-muted/80 hover:border-bano-green/30 cursor-pointer transition-all group"
-                            >
-                              <div className="relative flex items-center justify-center mt-0.5">
-                                <input
-                                  type="checkbox"
-                                  checked={isOtherSelected}
-                                  onChange={handleOtherToggle}
-                                  className="sr-only"
+                    {/* STATE 1+: The Application Content */}
+                    <div className={`
+                        flex-1 flex flex-col min-h-0 w-full p-6 md:p-8 transition-opacity duration-500 delay-100
+                        ${showContent ? 'opacity-100 visible' : 'opacity-0 invisible'}
+                    `}>
+                        {/* Progress Bar */}
+                        {userState.step > 0 && userState.step < 4 && (
+                            <div className="flex justify-center gap-2 mb-6 shrink-0">
+                            {[1, 2, 3].map((s) => (
+                                <div 
+                                key={s} 
+                                className={`h-1 rounded-full transition-all duration-500 ${
+                                    userState.step >= s ? 'w-8 bg-green-400 shadow-[0_0_10px_#34d399]' : 'w-2 bg-slate-800'
+                                }`}
                                 />
-                                <div
-                                  className={`w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                                    isOtherSelected
-                                      ? "bg-bano-green border-bano-green"
-                                      : "border-border group-hover:border-bano-green/50"
-                                  }`}
-                                >
-                                  {isOtherSelected && <Check className="w-3.5 h-3.5 text-white" />}
-                                </div>
-                              </div>
-                              <span className="text-sm text-foreground flex-1">Khác</span>
-                            </motion.label>
-                            {/* Other input */}
-                            <AnimatePresence>
-                              {isOtherSelected && (
-                                <motion.div
-                                  initial={{ opacity: 0, height: 0 }}
-                                  animate={{ opacity: 1, height: "auto" }}
-                                  exit={{ opacity: 0, height: 0 }}
-                                >
-                                  <textarea
-                                    value={otherPainPoint}
-                                    onChange={(e) => setOtherPainPoint(e.target.value)}
-                                    placeholder="Mô tả nỗi đau của bạn..."
-                                    className="w-full p-3 rounded-lg bg-muted/80 border-1 border-border focus:border-bano-green focus:outline-none focus:ring-1 focus:ring-bano-green/20 transition-all text-sm"
-                                  />
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    {/* Phone Input */}
-                    <AnimatePresence>
-                      {(selectedPainPoints.length > 0 || (isOtherSelected && otherPainPoint.trim())) && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          className="space-y-2 relative"
-                        >
-                          <label className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                            <span className="w-6 h-6 rounded-full bg-bano-green/20 flex items-center justify-center text-xs text-bano-green font-bold">
-                              3
-                            </span>
-                            Số điện thoại liên hệ
-                          </label>
-                          <input
-                            type="tel"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                            placeholder="0912 345 678"
-                            className="w-full p-3 rounded-xl bg-muted/80 border-1 border-border focus:border-bano-green focus:outline-none focus:ring-1 focus:ring-bano-green/20 transition-all"
-                          />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-
-                    {/* Submit Button */}
-                    <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                      <Button
-                        variant="primary"
-                        size="sm"
-                        className="w-full cursor-pointer text-md py-3 shadow-lg shadow-bano-green/30"
-                        onClick={handleSubmit}
-                        disabled={
-                          !selectedIndustry ||
-                          (selectedPainPoints.length === 0 && (!isOtherSelected || !otherPainPoint.trim())) ||
-                          !phone
-                        }
-                      >
-                        <Sparkles className="w-5 h-5" />
-                        Tạo lộ trình AI miễn phí
-                        <ArrowRight className="w-5 h-5" />
-                      </Button>
-                    </motion.div>
-
-                    <p className="text-center text-xs text-muted-foreground pt-2">
-                      Thông tin của bạn được bảo mật tuyệt đối
-                    </p>
-                  </div>
-                </div>
-              </motion.div>
-            ) : roadmapData?.output?.roadmap ? (
-              <motion.div
-                key="roadmap"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="max-w-6xl mx-auto"
-              >
-                {/* Header */}
-                <div className="text-center mb-8">
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.1 }}
-                    className="text-sm text-bano-water/80 mb-2"
-                  >
-                    KẾT QUẢ PHÂN TÍCH
-                  </motion.p>
-                  <motion.h2
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-3xl md:text-4xl font-bold mb-2"
-                  >
-                    Lộ trình Chuyển đổi số:{" "}
-                    <span className="text-gradient">
-                      {roadmapData?.output?.industry || currentIndustry?.name || "Doanh nghiệp của bạn"}
-                    </span>
-                  </motion.h2>
-                  <motion.p
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.3 }}
-                    className="text-sm text-muted-foreground max-w-2xl mx-auto"
-                  >
-                    Dựa trên những vấn đề bạn gặp phải, đây là chiến lược 3 bước tối ưu để tăng trưởng doanh thu bền vững.
-                  </motion.p>
-                </div>
-
-                {/* Main Content Grid */}
-                <div className="grid lg:grid-cols-4 gap-6 mb-8">
-                  {/* Left Section - Roadmap Phases */}
-                  <div className="lg:col-span-3 space-y-6">
-                    {roadmapData?.output?.roadmap && Object.entries(roadmapData.output.roadmap).map(([phaseKey, phase], index) => (
-                      <motion.div
-                        key={phaseKey}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.4 + index * 0.1 }}
-                        className="relative flex gap-4 items-start"
-                      >
-                        {/* Number Circle - Outside the card */}
-                        <div className="flex-shrink-0 relative z-10 mt-6">
-                          <div className="w-16 h-16 rounded-full bg-bano-green/20 border-2 border-bano-green flex items-center justify-center">
-                            <span className="text-bano-green font-bold text-2xl">{String(index + 1).padStart(2, '0')}</span>
-                          </div>
-                          {/* Connecting line to next phase */}
-                          {index < 3 && (
-                            <div className="absolute left-1/2 top-16 -translate-x-1/2 w-0.5 h-28 bg-gradient-to-b from-bano-green/30 via-bano-green/20 to-transparent" />
-                          )}
-                        </div>
-                        
-                        {/* Phase Card */}
-                        <div className="flex-1 glass rounded-xl p-6 border border-border/50">
-                          <div className="space-y-2">
-                            {/* <h4 className="text-xs font-semibold text-muted-foreground uppercase mb-1">
-                              {phase.title}
-                            </h4> */}
-                            <h3 className="text-xl font-bold mb-2">{phase.title.split(":")[1].trim()}</h3>
-                            {phase.items.map((item, itemIndex) => (
-                              <div key={itemIndex} className="space-y-2">
-                                {/* Action */}
-                                <div className="flex gap-2">
-                                  <span className="text-md text-muted-foreground">•</span>
-                                  <p className="text-md text-muted-foreground">{item.action}</p>
-                                </div>
-                                {/* Result */}
-                                <div className="flex items-start gap-2 text-md text-bano-green pl-3">
-                                  <Shield className="w-4 h-4" />
-                                  <span>{item.result}</span>
-                                </div>
-                              </div>
                             ))}
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
+                            </div>
+                        )}
 
-                  {/* Right Section - Deployment Proposal */}
-                  <motion.div
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.7 }}
-                    className="lg:col-span-1"
-                  >
-                    <div className="rounded-xl p-6 flex flex-col">
-                      {/* Action Buttons */}
-                      <div className="space-y-3">
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          className="w-full justify-center cursor-pointer"
-                        >
-                          Liên hệ với chúng tôi
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="w-full justify-center cursor-pointer"
-                          onClick={handleReset}
-                        >
-                          Tạo lộ trình mới
-                        </Button>
-                      </div>
+                        {/* Content Switching */}
+                        <div className="flex-1 min-h-0 relative">
+                            {userState.step === 1 && (
+                                <IndustrySelector onSelect={handleIndustrySelect} />
+                            )}
+                            
+                            {userState.step === 2 && currentIndustry && (
+                                <PainPoints
+                                    industry={currentIndustry}
+                                    onConfirm={handlePainPointConfirm}
+                                    onBack={handleBackToIndustries}
+                                />
+                            )}
+
+                            {userState.step === 3 && (
+                                <div className="h-full flex items-center justify-center">
+                                    <LeadForm onSubmit={handleLeadSubmit} isSubmitting={false} />
+                                </div>
+                            )}
+
+                            {userState.step === 4 && currentIndustry && (
+                                <Roadmap 
+                                    industry={currentIndustry}
+                                    userState={userState} 
+                                    onReset={handleReset} 
+                                />
+                            )}
+                        </div>
                     </div>
-                  </motion.div>
                 </div>
-              </motion.div>
-            ) : null}
-          </AnimatePresence>
+            </div>
+            
+            <style>{`
+                @keyframes shine {
+                    0% { left: -100%; }
+                    20% { left: 200%; }
+                    100% { left: 200%; }
+                }
+                .animate-shine {
+                    animation: shine 4s infinite linear;
+                }
+                
+                @keyframes cursor-click {
+                    0%, 100% { transform: translate(0, 0); }
+                    50% { transform: translate(8px, 2px); } /* Slight diagonal push towards the button */
+                }
+                .animate-cursor-click {
+                    animation: cursor-click 1.2s ease-in-out infinite;
+                }
+            `}</style>
         </div>
-      </div>
-    </section>
-  )
+    );
 }
+ 
+export default DiagnosticTool;

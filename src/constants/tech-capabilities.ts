@@ -4,7 +4,7 @@ export const capabilities = [
   {
     icon: Brain,
     image: "1.jpeg",
-    title: "🧠 Khai thác Trí tuệ Dữ liệu",
+    title: "Khai thác Trí tuệ Dữ liệu",
     tag: "AI Core",
     description: [
       "Xây dựng và tinh chỉnh các Mô hình Học Sâu (Deep Learning) tùy chỉnh theo bài toán.", 
@@ -15,7 +15,7 @@ export const capabilities = [
   {
     icon: Eye,
     image: "2.jpeg",
-    title: "🗣️ Máy móc Hiểu và Tương tác",
+    title: "Máy móc Hiểu và Tương tác",
     tag: "Perception",
     description: [
       "Xử lý Ngôn ngữ Tự nhiên (NLP): Phân tích cảm xúc, tóm tắt và tự động tạo nội dung báo cáo.", 
@@ -26,7 +26,7 @@ export const capabilities = [
   {
     icon: MessageSquare,
     image: "3.jpeg",
-    title: "⚙️ Tự động hóa Quy trình Bền vững",
+    title: "Tự động hóa Quy trình Bền vững",
     tag: "MLOps",
     description: [
       "Triển khai Tự động hoá kết hợp AI để tự động hóa các tác vụ lặp và ra quyết định phi cấu trúc.", 
@@ -37,7 +37,7 @@ export const capabilities = [
   {
     icon: Cog,
     image: "4.jpeg",
-    title: "🎯 Chiến lược Chuyển đổi Số Tối ưu",
+    title: "Chiến lược Chuyển đổi Số Tối ưu",
     tag: "Strategy",
     description: [
       "Chẩn đoán Chiến lược AI: Xác định các điểm ứng dụng mang lại Lợi tức Đầu tư (ROI) cao nhất.", 

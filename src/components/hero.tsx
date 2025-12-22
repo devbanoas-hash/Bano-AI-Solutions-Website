@@ -3,7 +3,9 @@
 import { motion } from "framer-motion"
 import { Button } from "./button"
 import { ArrowRight } from "lucide-react"
-import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
+import { Link } from "wouter"
+import { scrollToTop } from "../utils/scroll-helper"
+// import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 
 export function Hero() {
   const containerVariants = {
@@ -33,13 +35,21 @@ export function Hero() {
     },
   }
 
-  const bgImage = useRandomBackground()
+  // const bgImage = useRandomBackground()
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0" style={getRandomBackgroundStyle(bgImage)} />
+      <div
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url(BeautyPlus-Image-Enhancer-1766388670001.jpg)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
       {/* Bottom opacity gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/90 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black" />
       {/* <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-bano-navy/60 to-black/80" /> */}
       {/* <div className="hero-gradient absolute inset-0" /> */}
       {/* <div className="grid-pattern absolute inset-0 opacity-30" />   */}
@@ -87,9 +97,11 @@ export function Hero() {
               transition={{ delay: 1.2, duration: 0.6 }}
               className="flex flex-col sm:flex-row gap-4"
             >
-              <Button variant="primary" size="sm" href="/services">
-                Khám phá dịch vụ
-                <ArrowRight className="w-5 h-5" />
+              <Button variant="primary" size="sm">
+                <Link onClick={scrollToTop} href="/services" className="flex items-center gap-2">
+                  Khám phá dịch vụ
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
               </Button>
             </motion.div>
           </div>
@@ -98,14 +110,27 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.6 }}
-            className="flex items-center gap-2 text-xl"
+            className="flex items-center gap-5 text-xl"
           >
             <motion.span>
               Được tin cậy bởi tập đoàn hàng đầu Việt Nam
             </motion.span>
             <motion.span>
-              <img src="logo11.png" alt="Bano" className="w-10 h-10" />
+              <img src="LAVO-logo.png" alt="Bano" className="h-5" />
             </motion.span>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4"
+            >
+              <Button variant="primary" size="xs">
+                <Link onClick={scrollToTop} href="/case-studies" className="flex items-center gap-2">
+                  Xem chi tiết
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
+              </Button>
+            </motion.div>
           </motion.div>
         </div>
 

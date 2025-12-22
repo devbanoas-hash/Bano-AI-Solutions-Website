@@ -6,175 +6,88 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { Navigation, Pagination, Autoplay } from "swiper/modules"
 import type { Swiper as SwiperType } from "swiper"
 
-// === OVERLAY ANIMATION VARIANTS ===
-const overlayVariants = {
+// === POPUP ANIMATION VARIANTS ===
+const backdropVariants = {
+  hidden: { opacity: 0 },
+  visible: { 
+    opacity: 1,
+    transition: { duration: 0.3, ease: "easeOut" as const }
+  },
+  exit: { 
+    opacity: 0,
+    transition: { duration: 0.25, ease: "easeIn" as const }
+  }
+}
+
+const popupVariants = {
   hidden: { 
     opacity: 0,
+    scale: 0.9,
+    y: 40,
   },
   visible: { 
     opacity: 1,
+    scale: 1,
+    y: 0,
     transition: { 
       duration: 0.5,
-      ease: [0.22, 1, 0.36, 1] as const
+      ease: [0.16, 1, 0.3, 1] as const, // custom spring-like ease
+      staggerChildren: 0.08,
+      delayChildren: 0.15
     }
   },
   exit: { 
-    opacity: 0, 
-    transition: { 
-      duration: 0.3,
-      ease: "easeOut" as const
-    } 
-  }
-}
-
-// Hiệu ứng cho background image - zoom và pan nhẹ
-const backgroundVariants = {
-  hidden: { 
-    scale: 1.3,
     opacity: 0,
-  },
-  visible: { 
-    scale: 1,
-    opacity: 0.25,
-    transition: { 
-      duration: 1.2,
-      ease: [0.22, 1, 0.36, 1] as const
-    }
-  },
-  exit: {
-    scale: 1.1,
-    opacity: 0,
-    transition: { duration: 0.3 }
-  }
-}
-
-// Hiệu ứng line reveal cho tag
-const tagVariants = {
-  hidden: { 
-    opacity: 0,
-    y: 20,
-    clipPath: "inset(100% 0% 0% 0%)"
-  },
-  visible: { 
-    opacity: 1,
-    y: 0,
-    clipPath: "inset(0% 0% 0% 0%)",
-    transition: { 
-      duration: 0.6,
-      delay: 0.2,
-      ease: [0.22, 1, 0.36, 1] as const
-    }
-  },
-  exit: {
-    opacity: 0,
-    y: -10,
-    transition: { duration: 0.2 }
-  }
-}
-
-// Hiệu ứng title - split text reveal
-const titleVariants = {
-  hidden: { 
-    opacity: 0,
-    y: 60,
-    rotateX: 40,
-    transformPerspective: 1000,
-  },
-  visible: { 
-    opacity: 1,
-    y: 0,
-    rotateX: 0,
-    transition: { 
-      duration: 0.8,
-      delay: 0.3,
-      ease: [0.22, 1, 0.36, 1] as const
-    }
-  },
-  exit: {
-    opacity: 0,
-    y: -30,
-    transition: { duration: 0.2 }
-  }
-}
-
-// Hiệu ứng glow line
-const glowLineVariants = {
-  hidden: { 
-    scaleX: 0,
-    opacity: 0
-  },
-  visible: { 
-    scaleX: 1,
-    opacity: 1,
-    transition: { 
-      duration: 0.8,
-      delay: 0.5,
-      ease: [0.22, 1, 0.36, 1] as const
-    }
-  },
-  exit: {
-    scaleX: 0,
-    opacity: 0,
-    transition: { duration: 0.2 }
-  }
-}
-
-// Hiệu ứng cho mỗi card description - stagger từ dưới lên
-const cardContainerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.12,
-      delayChildren: 0.6
-    }
-  },
-  exit: {
-    transition: {
-      staggerChildren: 0.05,
-      staggerDirection: -1
-    }
-  }
-}
-
-const cardVariants = {
-  hidden: { 
-    opacity: 0,
-    y: 80,
-    scale: 0.9,
-  },
-  visible: { 
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { 
-      duration: 0.7,
-      ease: [0.22, 1, 0.36, 1] as const
-    }
-  },
-  exit: {
-    opacity: 0,
-    y: 40,
     scale: 0.95,
-    transition: { duration: 0.2 }
+    y: 20,
+    transition: { 
+      duration: 0.25,
+      ease: "easeIn" as const
+    }
   }
 }
 
-// Hiệu ứng số thứ tự trong card
-const numberVariants = {
+const headerVariants = {
+  hidden: { opacity: 0, y: -20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] as const }
+  }
+}
+
+const lineVariants = {
+  hidden: { scaleX: 0, opacity: 0 },
+  visible: { 
+    scaleX: 1, 
+    opacity: 1,
+    transition: { duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] as const }
+  }
+}
+
+const itemVariants = {
   hidden: { 
-    opacity: 0,
-    scale: 0.5,
-    rotate: -180
+    opacity: 0, 
+    y: 30,
+    scale: 0.95
   },
   visible: { 
-    opacity: 1,
+    opacity: 1, 
+    y: 0,
     scale: 1,
-    rotate: 0,
     transition: { 
-      duration: 0.6,
-      delay: 0.2,
-      ease: [0.34, 1.56, 0.64, 1] as const // spring-like
+      duration: 0.5,
+      ease: [0.16, 1, 0.3, 1] as const
     }
+  }
+}
+
+const closeButtonVariants = {
+  hidden: { opacity: 0, rotate: -90 },
+  visible: { 
+    opacity: 1, 
+    rotate: 0,
+    transition: { duration: 0.4, delay: 0.3, ease: [0.16, 1, 0.3, 1] as const }
   }
 }
 
@@ -184,7 +97,6 @@ export function TechCapabilities() {
   const swiperRef = useRef<SwiperType | null>(null);
 
   const handleHoverStart = (capability: any) => {
-    // Dừng autoplay ngay khi bắt đầu hover
     if (swiperRef.current?.autoplay) {
       swiperRef.current.autoplay.stop();
     }
@@ -200,155 +112,165 @@ export function TechCapabilities() {
       clearTimeout(hoverTimerRef.current);
       hoverTimerRef.current = null;
     }
+  };
+
+  const closePopup = () => {
     setHoveredCapability(null);
-    
-    // Tiếp tục autoplay khi không hover nữa
     if (swiperRef.current?.autoplay) {
       swiperRef.current.autoplay.start();
     }
   };
 
   return (
-    <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden min-h-[800px] flex flex-col justify-center">
+    <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden min-h-[800px] flex flex-col justify-center bg-black">
       
-      {/* === FULLSCREEN OVERLAY - THIẾT KẾ MỚI === */}
+      {/* === POPUP MODAL === */}
       <AnimatePresence mode="wait">
         {hoveredCapability && (
-          <motion.div 
-            key={hoveredCapability.title}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            variants={overlayVariants}
-            className="absolute inset-0 z-40 pointer-events-none flex flex-col items-center justify-center"
-          >
-            {/* Background gradient layers */}
-            <div className="absolute inset-0 bg-black" />
-            
-            {/* Background image với hiệu ứng */}
+          <>
+            {/* Backdrop */}
             <motion.div 
-              variants={backgroundVariants}
-              className="absolute inset-0"
+              key="backdrop"
+              variants={backdropVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              onClick={closePopup}
+              className="fixed inset-0 z-50 bg-black/80 backdrop-blur-md cursor-pointer"
+            />
+            
+            {/* Popup Container */}
+            <motion.div
+              key={hoveredCapability.title}
+              variants={popupVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8 pointer-events-none"
             >
-              <img 
-                src={hoveredCapability.image} 
-                className="w-full h-full object-cover" 
-                alt="" 
-              />
-              {/* Overlay gradient để tạo depth */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/50" />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/50 via-transparent to-black/50" />
-            </motion.div>
-            
-            {/* Animated particles/dots background */}
-            <div className="absolute inset-0 overflow-hidden opacity-30">
-              {[...Array(20)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-1 h-1 bg-bano-green rounded-full"
-                  initial={{ 
-                    x: Math.random() * 100 + "%",
-                    y: "110%",
-                    opacity: 0
-                  }}
-                  animate={{ 
-                    y: "-10%",
-                    opacity: [0, 1, 0],
-                  }}
-                  transition={{
-                    duration: Math.random() * 3 + 4,
-                    delay: Math.random() * 2,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                />
-              ))}
-            </div>
-
-            {/* Content */}
-            <div className="container mx-auto px-4 relative z-10 h-full flex flex-col justify-center">
-              {/* Header Section */}
-              <div className="text-center mb-12">
-                {/* Tag */}
-                <motion.span 
-                  variants={tagVariants}
-                  className="inline-block text-bano-green font-bold text-sm uppercase tracking-[0.3em] mb-4"
-                >
-                  {hoveredCapability.tag}
-                </motion.span>
+              {/* Popup Card */}
+              <div className="relative w-full max-w-3xl pointer-events-auto">
                 
-                {/* Title */}
-                <motion.h3 
-                  variants={titleVariants}
-                  className="text-4xl md:text-6xl font-bold text-white"
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  {hoveredCapability.title}
-                </motion.h3>
+                {/* Outer Glow */}
+                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-bano-green/50 via-bano-green/20 to-bano-green/50 blur-xl opacity-60" />
                 
-                {/* Glow line */}
-                <motion.div 
-                  variants={glowLineVariants}
-                  className="h-[2px] w-48 mx-auto mt-6 origin-center"
-                  style={{
-                    background: "linear-gradient(90deg, transparent, #31B450, transparent)",
-                    boxShadow: "0 0 20px #31B450, 0 0 40px #31B45080"
-                  }}
-                />
-              </div>
-
-              {/* Cards Grid */}
-              <motion.div 
-                variants={cardContainerVariants}
-                className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-5xl mx-auto items-stretch"
-              >
-                {hoveredCapability.description.map((description: string, index: number) => (
-                  <motion.div 
-                    key={index}
-                    variants={cardVariants}
-                    className="group relative h-full"
-                  >
-                    {/* Card glow effect */}
-                    <div 
-                      className="absolute -inset-[1px] rounded-2xl opacity-50 blur-sm h-full"
-                      style={{
-                        background: "linear-gradient(135deg, #31B450 0%, transparent 50%, #31B450 100%)"
-                      }}
+                {/* Border Glow */}
+                <div className="absolute -inset-[1px] rounded-3xl bg-gradient-to-br from-bano-green via-bano-green/30 to-bano-green opacity-80" />
+                
+                {/* Main Card */}
+                <div className="relative bg-black/95 backdrop-blur-2xl rounded-3xl overflow-hidden border border-bano-green/20">
+                  
+                  {/* Background Image */}
+                  <div className="absolute inset-0 opacity-15">
+                    <img 
+                      src={hoveredCapability.image} 
+                      className="w-full h-full object-cover" 
+                      alt="" 
                     />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/60" />
+                  </div>
+                  
+                  {/* Animated Corner Decorations */}
+                  <div className="absolute top-0 left-0 w-20 h-20">
+                    <motion.div 
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.6, delay: 0.3 }}
+                      className="absolute top-6 left-6 w-10 h-[2px] bg-bano-green origin-left"
+                    />
+                    <motion.div 
+                      initial={{ scaleY: 0 }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.6, delay: 0.35 }}
+                      className="absolute top-6 left-6 w-[2px] h-10 bg-bano-green origin-top"
+                    />
+                  </div>
+                  <div className="absolute bottom-0 right-0 w-20 h-20">
+                    <motion.div 
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 0.6, delay: 0.3 }}
+                      className="absolute bottom-6 right-6 w-10 h-[2px] bg-bano-green origin-right"
+                    />
+                    <motion.div 
+                      initial={{ scaleY: 0 }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.6, delay: 0.35 }}
+                      className="absolute bottom-6 right-6 w-[2px] h-10 bg-bano-green origin-bottom"
+                    />
+                  </div>
+
+                  {/* Close Button */}
+                  <motion.button
+                    variants={closeButtonVariants}
+                    onClick={closePopup}
+                    className="cursor-pointer absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center text-white hover:text-bano-green transition-all duration-300 group"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.9 }}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </motion.button>
+
+                  {/* Content */}
+                  <div className="relative z-10 p-8 md:p-10">
                     
-                    {/* Card content */}
-                    <div 
-                      className="relative bg-black/80 backdrop-blur-xl p-8 rounded-2xl border border-bano-green/30 text-center overflow-hidden h-full flex flex-col"
-                    >
-                      {/* Corner accents */}
-                      <div className="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-bano-green/50 rounded-tl-2xl" />
-                      <div className="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-bano-green/50 rounded-br-2xl" />
+                    {/* Header */}
+                    <motion.div variants={headerVariants} className="text-center mb-8">
+                      {/* Tag */}
+                      <span className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-[0.2em] text-bano-green bg-bano-green/10 border border-bano-green/30 mb-4">
+                        {hoveredCapability.tag}
+                      </span>
                       
-                      {/* Number */}
-                      <motion.span 
-                        variants={numberVariants}
-                        className="inline-flex items-center justify-center w-12 h-12 rounded-full mb-4 text-2xl font-bold text-bano-green border border-bano-green/30 mx-auto flex-shrink-0"
+                      {/* Title */}
+                      <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+                        {hoveredCapability.title}
+                      </h3>
+                      
+                      {/* Glow Line */}
+                      <motion.div 
+                        variants={lineVariants}
+                        className="h-[2px] w-24 mx-auto origin-center rounded-full"
                         style={{
-                          background: "radial-gradient(circle at center, rgba(49,180,80,0.15) 0%, transparent 70%)",
-                          boxShadow: "0 0 30px rgba(49,180,80,0.2)"
+                          background: "linear-gradient(90deg, transparent, #31B450, transparent)",
+                          boxShadow: "0 0 15px #31B450, 0 0 30px #31B45060"
                         }}
-                      >
-                        {index + 1}
-                      </motion.span>
-                      
-                      {/* Description text */}
-                      <p className="text-gray-300 text-base leading-relaxed flex-grow flex items-center justify-center">
-                        {description}
-                      </p>
+                      />
+                    </motion.div>
+
+                    {/* Description Cards */}
+                    <div className="space-y-4">
+                      {hoveredCapability.description.map((description: string, index: number) => (
+                        <motion.div 
+                          key={index}
+                          variants={itemVariants}
+                          className="group relative"
+                        >
+                          <div className="flex items-start gap-4 p-5 rounded-2xl bg-white/[0.03] border border-white/[0.06] hover:border-bano-green/30 hover:bg-bano-green/[0.03] transition-all duration-300">
+                            {/* Number Badge */}
+                            <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-bano-green/10 border border-bano-green/30 flex items-center justify-center">
+                              <span className="text-lg font-bold text-bano-green">{index + 1}</span>
+                            </div>
+                            
+                            {/* Text */}
+                            <p className="text-gray-300 text-base leading-relaxed pt-1.5">
+                              {description}
+                            </p>
+                          </div>
+                        </motion.div>
+                      ))}
                     </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </div>
-            
-            {/* Bottom gradient fade */}
-            <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent" />
-          </motion.div>
+
+                  </div>
+                  
+                  {/* Bottom Gradient */}
+                  <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/50 to-transparent pointer-events-none" />
+                  
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
@@ -356,11 +278,10 @@ export function TechCapabilities() {
       <motion.div 
         className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
         animate={{ 
-          opacity: hoveredCapability ? 0.15 : 1,
+          opacity: hoveredCapability ? 0.3 : 1,
           scale: hoveredCapability ? 0.98 : 1,
-          filter: hoveredCapability ? "blur(4px)" : "blur(0px)"
         }}
-        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
         <ScrollReveal className="text-center mb-16">
           <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
@@ -372,12 +293,6 @@ export function TechCapabilities() {
         </ScrollReveal>
 
         <div className="relative flex items-center justify-center gap-4">
-          <button className="swiper-button-prev-tech w-12 h-12 rounded-full hover:border-bano-green/60 hover:bg-bano-green/10 flex items-center justify-center transition-all cursor-pointer hidden md:flex z-20">
-            <svg className="w-6 h-6 text-bano-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
             onSwiper={(swiper) => { swiperRef.current = swiper; }}
@@ -444,13 +359,7 @@ export function TechCapabilities() {
                     </div>
                     
                     {/* Content section */}
-                    <motion.div 
-                      className="absolute bottom-0 left-0 right-0 p-6 z-10"
-                      animate={{ 
-                        opacity: hoveredCapability?.title === capability.title ? 0 : 1 
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
+                    <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
                       {/* Glow line above title */}
                       <div className="w-12 h-[2px] mb-4 bg-gradient-to-r from-bano-green to-transparent rounded-full origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-500" 
                            style={{ boxShadow: "0 0 10px #31B450" }}
@@ -468,7 +377,7 @@ export function TechCapabilities() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                       </div>
-                    </motion.div>
+                    </div>
                     
                     {/* Scan line effect on hover */}
                     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -479,16 +388,22 @@ export function TechCapabilities() {
               </SwiperSlide>
             ))}
           </Swiper>
+        </div>
 
-          <button className="swiper-button-next-tech w-12 h-12 rounded-full hover:border-bano-green/60 hover:bg-bano-green/10 flex items-center justify-center transition-all cursor-pointer hidden md:flex z-20">
+        <div className="flex justify-center w-fit mx-auto space-x-4 mt-8">
+          <button className="swiper-button-prev-tech p-2 rounded-full hover:border-bano-green/60 hover:bg-bano-green/10 flex items-center justify-center transition-all cursor-pointer hidden md:flex z-20">
+            <svg className="w-6 h-6 text-bano-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+
+          <div className="swiper-pagination-tech flex items-center justify-center gap-2"></div>
+
+          <button className="swiper-button-next-tech p-2 rounded-full hover:border-bano-green/60 hover:bg-bano-green/10 flex items-center justify-center transition-all cursor-pointer hidden md:flex z-20">
             <svg className="w-6 h-6 text-bano-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>
-        </div>
-
-        <div className="flex items-center justify-center gap-4 mt-8">
-          <div className="swiper-pagination-tech flex items-center justify-center gap-2"></div>
         </div>
       </motion.div>
       

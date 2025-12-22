@@ -101,10 +101,10 @@ const IndustrySelector: React.FC<IndustrySelectorProps> = ({ onSelect }) => {
   return (
     <div className="w-full h-full flex flex-col">
       <div className="text-center mb-6 shrink-0 animate-fade-in">
-        <h2 className="text-2xl md:text-3xl font-display text-white mb-2 tracking-tight">
+        <h2 className="text-2xl md:text-3xl text-white mb-2 tracking-tight">
           Hồ sơ doanh nghiệp
         </h2>
-        <p className="text-emerald-500 text-sm font-medium uppercase tracking-widest">
+        <p className="text-bano-green text-sm font-medium uppercase tracking-widest">
           Để Bano thiết kế lộ trình phù hợp nhất
         </p>
       </div>
@@ -123,8 +123,8 @@ const IndustrySelector: React.FC<IndustrySelectorProps> = ({ onSelect }) => {
               
               {/* Company Name Input */}
               <div className="space-y-3">
-                <label className="flex items-center gap-2 text-emerald-100 text-sm font-semibold tracking-wide ml-1">
-                  <Building2 size={16} className="text-emerald-400" /> TÊN CÔNG TY
+                <label className="flex items-center gap-2 text-white text-sm font-semibold tracking-wide ml-1">
+                  <Building2 size={16} className="text-bano-green" /> TÊN CÔNG TY
                 </label>
                 <div className="relative group w-full">
                   <div className={`absolute inset-0 rounded-2xl blur transition-opacity duration-300 ${errors.name ? 'bg-red-500/20 opacity-50' : 'bg-emerald-500/10 opacity-0 group-hover:opacity-100'}`}></div>
@@ -145,8 +145,8 @@ const IndustrySelector: React.FC<IndustrySelectorProps> = ({ onSelect }) => {
 
               {/* Company Size Selection - GRID 2 COLS FOR BALANCE */}
               <div className="space-y-3">
-                 <label className="flex items-center gap-2 text-emerald-100 text-sm font-semibold tracking-wide ml-1">
-                  <Users size={16} className="text-emerald-400" /> QUY MÔ NHÂN SỰ
+                 <label className="flex items-center gap-2 text-white text-sm font-semibold tracking-wide ml-1">
+                  <Users size={16} className="text-bano-green" /> QUY MÔ NHÂN SỰ
                 </label>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {COMPANY_SIZES.map((size) => (
@@ -155,8 +155,8 @@ const IndustrySelector: React.FC<IndustrySelectorProps> = ({ onSelect }) => {
                       onClick={() => handleSizeSelect(size)}
                       className={`h-14 px-4 rounded-2xl border text-sm font-medium transition-all duration-300 relative overflow-hidden flex items-center justify-between group
                         ${companySize === size 
-                          ? 'bg-emerald-600 border-emerald-400 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' 
-                          : 'bg-slate-900/60 border-emerald-500/10 text-slate-400 hover:border-emerald-500/40 hover:bg-emerald-900/20 hover:text-emerald-100'
+                          ? 'bg-bano-green border-bano-green text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' 
+                          : 'bg-slate-900/60 border-bano-green/10 text-slate-400 hover:border-bano-green/40 hover:bg-bano-green/20 hover:text-bano-green'
                         }
                         ${errors.size && !companySize ? 'border-red-500/40 bg-red-900/10' : ''}
                       `}
@@ -178,9 +178,9 @@ const IndustrySelector: React.FC<IndustrySelectorProps> = ({ onSelect }) => {
 
         {/* Divider */}
         <div className="flex items-center gap-4 mb-6 px-2">
-           <div className="h-px bg-gradient-to-r from-transparent via-emerald-800/50 to-transparent flex-1" />
+           <div className="h-px bg-gradient-to-r from-transparent via-bano-green/50 to-transparent flex-1" />
            <span className="text-[10px] md:text-xs text-slate-500 uppercase tracking-[0.2em] font-bold">Lĩnh vực hoạt động</span>
-           <div className="h-px bg-gradient-to-r from-transparent via-emerald-800/50 to-transparent flex-1" />
+           <div className="h-px bg-gradient-to-r from-transparent via-bano-green/50 to-transparent flex-1" />
         </div>
 
         <div className="flex flex-col gap-3">
@@ -188,7 +188,7 @@ const IndustrySelector: React.FC<IndustrySelectorProps> = ({ onSelect }) => {
             <button
               key={industry.id}
               onClick={() => handleIndustryClick(industry.id)}
-              className="group relative w-full flex items-center gap-4 p-4 rounded-2xl border border-emerald-900/50 bg-emerald-950/20 hover:bg-emerald-900/60 hover:border-emerald-500/80 transition-all duration-300 overflow-hidden hover:scale-[1.01] hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]"
+              className="cursor-pointer group relative w-full flex items-center gap-4 p-4 rounded-2xl border border-green-900/50 bg-green-950/20 hover:bg-green-900/60 hover:border-bano-green/80 transition-all duration-300 overflow-hidden hover:scale-[1.01] hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]"
               style={{ 
                 animation: 'slideInRight 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards', 
                 animationDelay: `${idx * 0.08}s`,
@@ -197,22 +197,22 @@ const IndustrySelector: React.FC<IndustrySelectorProps> = ({ onSelect }) => {
               }}
             >
               {/* Hover Highlight Gradient */}
-              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 to-teal-400 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-l-full"></div>
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-bano-green to-bano-green/50 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-l-full"></div>
               
               {/* Icon Container */}
-              <div className="shrink-0 w-12 h-12 rounded-xl bg-slate-900 border border-emerald-900/50 flex items-center justify-center text-emerald-500 group-hover:text-emerald-300 group-hover:border-emerald-500/30 transition-all duration-300 shadow-lg">
+              <div className="shrink-0 w-12 h-12 rounded-xl bg-slate-900 border border-green-900/50 flex items-center justify-center text-bano-green group-hover:text-bano-green group-hover:border-bano-green/30 transition-all duration-300 shadow-lg">
                 <industry.icon className="w-6 h-6" />
               </div>
               
               {/* Text Content */}
               <div className="flex-1 text-left flex flex-col justify-center">
-                <h3 className="text-lg font-semibold text-slate-200 group-hover:text-white transition-colors tracking-wide group-hover:-translate-y-0.5 duration-300">
+                <h3 className="text-lg font-semibold text-slate-200 group-hover:text-bano-green transition-colors tracking-wide group-hover:-translate-y-0.5 duration-300">
                   {industry.name}
                 </h3>
               </div>
               
               {/* Arrow */}
-              <div className="w-8 h-8 rounded-full flex items-center justify-center text-emerald-700 bg-emerald-950/50 border border-transparent group-hover:border-emerald-500/30 group-hover:text-emerald-400 group-hover:bg-emerald-900 transition-all transform group-hover:translate-x-1 duration-300">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center text-green-700 bg-green-950/50 border border-transparent group-hover:border-green-500/30 group-hover:text-green-400 group-hover:bg-green-900 transition-all transform group-hover:translate-x-1 duration-300">
                 <ChevronRight size={18} />
               </div>
             </button>

@@ -3,7 +3,7 @@ import Lenis from "lenis"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { ScrollReveal, StaggerContainer, StaggerItem } from "../components/scroll-reveal"
 import { Button } from "../components/button"
-import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
+// import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
 import {
   Search,
   Target,
@@ -28,6 +28,8 @@ import {
   ChevronRight,
 } from "lucide-react"
 import CTASection from "../components/cta-section"
+import { Link } from "wouter"
+import { scrollToTop } from "../utils/scroll-helper"
 
 const steps = [
   {
@@ -271,11 +273,11 @@ export default function ServicesPage() {
   }, [])
 
   return (
-    <div className="relative">
+    <div className="relative bg-black">
 
       {/* Hero */}
       <section className="min-h-[80vh] flex items-center justify-center pt-20 sm:pt-24 relative overflow-hidden py-12 sm:py-16">
-        {(() => {
+        {/* {(() => {
           const heroBg = useRandomBackground()
           return (
             <>
@@ -284,7 +286,7 @@ export default function ServicesPage() {
               <div className="grid-pattern absolute inset-0 opacity-30" />
             </>
           )
-        })()}
+        })()} */}
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.span
@@ -381,7 +383,7 @@ export default function ServicesPage() {
                     <div className="relative z-10">
                       <motion.div
                         whileHover={{ scale: 1.1 }}
-                        className="w-20 h-20 rounded-2xl bg-bano-green/20 border-2 border-bano-green flex items-center justify-center"
+                        className="w-20 h-20 rounded-2xl border-2 border-bano-green flex items-center justify-center"
                       >
                         <step.icon className="w-8 h-8 text-bano-green" />
                       </motion.div>
@@ -399,7 +401,7 @@ export default function ServicesPage() {
 
       {/* Core Services - Completely redesigned with new content */}
       <section className="py-16 sm:py-20 md:py-28 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/10 to-background" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/10 to-background" /> */}
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="text-center mb-20">
@@ -470,8 +472,10 @@ export default function ServicesPage() {
                     className="w-full group-hover:bg-bano-green group-hover:text-white group-hover:border-bano-green bg-transparent"
                     href="/contact"
                   >
-                    Tìm hiểu thêm
-                    <ArrowRight className="w-4 h-4" />
+                    <Link onClick={scrollToTop} href="/contact" className="flex items-center gap-2">
+                      Tìm hiểu thêm
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
                   </Button>
                 </motion.div>
               </StaggerItem>
@@ -482,11 +486,11 @@ export default function ServicesPage() {
 
       {/* Why Trust Bano - 5 Pillars */}
       <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/5 to-background" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/5 to-background" /> */}
 
         {/* Background decorative elements */}
-        <div className="absolute top-1/4 left-0 w-96 h-96 bg-bano-green/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-bano-water/10 rounded-full blur-3xl" />
+        {/* <div className="absolute top-1/4 left-0 w-96 h-96 bg-bano-green/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-bano-water/10 rounded-full blur-3xl" /> */}
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="text-center mb-16">
@@ -512,7 +516,7 @@ export default function ServicesPage() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleScrollLeft}
-                className="absolute left-0 z-20 w-12 h-12 rounded-full glass border border-bano-green/30 bg-background/80 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-bano-green/10 hover:border-bano-green/50 transition-all group -translate-x-14"
+                className="cursor-pointer absolute left-0 z-20 w-12 h-12 rounded-full glass border border-bano-green/30 bg-background/80 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-bano-green/10 hover:border-bano-green/50 transition-all group -translate-x-14"
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-6 h-6 text-bano-green group-hover:scale-110 transition-transform" />
@@ -528,7 +532,7 @@ export default function ServicesPage() {
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleScrollRight}
-                className="absolute right-0 z-20 w-12 h-12 rounded-full glass border border-bano-green/30 bg-background/80 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-bano-green/10 hover:border-bano-green/50 transition-all group translate-x-14"
+                className="cursor-pointer absolute right-0 z-20 w-12 h-12 rounded-full glass border border-bano-green/30 bg-background/80 backdrop-blur-sm flex items-center justify-center shadow-lg hover:bg-bano-green/10 hover:border-bano-green/50 transition-all group translate-x-14"
                 aria-label="Scroll right"
               >
                 <ChevronRight className="w-6 h-6 text-bano-green group-hover:scale-110 transition-transform" />

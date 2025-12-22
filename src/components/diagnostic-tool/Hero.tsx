@@ -5,16 +5,16 @@ interface HeroProps {
 
 const Hero = ({ isExpanded }: HeroProps) => {
     return (
-        <div className="absolute inset-0 w-full h-full overflow-hidden bg-[#020617]">
+        <div className="absolute inset-0 w-full h-full overflow-hidden bg-black">
         
         {/* 1. Background Effects - Spotlight Style */}
         <div className="absolute inset-0 pointer-events-none">
             {/* Main Center Glow - The "Green Sun" */}
-            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] md:w-[600px] h-[600px] bg-emerald-500/20 blur-[120px] rounded-full transition-all duration-1000 ${isExpanded ? 'opacity-20 scale-150' : 'opacity-100 scale-100'}`}></div>
+            <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] md:w-[600px] h-[600px] bg-bano-green/20 blur-[120px] rounded-full transition-all duration-1000 ${isExpanded ? 'opacity-20 scale-150' : 'opacity-100 scale-100'}`}></div>
             
             {/* Secondary Ambient Glows */}
-            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-teal-900/20 blur-[100px] rounded-full"></div>
-            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-emerald-900/20 blur-[100px] rounded-full"></div>
+            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-bano-navy/20 blur-[100px] rounded-full"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-bano-navy/20 blur-[100px] rounded-full"></div>
 
             {/* Grid Pattern Overlay */}
             <div className="absolute inset-0 opacity-[0.15]" 
@@ -31,25 +31,25 @@ const Hero = ({ isExpanded }: HeroProps) => {
             
             {/* Top Tagline */}
             <div className="inline-block mb-6 animate-fade-in">
-                <div className="px-4 py-1.5 rounded-full border border-emerald-500/30 bg-emerald-950/30 backdrop-blur-md shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-                <span className="text-emerald-400 text-[10px] md:text-xs font-semibold uppercase tracking-widest">
+                <div className="px-4 py-1.5 rounded-full border border-bano-green/30 bg-bano-navy/30 backdrop-blur-md shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                <span className="text-bano-green text-[10px] md:text-xs font-semibold uppercase tracking-widest">
                     Công cụ chẩn đoán AI miễn phí
                 </span>
                 </div>
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold font-display text-white tracking-tight mb-6 drop-shadow-2xl leading-[1.1]">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight mb-6 drop-shadow-2xl leading-[1.1]">
             Tìm lời giải riêng cho <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-emerald-100 to-emerald-400">
+            <span className="text-transparent bg-clip-text bg-gradient-to-b from-white via-bano-green/100 to-bano-green">
                 Bài toán của bạn
             </span>
             </h1>
 
             {/* Subline */}
-            <p className="max-w-2xl mx-auto text-slate-400 text-sm md:text-base font-light leading-relaxed tracking-wide">
-            Chọn ngành và vấn đề đang gặp phải để xem Bano sẽ triển khai AI <br className="hidden md:block"/>
-            như thế nào cho doanh nghiệp tương tự bạn.
+            <p className="max-w-2xl mx-auto text-sm md:text-base font-light leading-relaxed tracking-wide">
+                Chọn ngành và vấn đề đang gặp phải để xem Bano sẽ triển khai AI <br className="hidden md:block"/>
+                như thế nào cho doanh nghiệp tương tự bạn.
             </p>
         </div>
 

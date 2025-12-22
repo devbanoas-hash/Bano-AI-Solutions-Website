@@ -3,7 +3,7 @@
 import { useRef, useEffect } from "react"
 import { motion } from "framer-motion"
 import { ScrollReveal } from "./scroll-reveal"
-import { reasons } from "../constants/why-bano"
+import { reasons } from "../constants/about"
 
 export function WhyBano() {
   const sectionRef = useRef<HTMLDivElement>(null)
@@ -77,13 +77,11 @@ export function WhyBano() {
                       
                       <div className="space-y-4 text-justify">
                         <p className="text-gray-400 leading-relaxed text-base">
-                          {reason.description1}
+                          {reason.description[0]}
                         </p>
-                        {reason.description2 && (
-                          <p className="text-gray-400 leading-relaxed text-base">
-                            {reason.description2}
-                          </p>
-                        )}
+                        <p className="text-gray-400 leading-relaxed text-base">
+                          {reason.description[1]}
+                        </p>
                       </div>
 
                       {/* Hiển thị icon hoặc mini-image nếu cần */}

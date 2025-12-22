@@ -1,124 +1,32 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import Lenis from "lenis"
 import { motion, useInView } from "framer-motion"
 import { ScrollReveal, StaggerContainer, StaggerItem } from "../components/scroll-reveal"
 import {
-  Clock,
-  TrendingDown,
-  BarChart3,
-  Search,
-  Rocket,
-  DollarSign,
-  // TrendingUp,
   Eye,
   Target,
-  Scale,
 } from "lucide-react"
 import CTASection from "../components/cta-section"
 import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
-
-const valueCommitments = [
-  {
-    icon: Clock,
-    title: "Hiệu quả nhìn thấy rõ",
-    description: "Trong 2-6 tuần",
-  },
-  {
-    icon: TrendingDown,
-    title: "Giảm rủi ro triển khai",
-    description: "Không cần thay hệ thống đang dùng",
-  },
-  {
-    icon: DollarSign,
-    title: "Giảm chi phí vận hành",
-    description: "Tăng năng suất",
-  },
-  {
-    icon: BarChart3,
-    title: "Ra quyết định chính xác",
-    description: "Bằng dữ liệu rõ ràng",
-  },
-]
-
-// const coreAdvantages = [
-//   {
-//     icon: Search,
-//     title: "Chẩn đoán chiến lược sâu",
-//     description: "Phân tích toàn diện để hiểu rõ nhu cầu và thách thức của doanh nghiệp",
-//   },
-//   {
-//     icon: Rocket,
-//     title: "Quick Win trong 90 ngày",
-//     description: "Kết quả nhanh chóng, giá trị ngay từ những tuần đầu tiên",
-//   },
-//   {
-//     icon: DollarSign,
-//     title: "Chi phí tối ưu",
-//     description: "Giải pháp phù hợp cho cả SME & Enterprise",
-//   },
-//   {
-//     icon: TrendingUp,
-//     title: "Giải pháp mở rộng",
-//     description: "Theo tốc độ phát triển doanh nghiệp",
-//   },
-// ]
-
-const team = [
-  {
-    name: "Nguyễn Minh Tuấn",
-    role: "Founder",
-    image: "/volunteer1.JPG",
-  },
-  {
-    name: "Trần Thị Hương",
-    role: "AI Engineer",
-    image: "/volunteer2.JPG",
-  },
-  {
-    name: "Lê Văn Hoàng",
-    role: "Data Architect",
-    image: "/volunteer3.JPG",
-  },
-  {
-    name: "Phạm Thị Mai",
-    role: "Implementation Specialist",
-    image: "/volunteer4.JPG",
-  },
-  {
-    name: "Hoạt động 5",
-    role: "Team Activity",
-    image: "/daily1.jpg",
-  },
-  {
-    name: "Hoạt động 6",
-    role: "Team Activity",
-    image: "/daily2.JPG",
-  },
-  {
-    name: "Hoạt động 7",
-    role: "Team Activity",
-    image: "/daily3.jpg",
-  },
-  {
-    name: "Hoạt động 8",
-    role: "Team Activity",
-    image: "/daily4.jpg",
-  },
-]
-
-// const activityTexts = [
-//   {
-//     title: "Hoạt động nhóm",
-//     description: "Chúng tôi thường xuyên tổ chức các hoạt động team building và workshop để nâng cao kỹ năng và gắn kết đội ngũ.",
-//   },
-//   {
-//     title: "Sự kiện & Hội thảo",
-//     description: "Bano tham gia và tổ chức nhiều sự kiện công nghệ, chia sẻ kiến thức và kinh nghiệm với cộng đồng.",
-//   },
-// ]
+import { reasons, valueCommitments, team } from "../constants/about"
 
 export default function AboutPage() {
   const section1Bg = useRandomBackground()
+  const imageRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const [maxImageHeight, setMaxImageHeight] = useState(0);
+  const [loadedCount, setLoadedCount] = useState(0);
+
+  useEffect(() => {
+    if (loadedCount === reasons.length) {
+      let maxHeight = 0;
+      imageRefs.current.forEach((img) => {
+        if (img) {
+          maxHeight = Math.max(maxHeight, img.clientHeight);
+        }
+      });
+      setMaxImageHeight(maxHeight);
+    }
+  }, [loadedCount, reasons.length]);
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -282,7 +190,6 @@ export default function AboutPage() {
                       className="w-16 h-16 rounded-2xl bg-bano-green/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-bano-green/20 transition-colors relative z-10"
                       whileHover={{
                         scale: 1.15,
-                        rotate: 360,
                         boxShadow: "0 0 30px rgba(49, 180, 80, 0.4)",
                       }}
                       transition={{ duration: 0.5 }}
@@ -352,33 +259,8 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 3 — Vision / Mission */}
-      <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">  
         <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/20 to-background" />
-        {/* Animated orbs */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-64 h-64 bg-bano-green/10 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.3, 1],
-            rotate: [0, 180, 360],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-bano-navy/30 rounded-full blur-3xl"
-          animate={{
-            scale: [1, 1.2, 1],
-            rotate: [360, 180, 0],
-          }}
-          transition={{
-            duration: 20,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-        />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
@@ -388,15 +270,6 @@ export default function AboutPage() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
           >
-            {/* <motion.span
-              className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-            >
-              Vision & Mission
-            </motion.span> */}
             <motion.h2
               className="text-3xl font-bold mb-12"
               initial={{ opacity: 0, y: 20 }}
@@ -448,7 +321,6 @@ export default function AboutPage() {
                     className="w-16 h-16 rounded-2xl bg-bano-green/10 flex items-center justify-center mx-auto mb-6 group-hover:bg-bano-green/20 transition-colors relative z-10"
                     whileHover={{
                       scale: 1.2,
-                      rotate: 360,
                       boxShadow: "0 0 40px rgba(49, 180, 80, 0.5)",
                     }}
                     transition={{ duration: 0.6 }}
@@ -462,7 +334,7 @@ export default function AboutPage() {
                     {item.title}
                   </motion.h3>
                   <motion.p
-                    className="text-muted-foreground relative z-10"
+                    className="relative z-10"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
                     viewport={{ once: true }}
@@ -504,40 +376,7 @@ export default function AboutPage() {
         {/* Cards Section */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 mt-12 sm:mt-16 md:mt-24">
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" staggerDelay={0.15}>
-            {[
-              {
-                id: 1,
-                icon: Search,
-                title: "Chẩn đoán chiến lược",
-                image: "/Kim - 7.png",
-                description: "Chiến lược toàn diện để hiểu rõ nhu cầu và thách thức của doanh nghiệp",
-                color: "#31B450",
-              },
-              {
-                id: 2,
-                icon: Target,
-                title: "Lộ trình Quick Win 90 ngày",
-                image: "/Kim - 8.png",
-                description: "Kết quả nhanh chóng, giá trị trao ngay từ những tuần đầu tiên",
-                color: "#D1F1EF",
-              },
-              {
-                id: 3,
-                icon: Scale,
-                title: "Tối ưu chi phí, hiệu quả cao",
-                image: "/Kim - 10.png",
-                description: "Giải pháp phù hợp cho cả SME & Enterprise",
-                color: "#C5CAD4",
-              },
-              {
-                id: 4,
-                icon: Rocket,
-                title: "Mở rộng theo tốc độ doanh nghiệp",
-                image: "/Kim - 11.png",
-                description: "Phù hợp với tốc độ phát triển doanh nghiệp",
-                color: "#31B450",
-              },
-            ].map((reason, index) => {
+            {reasons.map((reason, index) => {
               const cardRef = useRef(null)
               const isInView = useInView(cardRef, { once: true, margin: "-50px" })
 
@@ -557,13 +396,20 @@ export default function AboutPage() {
                   >
                     <span className="text-3xl font-bold group-hover:text-bano-green transition-colors">0{reason.id}</span>
 
-                    <img src={reason.image} alt={reason.title} className="w-full h-auto object-cover rounded-xl" />
+                    <img 
+                      ref={(el) => { imageRefs.current[index] = el; }}
+                      src={reason.image} 
+                      alt={reason.title} 
+                      className="w-full object-cover rounded-xl"
+                      style={{ height: maxImageHeight > 0 ? `${maxImageHeight}px` : 'auto' }}
+                      onLoad={() => setLoadedCount((prev) => prev + 1)}
+                    />
 
                     <h3 className="text-lg font-bold text-bano-green transition-colors leading-tight">
                       {reason.title}
                     </h3>
 
-                    <p className="text-muted-foreground text-base">{reason.description}</p>
+                    <p className="text-base">{reason.subtitle}</p>
                   </motion.div>
                 </StaggerItem>
               )
@@ -574,7 +420,7 @@ export default function AboutPage() {
 
       {/* SECTION 5 — Team */}
       <section className="py-12 sm:py-16 md:py-24 relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/20 to-background" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/20 to-background" /> */}
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="text-center mb-12 sm:mb-16">
@@ -582,25 +428,6 @@ export default function AboutPage() {
               Những <span className="text-gradient">hoạt động</span> tại <span className="text-gradient">BANO</span>
             </h2>
           </ScrollReveal>
-
-          {/* <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {team.map((member, index) => (
-              <StaggerItem key={index}>
-                <motion.div whileHover={{ y: -8 }} className="group cursor-pointer">
-                  <div className="aspect-square rounded-2xl overflow-hidden mb-4 relative">
-                    <img
-                      src={member.image || "/placeholder.svg"}
-                      alt={member.name}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <h3 className="text-lg font-bold group-hover:text-bano-green transition-colors">{member.name}</h3>
-                  <p className="text-sm text-muted-foreground">{member.role}</p>
-                </motion.div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer> */}
 
           <div className="space-y-12 md:space-y-16">
             {/* First group: 4 images forming a square + text on the right */}
@@ -642,18 +469,20 @@ export default function AboutPage() {
                   <h3 className="text-2xl font-bold text-bano-green">
                     Hoạt động tình nguyện tại Bano
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="leading-relaxed">
                     WITH BANO, WE CONNECT HEARTS
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="leading-relaxed">
                     Không chỉ trong công việc, tại BANO AI chúng tôi tin rằng sự kết nối từ trái tim sẽ làm nên những điều ý nghĩa nhất.
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="leading-relaxed">
                     Hành trình đến thăm và sẻ chia cùng các em nhỏ tại Trung tâm nuôi dạy trẻ mồ côi là cơ hội để mỗi thành viên BANO AI lan tỏa yêu thương, mang niềm vui và hy vọng đến những trái tim bé nhỏ. Cùng nhau, chúng ta kết nối những nhịp đập - để yêu thương được lan tỏa và niềm vui được nhân lên.
                   </p>
                 </motion.div>
               </StaggerItem>
             </StaggerContainer>
+
+            <div className="w-full h-0.25 bg-gradient-to-r from-transparent via-bano-green to-transparent"></div>
 
             {/* Second group: 4 images forming a square + text on the right */}
             <StaggerContainer className="grid grid-cols-1 md:grid-cols-10 gap-6 md:gap-8">
@@ -694,13 +523,13 @@ export default function AboutPage() {
                   <h3 className="text-2xl font-bold text-bano-green">
                     Khoảnh khắc daily meet sôi nổi
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="leading-relaxed">
                     BANO TALK | WEEKLY MEET
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="leading-relaxed">
                     Một cuộc họp “đậm chất BANO” - nơi mọi ý tưởng được bật lên, mọi quan điểm được lắng nghe và… tiếng cười thì không bao giờ thiếu
                   </p>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="leading-relaxed">
                     Ở BANO, họp không chỉ để trao đổi công việc, mà còn để kết nối, chia sẻ và cùng nhau tạo nên những điều lớn lao hơn mỗi ngày
                   </p>
                 </motion.div>
