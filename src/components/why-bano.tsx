@@ -297,28 +297,28 @@ export function WhyBano() {
       {/* ===== END BACKGROUND ===== */}
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 md:gap-12 lg:gap-8 items-start">
           
           {/* CỘT TRÁI: Tiêu đề và Đồ họa */}
-          <div className="lg:col-span-5 sticky top-32">
+          <div className="lg:col-span-5 sticky top-20 sm:top-24 md:top-32">
             <ScrollReveal>
               <div className="relative">
                 {/* Glow effect behind title */}
-                <div className="absolute -left-20 top-20 w-64 h-64 bg-bano-green/20 blur-[100px] rounded-full animate-pulse-slow" />
+                <div className="absolute -left-10 sm:-left-20 top-10 sm:top-20 w-32 h-32 sm:w-64 sm:h-64 bg-bano-green/20 blur-[100px] rounded-full animate-pulse-slow" />
                 
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+                <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                   <span className="text-white block">Tại sao <span className="text-gradient">chọn Bano</span></span>
                 </h2>
                 
-                <p className="mt-6 text-gray-400 text-lg max-w-lg">
+                <p className="mt-4 sm:mt-6 text-gray-400 text-sm sm:text-base md:text-lg max-w-lg">
                   Giải pháp chuyển đổi số toàn diện giúp doanh nghiệp tối ưu vận hành và bứt phá doanh thu.
                 </p>
 
                 {/* Animated wave curves */}
-                <div className="mt-12 relative h-40 w-full overflow-hidden opacity-50">
+                <div className="mt-8 sm:mt-10 md:mt-12 relative h-24 sm:h-32 md:h-40 w-full overflow-hidden opacity-50">
                   <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-bano-green to-transparent animate-pulse-glow" />
-                  <div className="absolute bottom-4 left-[-10%] w-[120%] h-20 border-t-4 border-bano-green/30 rounded-[100%] animate-wave-1" />
-                  <div className="absolute bottom-8 left-[-20%] w-[140%] h-24 border-t-4 border-bano-green/20 rounded-[100%] animate-wave-2" />
+                  <div className="absolute bottom-4 left-[-10%] w-[120%] h-12 sm:h-16 md:h-20 border-t-2 sm:border-t-4 border-bano-green/30 rounded-[100%] animate-wave-1" />
+                  <div className="absolute bottom-8 left-[-20%] w-[140%] h-16 sm:h-20 md:h-24 border-t-2 sm:border-t-4 border-bano-green/20 rounded-[100%] animate-wave-2" />
                 </div>
               </div>
             </ScrollReveal>
@@ -334,25 +334,25 @@ export function WhyBano() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                   viewport={{ once: true }}
-                  className={`py-10 ${index !== 0 ? 'border-t border-gray-800' : ''} group`}
+                  className={`py-6 sm:py-8 md:py-10 ${index !== 0 ? 'border-t border-gray-800' : ''} group`}
                 >
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-4">
                     {/* Số thứ tự */}
                     <div className="md:col-span-1">
-                      <span className="text-2xl text-gray-500 group-hover:text-bano-green transition-colors">
+                      <span className="text-xl sm:text-2xl text-gray-500 group-hover:text-bano-green transition-colors">
                         0{reason.id}.
                       </span>
                     </div>
 
                     {/* Nội dung chính */}
                     <div className="md:col-span-11">
-                      <h3 className="text-2xl font-bold text-white mb-4 group-hover:text-bano-green transition-colors">
+                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white mb-3 sm:mb-4 group-hover:text-bano-green transition-colors">
                         {reason.title}
                       </h3>
                       
-                      <div className="space-y-4 text-justify">
+                      <div className="space-y-3 sm:space-y-4 text-justify">
                         {reason.description.map((desc, idx) => (
-                          <p key={idx} className="text-gray-400 leading-relaxed text-base">
+                          <p key={idx} className="text-gray-400 leading-relaxed text-sm sm:text-base">
                             {desc}
                           </p>
                         ))}

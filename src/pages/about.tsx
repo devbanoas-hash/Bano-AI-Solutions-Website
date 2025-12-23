@@ -54,13 +54,13 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center">
             <motion.div initial={{ opacity: 0, x: -50 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }}>
-              <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
+              <span className="text-bano-green text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3 sm:mb-4 block">
                 Lý Do Chúng Tôi Tồn Tại
               </span>
-              <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6">
-                Chiến lược trước <br /> <span className="text-gradient">Công nghệ sau</span>
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6">
+                Chiến lược trước <br className="hidden sm:block" /> <span className="text-gradient">Công nghệ sau</span>
               </h1>
-              <div className="space-y-4 text-xl text-muted-foreground mb-8">
+              <div className="space-y-3 sm:space-y-4 text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8">
                 <p>
                   Doanh nghiệp thất bại <span className="font-bold text-foreground">70%</span> khi triển khai công nghệ vì
                   mua công cụ thay vì xây chiến lược.
@@ -83,7 +83,7 @@ export default function AboutPage() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <div className="aspect-square rounded-3xl overflow-hidden">
+              <div className="aspect-square rounded-2xl sm:rounded-3xl overflow-hidden">
                 <img
                   src="/about_image.jpg"
                   alt="BANO Team"

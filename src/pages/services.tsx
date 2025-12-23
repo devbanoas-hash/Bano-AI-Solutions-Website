@@ -295,9 +295,9 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 px-4"
           >
-            Giải pháp AI <span className="text-gradient">end-to-end</span> <br/> thiết kế theo đúng bài toán của doanh nghiệp bạn
+            Giải pháp AI <span className="text-gradient">end-to-end</span> <br className="hidden sm:block"/> thiết kế theo đúng bài toán của doanh nghiệp bạn
           </motion.h1>
 
           {/* <motion.p
@@ -341,11 +341,11 @@ export default function ServicesPage() {
       {/* Strategic Approach - Timeline */}
       <section className="py-16 sm:py-20 md:py-28 relative" ref={timelineRef}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <ScrollReveal className="text-center mb-20">
-            <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
+          <ScrollReveal className="text-center mb-12 sm:mb-16 md:mb-20">
+            <span className="text-bano-green text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3 sm:mb-4 block">
               CÁCH TIẾP CẬN CHIẾN LƯỢC
             </span>
-            <h2 className="text-3xl font-bold">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold">
               Quy trình <span className="text-gradient">4</span> bước
             </h2>
           </ScrollReveal>
@@ -353,33 +353,33 @@ export default function ServicesPage() {
           {/* Timeline */}
           <div className="relative max-w-4xl mx-auto">
             {/* Vertical Line */}
-            <div className="absolute left-1/2 top-17 bottom-17 opacity-100 w-px bg-border -translate-x-1/2 hidden md:block">
+            <div className="absolute left-1/2 top-12 sm:top-17 bottom-12 sm:bottom-17 opacity-100 w-px bg-border -translate-x-1/2 hidden md:block">
               <motion.div className="w-full bg-white origin-top" style={{ height: lineHeight }} />
             </div>
 
             {/* Steps */}
-            <div className="space-y-16 md:space-y-24">
+            <div className="space-y-12 sm:space-y-16 md:space-y-24">
               {steps.map((step, index) => (
                 <ScrollReveal key={step.id} delay={index * 0.1} direction={index % 2 === 0 ? "left" : "right"}>
                   <div
-                    className={`flex flex-col md:flex-row items-center gap-8 ${
+                    className={`flex flex-col md:flex-row items-center gap-6 sm:gap-8 ${
                       index % 2 === 1 ? "md:flex-row-reverse" : ""
                     }`}
                   >
                     {/* Content */}
-                    <div className={`flex-1 ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
-                      <span className="text-bano-green text-lg font-medium">Bước {step.id}</span>
-                      <h3 className="text-xl md:text-2xl font-bold mb-2">{step.title}</h3>
-                      <p className="text-muted-foreground text-base">{step.description}</p>
+                    <div className={`flex-1 text-center md:text-left ${index % 2 === 0 ? "md:text-right" : "md:text-left"}`}>
+                      <span className="text-bano-green text-base sm:text-lg font-medium">Bước {step.id}</span>
+                      <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-2">{step.title}</h3>
+                      <p className="text-muted-foreground text-sm sm:text-base">{step.description}</p>
                     </div>
 
                     {/* Icon */}
                     <div className="relative z-10">
                       <motion.div
                         whileHover={{ scale: 1.1 }}
-                        className="w-20 h-20 rounded-2xl bg-[#133421]/100 border-2 border-bano-green flex items-center justify-center"
+                        className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl sm:rounded-2xl bg-[#133421]/100 border-2 border-bano-green flex items-center justify-center"
                       >
-                        <step.icon className="w-8 h-8 text-bano-green" />
+                        <step.icon className="w-6 h-6 sm:w-8 sm:h-8 text-bano-green" />
                       </motion.div>
                     </div>
 
@@ -398,11 +398,11 @@ export default function ServicesPage() {
         {/* <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/10 to-background" /> */}
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <ScrollReveal className="text-center mb-20">
-            <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
+          <ScrollReveal className="text-center mb-12 sm:mb-16 md:mb-20">
+            <span className="text-bano-green text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3 sm:mb-4 block">
               Dịch vụ chính
             </span>
-            <h2 className="text-3xl font-bold mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">
               3 DÒNG DỊCH VỤ <span className="text-gradient">CỐT LÕI</span>
             </h2>
             {/* <p className="text-muted-foreground max-w-2xl mx-auto">
@@ -410,40 +410,40 @@ export default function ServicesPage() {
             </p> */}
           </ScrollReveal>
 
-          <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {services.map((service, index) => (
               <StaggerItem key={index}>
                 <motion.div
                   whileHover={{ y: -12 }}
-                  className="glass rounded-3xl p-8 h-full flex flex-col group hover:border-bano-green/50 transition-all relative overflow-hidden"
+                  className="glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 h-full flex flex-col group hover:border-bano-green/50 transition-all relative overflow-hidden"
                 >
                   {/* Background accent */}
                   <div
-                    className="absolute top-0 right-0 w-32 h-32 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"
+                    className="absolute top-0 right-0 w-24 h-24 sm:w-32 sm:h-32 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity"
                     style={{ backgroundColor: service.color }}
                   />
 
-                  <span className="text-5xl text-muted-foreground font-bold group-hover:text-bano-green ml-auto mb-2">0{index + 1}</span>
+                  <span className="text-4xl sm:text-5xl text-muted-foreground font-bold group-hover:text-bano-green ml-auto mb-2">0{index + 1}</span>
 
-                  <div className="mb-4">
-                    <h3 className="text-xl font-bold mb-1 group-hover:text-bano-green transition-colors">
+                  <div className="mb-3 sm:mb-4">
+                    <h3 className="text-lg sm:text-xl font-bold mb-1 group-hover:text-bano-green transition-colors">
                       {service.title}
                     </h3>
-                    <span className="text-base text-muted-foreground">{service.subtitle}</span>
+                    <span className="text-sm sm:text-base text-muted-foreground">{service.subtitle}</span>
                   </div>
 
-                  <p className="text-muted-foreground mb-4 flex-grow text-base">{service.description}</p>
+                  <p className="text-muted-foreground mb-4 flex-grow text-sm sm:text-base">{service.description}</p>
 
                   {/* Features list */}
-                  <ul className="space-y-4 mb-6">
+                  <ul className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
                     {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center gap-3">
+                      <li key={featureIndex} className="flex items-center gap-2 sm:gap-3">
                         <div
-                          className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                          className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center flex-shrink-0"
                           style={{ backgroundColor: `${service.color}30` }}
                         >
                           <feature.icon
-                            className="w-5 h-5"
+                            className="w-4 h-4 sm:w-5 sm:h-5"
                             style={{
                               color:
                                 service.color === "#D1F1EF" ||
@@ -454,7 +454,7 @@ export default function ServicesPage() {
                             }}
                           />
                         </div>
-                        <span className="text-base font-medium">{feature.text}</span>
+                        <span className="text-sm sm:text-base font-medium">{feature.text}</span>
                       </li>
                     ))}
                   </ul>
@@ -487,11 +487,11 @@ export default function ServicesPage() {
         <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-bano-water/10 rounded-full blur-3xl" /> */}
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <ScrollReveal className="text-center mb-16">
-            <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
+          <ScrollReveal className="text-center mb-12 sm:mb-16">
+            <span className="text-bano-green text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3 sm:mb-4 block">
               Tại sao chọn Bano
             </span>
-            <h2 className="text-3xl font-bold mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 px-4">
               Điều khiến Bano trở thành <span className="text-gradient">đối tác đáng tin cậy</span>
             </h2>
             {/* <p className="text-muted-foreground max-w-2xl mx-auto">

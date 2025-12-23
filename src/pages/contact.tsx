@@ -114,10 +114,10 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-3xl md:text-5xl lg:text-6xl font-bold mb-6"
+            className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 px-4"
           >
             Tư vấn 60 phút
-            <br />
+            <br className="hidden sm:block" />
             <span className="text-gradient">hoàn toàn miễn phí</span>
           </motion.h1>
 
@@ -125,7 +125,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-xl text-muted-foreground max-w-2xl mx-auto"
+            className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4"
           >
             Chia sẻ thách thức của bạn, chúng tôi sẽ đề xuất giải pháp AI phù hợp nhất.
           </motion.p>
@@ -135,11 +135,11 @@ export default function ContactPage() {
       {/* Contact Section */}
       <section className="py-12 sm:py-16 relative z-10">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
             {/* Form */}
             <ScrollReveal>
               {!isSubmitted ? (
-                <motion.form onSubmit={handleSubmit} className="glass rounded-3xl p-6 space-y-6">
+                <motion.form onSubmit={handleSubmit} className="glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 space-y-4 sm:space-y-6">
                   {error && (
                     <motion.div
                       initial={{ opacity: 0, y: -10 }}

@@ -55,23 +55,23 @@ export function Hero() {
       {/* <div className="grid-pattern absolute inset-0 opacity-30" />   */}
 
       {/* Content */}
-      <div className="absolute inset-0 flex flex-col justify-end py-24 z-10">
-        <div className="flex flex-col gap-15 container mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-8xl">
-          <div className="w-full border-b border-gray-500 pb-15">
+      <div className="absolute inset-0 flex flex-col justify-end py-12 sm:py-16 md:py-20 lg:py-24 z-10">
+        <div className="flex flex-col gap-8 sm:gap-12 md:gap-15 container mx-auto px-4 sm:px-6 lg:px-8 w-full max-w-8xl">
+          <div className="w-full border-b border-gray-500 pb-8 sm:pb-12 md:pb-15">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
-              className="inline-flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full border border-bano-green/30 bg-bano-green/10 mb-6 sm:mb-8"
+              className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-bano-green/30 bg-bano-green/10 mb-4 sm:mb-6 md:mb-8"
             >
-              <span className="w-2 h-2 bg-bano-green rounded-full animate-pulse" />
-              <span className="text-xs sm:text-sm text-bano-green font-medium">Human-centered AI Solutions</span>
+              <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-bano-green rounded-full animate-pulse" />
+              <span className="text-[10px] xs:text-xs sm:text-sm text-bano-green font-medium">Human-centered AI Solutions</span>
             </motion.div>
             <motion.h1
               variants={containerVariants}
               initial="hidden"
               animate="visible"
-              className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight mb-4 sm:mb-6 w-full"
+              className="text-xl xs:text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 sm:mb-5 md:mb-6 w-full"
             >
               <motion.span
                 variants={wordVariants}
@@ -86,21 +86,21 @@ export function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1, duration: 0.6 }}
-              className="text-base sm:text-lg md:text-lg max-w-6xl mb-8 sm:mb-10"
+              className="text-sm sm:text-base md:text-lg max-w-6xl mb-6 sm:mb-8 md:mb-10 leading-relaxed"
             >
-              Chúng tôi kiến tạo lợi thế cạnh tranh vượt trội thông qua chiến lược công nghệ được thiết kế riêng. <br /> Đúng quy trình, đúng thời điểm - giúp tinh gọn vận hành, loại bỏ rủi ro, và tăng tốc quyết định trong kinh doanh.
+              Chúng tôi kiến tạo lợi thế cạnh tranh vượt trội thông qua chiến lược công nghệ được thiết kế riêng. <br className="hidden sm:block" /> Đúng quy trình, đúng thời điểm - giúp tinh gọn vận hành, loại bỏ rủi ro, và tăng tốc quyết định trong kinh doanh.
             </motion.p>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4"
             >
               <Button variant="primary" size="sm">
                 <Link onClick={scrollToTop} href="/services" className="flex items-center gap-2">
                   Khám phá dịch vụ
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Link>
               </Button>
             </motion.div>
@@ -110,24 +110,24 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.2, duration: 0.6 }}
-            className="flex items-center gap-5 text-xl"
+            className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 md:gap-5 text-sm sm:text-base md:text-lg lg:text-xl"
           >
-            <motion.span>
+            <motion.span className="text-center sm:text-left">
               Được tin cậy bởi tập đoàn hàng đầu Việt Nam
             </motion.span>
-            <motion.span>
-              <img src="LAVO-logo.png" alt="Bano" className="h-5" />
+            <motion.span className="flex justify-center sm:justify-start">
+              <img src="LAVO-logo.png" alt="Bano" className="h-4 sm:h-5 md:h-6" />
             </motion.span>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4"
+              className="w-full sm:w-auto"
             >
-              <Button variant="primary" size="xs">
-                <Link onClick={scrollToTop} href="/case-studies" className="flex items-center gap-2">
+              <Button variant="primary" size="xs" className="w-full sm:w-auto">
+                <Link onClick={scrollToTop} href="/case-studies" className="flex items-center justify-center gap-2">
                   Xem chi tiết
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Link>
               </Button>
             </motion.div>
