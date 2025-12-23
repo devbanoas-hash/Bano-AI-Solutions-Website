@@ -45,7 +45,7 @@ export default function AboutPage() {
   }, [])
 
   return (
-    <div className="relative">
+    <div className="relative bg-black">
       {/* SECTION 1 — Lý Do Chúng Tôi Tồn Tại */}
       <section className="flex items-center justify-center min-h-screen pt-20 sm:pt-24 relative overflow-hidden">
         <div className="absolute inset-0" style={getRandomBackgroundStyle(section1Bg, 0.5)} />
@@ -258,8 +258,6 @@ export default function AboutPage() {
 
       {/* SECTION 3 — Vision / Mission */}
       <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">  
-        <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/20 to-background" />
-
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-12 sm:mb-16"
