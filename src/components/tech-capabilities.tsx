@@ -1,4 +1,4 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { ScrollReveal } from "./scroll-reveal"
 import { capabilities } from "../constants/tech-capabilities"
@@ -93,24 +93,42 @@ const closeButtonVariants = {
 
 export function TechCapabilities() {
   const [hoveredCapability, setHoveredCapability] = useState<any>(null);
-  const hoverTimerRef = useRef<any>(null);
+  const [isInView, setIsInView] = useState(false);
+  const autoOpenTimerRef = useRef<any>(null);
   const swiperRef = useRef<SwiperType | null>(null);
+  const sectionRef = useRef<HTMLElement>(null);
+  const lastInteractionTimeRef = useRef<number>(Date.now());
 
-  const handleHoverStart = (capability: any) => {
-    if (swiperRef.current?.autoplay) {
-      swiperRef.current.autoplay.stop();
-    }
+  // Auto-open popup after 3 seconds of inactivity (only when section is in view)
+  const startAutoOpenTimer = useCallback(() => {
+    if (!isInView) return; // Only start timer if section is visible
     
-    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
-    hoverTimerRef.current = setTimeout(() => {
-      setHoveredCapability(capability);
-    }, 1000);
-  };
+    if (autoOpenTimerRef.current) {
+      clearTimeout(autoOpenTimerRef.current);
+    }
 
-  const handleHoverEnd = () => {
-    if (hoverTimerRef.current) {
-      clearTimeout(hoverTimerRef.current);
-      hoverTimerRef.current = null;
+    autoOpenTimerRef.current = setTimeout(() => {
+      if (!hoveredCapability && swiperRef.current && isInView) {
+        const activeIndex = swiperRef.current.realIndex;
+        const capability = capabilities[activeIndex];
+        if (capability) {
+          if (swiperRef.current?.autoplay) {
+            swiperRef.current.autoplay.stop();
+          }
+          setHoveredCapability(capability);
+        }
+      }
+    }, 3000);
+  }, [isInView, hoveredCapability]);
+
+  // Reset timer on any interaction
+  const resetAutoOpenTimer = () => {
+    lastInteractionTimeRef.current = Date.now();
+    if (autoOpenTimerRef.current) {
+      clearTimeout(autoOpenTimerRef.current);
+    }
+    if (!hoveredCapability && isInView) {
+      startAutoOpenTimer();
     }
   };
 
@@ -119,10 +137,65 @@ export function TechCapabilities() {
     if (swiperRef.current?.autoplay) {
       swiperRef.current.autoplay.start();
     }
+    // Restart auto-open timer after closing (only if section is in view)
+    if (isInView) {
+      startAutoOpenTimer();
+    }
   };
 
+  // Use Intersection Observer to detect when section enters viewport
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            // Start timer when section enters viewport
+            if (!hoveredCapability) {
+              startAutoOpenTimer();
+            }
+          } else {
+            setIsInView(false);
+            // Clear timer when section leaves viewport
+            if (autoOpenTimerRef.current) {
+              clearTimeout(autoOpenTimerRef.current);
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.3, // Trigger when 30% of section is visible
+      }
+    );
+
+    const currentSection = sectionRef.current;
+    if (currentSection) {
+      observer.observe(currentSection);
+    }
+
+    return () => {
+      if (currentSection) {
+        observer.unobserve(currentSection);
+      }
+      if (autoOpenTimerRef.current) {
+        clearTimeout(autoOpenTimerRef.current);
+      }
+    };
+  }, [hoveredCapability, startAutoOpenTimer]);
+
+  // Restart timer when slide changes or popup closes (only if section is in view)
+  useEffect(() => {
+    if (!hoveredCapability && isInView) {
+      startAutoOpenTimer();
+    } else {
+      if (autoOpenTimerRef.current) {
+        clearTimeout(autoOpenTimerRef.current);
+      }
+    }
+  }, [hoveredCapability, isInView]);
+
   return (
-    <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden min-h-[800px] flex flex-col justify-center bg-black">
+    <section ref={sectionRef} className="py-16 sm:py-20 md:py-28 relative overflow-hidden min-h-[800px] flex flex-col justify-center bg-black">
       
       {/* === POPUP MODAL === */}
       <AnimatePresence mode="wait">
@@ -295,7 +368,18 @@ export function TechCapabilities() {
         <div className="relative flex items-center justify-center gap-4">
           <Swiper
             modules={[Navigation, Pagination, Autoplay]}
-            onSwiper={(swiper) => { swiperRef.current = swiper; }}
+            onSwiper={(swiper) => { 
+              swiperRef.current = swiper;
+              // Start timer when swiper is ready
+              setTimeout(() => {
+                if (!hoveredCapability) {
+                  startAutoOpenTimer();
+                }
+              }, 100);
+            }}
+            onSlideChange={() => {
+              resetAutoOpenTimer();
+            }}
             spaceBetween={16}
             slidesPerView={1}
             centeredSlides={true}
@@ -315,8 +399,8 @@ export function TechCapabilities() {
             {capabilities.map((capability, index) => (
               <SwiperSlide key={index} className="h-auto">
                 <motion.div
-                  onHoverStart={() => handleHoverStart(capability)}
-                  onHoverEnd={handleHoverEnd}
+                  onMouseMove={resetAutoOpenTimer}
+                  onTouchStart={resetAutoOpenTimer}
                   className="group relative overflow-hidden h-[400px] md:h-[450px] cursor-pointer"
                   whileHover={{ scale: 1.02 }}
                   transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
@@ -370,9 +454,9 @@ export function TechCapabilities() {
                         {capability.title}
                       </h3>
                       
-                      {/* Hover hint */}
-                      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-70 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 delay-150">
-                        <span className="text-sm text-gray-400">Giữ để xem chi tiết</span>
+                      {/* Auto-open hint */}
+                      <div className="flex items-center gap-2 opacity-70 transform translate-y-0 transition-all duration-500">
+                        <span className="text-sm text-gray-400">Tự động hiển thị sau 3 giây</span>
                         <svg className="w-4 h-4 text-bano-green animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>

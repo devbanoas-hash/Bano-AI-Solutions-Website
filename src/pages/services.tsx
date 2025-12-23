@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import Lenis from "lenis"
+import { initSnapScroll, refreshSnapScroll } from "../utils/snap-scroll"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { ScrollReveal, StaggerContainer, StaggerItem } from "../components/scroll-reveal"
 import { Button } from "../components/button"
@@ -30,6 +30,7 @@ import {
 import CTASection from "../components/cta-section"
 import { Link } from "wouter"
 import { scrollToTop } from "../utils/scroll-helper"
+import { getRandomBackgroundStyle, useRandomBackground } from "../utils/background-helper"
 
 const steps = [
   {
@@ -256,37 +257,30 @@ export default function ServicesPage() {
   }, [])
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 0.8,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1.2,
-    })
+    // Initialize snap scroll
+    const snapScroll = initSnapScroll()
 
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
+    // Refresh after components mount
+    setTimeout(() => {
+      refreshSnapScroll()
+    }, 300)
+
+    return () => {
+      if (snapScroll) {
+        snapScroll.destroy()
+      }
     }
-    requestAnimationFrame(raf)
-
-    return () => lenis.destroy()
   }, [])
+
+  const heroBg = useRandomBackground()
 
   return (
     <div className="relative bg-black">
 
       {/* Hero */}
-      <section className="min-h-[80vh] flex items-center justify-center pt-20 sm:pt-24 relative overflow-hidden py-12 sm:py-16">
-        {/* {(() => {
-          const heroBg = useRandomBackground()
-          return (
-            <>
-              <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(heroBg, 0.5)} />
-              <div className="hero-gradient absolute inset-0" />
-              <div className="grid-pattern absolute inset-0 opacity-30" />
-            </>
-          )
-        })()} */}
+      <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0" style={getRandomBackgroundStyle(heroBg, 0.5)} />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black" />
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.span
@@ -383,7 +377,7 @@ export default function ServicesPage() {
                     <div className="relative z-10">
                       <motion.div
                         whileHover={{ scale: 1.1 }}
-                        className="w-20 h-20 rounded-2xl border-2 border-bano-green flex items-center justify-center"
+                        className="w-20 h-20 rounded-2xl bg-[#133421]/100 border-2 border-bano-green flex items-center justify-center"
                       >
                         <step.icon className="w-8 h-8 text-bano-green" />
                       </motion.div>

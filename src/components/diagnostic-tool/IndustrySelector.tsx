@@ -12,6 +12,7 @@ const IndustrySelector: React.FC<IndustrySelectorProps> = ({ onSelect }) => {
   const [companySize, setCompanySize] = useState('');
   const [errors, setErrors] = useState<{name?: boolean, size?: boolean}>({});
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const formSectionRef = useRef<HTMLDivElement>(null);
 
   // Prevent scroll from propagating to parent (Lenis)
   useEffect(() => {
@@ -82,6 +83,17 @@ const IndustrySelector: React.FC<IndustrySelectorProps> = ({ onSelect }) => {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
+      
+      // Scroll to form section when there are errors
+      if (formSectionRef.current && scrollContainerRef.current) {
+        setTimeout(() => {
+          const formTop = formSectionRef.current!.offsetTop;
+          scrollContainerRef.current?.scrollTo({
+            top: formTop - 100, // Add small offset for better visibility
+            behavior: 'smooth'
+          });
+        }, 100);
+      }
       return;
     }
 
@@ -117,7 +129,7 @@ const IndustrySelector: React.FC<IndustrySelectorProps> = ({ onSelect }) => {
         style={{ touchAction: 'pan-y' }}
       >
         {/* SECTION 1: Company Info Form - EXPANDED FRAME & HARMONIZED */}
-        <div className="mb-8 mx-1">
+        <div ref={formSectionRef} className="mb-8 mx-1">
           <div className="bg-slate-950/30 border border-emerald-900/30 rounded-3xl p-6 backdrop-blur-sm shadow-inner">
             <div className="grid gap-6">
               

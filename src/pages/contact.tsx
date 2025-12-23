@@ -1,38 +1,14 @@
 import type React from "react"
 
 import { useEffect, useState } from "react"
-import Lenis from "lenis"
+import { initSnapScroll, refreshSnapScroll } from "../utils/snap-scroll"
 import { AnimatePresence, motion } from "framer-motion"
 import { ScrollReveal } from "../components/scroll-reveal"
 import { Button } from "../components/button"
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle, Building2, Loader2, AlertCircle } from "lucide-react"
 import { FaHandPointRight } from "react-icons/fa"
 import { useRandomBackground, getRandomBackgroundStyle } from "../utils/background-helper"
-// import emailjs from "@emailjs/browser"
-
-const officeLocations = [
-  {
-    id: "hq",
-    name: "Trụ sở chính",
-    address: "Tầng 3 toà nhà PVcombank, phường Hoà Cường, TP. Đà Nẵng",
-    mapUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3834.2851994660387!2d108.21897847500385!3d16.044730684634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314219c9b06b8e15%3A0x929d6e91c4b8c1d2!2sPVcomBank%20-%20Da%20Nang%20Branch!5e0!3m2!1sen!2svn!4v1701000000000!5m2!1sen!2svn",
-  },
-  {
-    id: "danang",
-    name: "CN Đà Nẵng",
-    address: "12 Hoàng Công Chất, Ngũ Hành Sơn, TP. Đà Nẵng",
-    mapUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.9385894660387!2d108.24897847500385!3d16.064730684634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314219c9b06b8e15%3A0x929d6e91c4b8c1d2!2s12%20Ho%C3%A0ng%20C%C3%B4ng%20Ch%E1%BA%A5t%2C%20Ng%C5%A9%20H%C3%A0nh%20S%C6%A1n%2C%20%C4%90%C3%A0%20N%E1%BA%B5ng!5e0!3m2!1sen!2svn!4v1701000000000!5m2!1sen!2svn",
-  },
-  {
-    id: "hcm",
-    name: "CN HCM",
-    address: "KĐT Vạn Phúc City, biệt thự 4/4/1/23 đường số 3, Hiệp Bình Phước, Thủ Đức",
-    mapUrl:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3918.5849894660387!2d106.72897847500385!3d10.844730684634!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752710a5a7a5a5%3A0x929d6e91c4b8c1d2!2zVuG6oW4gUGjDumMgQ2l0eQ!5e0!3m2!1sen!2svn!4v1701000000000!5m2!1sen!2svn",
-  },
-]
+import { mapInfo } from "../constants/footer"
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -45,34 +21,25 @@ export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const [activeLocation, setActiveLocation] = useState("hq")
-  const currentLocation = officeLocations.find((loc) => loc.id === activeLocation) || officeLocations[0]
-  
+  const [activeLocation, setActiveLocation] = useState("Trụ sở")
+  const currentLocation = mapInfo.find((item) => item.name === activeLocation) || mapInfo[0]
+
   const heroBg = useRandomBackground()
 
-  // Initialize EmailJS
-  // useEffect(() => {
-  //   const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-  //   if (publicKey) {
-  //     emailjs.init(publicKey)
-  //   }
-  // }, [])
-
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 0.8,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1.2,
-    })
+    // Initialize snap scroll
+    const snapScroll = initSnapScroll()
 
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
+    // Refresh after components mount
+    setTimeout(() => {
+      refreshSnapScroll()
+    }, 300)
+
+    return () => {
+      if (snapScroll) {
+        snapScroll.destroy()
+      }
     }
-    requestAnimationFrame(raf)
-
-    return () => lenis.destroy()
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -81,13 +48,6 @@ export default function ContactPage() {
     setError(null)
 
     try {
-      // const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID || "service_default"
-      // const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "template_default"
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-
-      if (!publicKey) {
-        throw new Error("EmailJS chưa được cấu hình. Vui lòng kiểm tra biến môi trường.")
-      }
 
       // Map industry values to readable text
       // const industryMap: Record<string, string> = {
@@ -135,11 +95,11 @@ export default function ContactPage() {
   }
 
   return (
-    <div className="relative">
+    <div className="relative bg-black">
       {/* Hero */}
-      <section className="min-h-[50vh] flex items-center justify-center pt-20 sm:pt-24 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(heroBg, 0.5)} />
-        <div className="hero-gradient absolute inset-0" />
+      <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0" style={getRandomBackgroundStyle(heroBg, 0.5)} />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black" />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -432,20 +392,20 @@ export default function ContactPage() {
 
         {/* Location Tabs */}
         <div className="flex flex-wrap justify-center gap-3 mb-6">
-          {officeLocations.map((location) => (
+          {mapInfo.map((item) => (
             <motion.button
-              key={location.id}
-              onClick={() => setActiveLocation(location.id)}
+              key={item.name}
+              onClick={() => setActiveLocation(item.name)}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={`cursor-pointer px-5 py-3 rounded-xl font-medium transition-all duration-300 flex items-center gap-2 ${
-                activeLocation === location.id
+                activeLocation === item.name
                   ? "bg-bano-green text-white shadow-lg shadow-bano-green/25"
                   : "bg-muted text-muted-foreground hover:bg-muted/80"
               }`}
             >
               <Building2 className="w-4 h-4" />
-              {location.name}
+              {item.name}
             </motion.button>
           ))}
         </div>
@@ -454,7 +414,7 @@ export default function ContactPage() {
         <div className="relative rounded-2xl overflow-hidden border border-border bg-card">
           <AnimatePresence mode="wait">
             <motion.div
-              key={currentLocation.id}
+              key={currentLocation.name}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}

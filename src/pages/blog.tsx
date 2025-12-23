@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import Lenis from "lenis"
+import { initSnapScroll, refreshSnapScroll } from "../utils/snap-scroll"
 import { motion } from "framer-motion"
 import { ArrowLeft, Calendar, Clock } from "lucide-react"
 import { scrollToTop } from "../utils/scroll-helper"
@@ -119,20 +119,19 @@ export default function BlogPage({ params }: BlogPageProps = {}) {
   const otherPosts = Object.values(blogPosts).filter((p) => p.id !== postId)
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 0.8,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1.2,
-    })
+    // Initialize snap scroll
+    const snapScroll = initSnapScroll()
 
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
+    // Refresh after components mount
+    setTimeout(() => {
+      refreshSnapScroll()
+    }, 300)
+
+    return () => {
+      if (snapScroll) {
+        snapScroll.destroy()
+      }
     }
-    requestAnimationFrame(raf)
-
-    return () => lenis.destroy()
   }, [])
 
   if (!post) {

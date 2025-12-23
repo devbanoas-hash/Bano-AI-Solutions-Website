@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import Lenis from "lenis"
+import { initSnapScroll, refreshSnapScroll } from "../utils/snap-scroll"
 import { Hero } from "../components/hero"
 import { WhyBano } from "../components/why-bano"
 import { TechCapabilities } from "../components/tech-capabilities"
@@ -8,24 +8,18 @@ import DiagnosticTool from "../components/diagnostic-tool"
 
 export default function Home() {
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 0.8,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 1.2,
-    })
+    // Initialize snap scroll
+    const snapScroll = initSnapScroll()
 
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-
-    requestAnimationFrame(raf)
+    // Refresh after components mount
+    setTimeout(() => {
+      refreshSnapScroll()
+    }, 300)
 
     return () => {
-      lenis.destroy()
+      if (snapScroll) {
+        snapScroll.destroy()
+      }
     }
   }, [])
 

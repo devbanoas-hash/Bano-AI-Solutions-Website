@@ -83,7 +83,7 @@ const DiagnosticTool = () => {
     };
 
     return (
-        <div className="relative py-28 md:py-32 min-h-screen w-full overflow-visible selection:bg-bano-green selection:text-white">        
+        <section className="relative py-28 md:py-32 min-h-screen w-full overflow-visible selection:bg-bano-green selection:text-white">        
             {/* 1. Background Layer */}
             <Hero isExpanded={isExpanded} isHovered={isHovered} />
 
@@ -217,7 +217,7 @@ const DiagnosticTool = () => {
                     animation: cursor-click 1.2s ease-in-out infinite;
                 }
             `}</style>
-        </div>
+        </section>
     );
 }
  

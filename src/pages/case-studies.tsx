@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react"
-import Lenis from "lenis"
+import { initSnapScroll, refreshSnapScroll } from "../utils/snap-scroll"
 import { motion, useScroll, useTransform, useInView } from "framer-motion"
 import { StaggerContainer, StaggerItem } from "../components/scroll-reveal"
 import { Button } from "../components/button"
@@ -55,32 +55,32 @@ export default function CaseStudiesPage() {
   const heroBg = useRandomBackground()
 
   useEffect(() => {
-    const lenis = new Lenis({
-      duration: 0.8,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-      wheelMultiplier: 1.2,
-    })
+    // Initialize snap scroll
+    const snapScroll = initSnapScroll()
 
-    function raf(time: number) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
+    // Refresh after components mount
+    setTimeout(() => {
+      refreshSnapScroll()
+    }, 300)
+
+    return () => {
+      if (snapScroll) {
+        snapScroll.destroy()
+      }
     }
-    requestAnimationFrame(raf)
-
-    return () => lenis.destroy()
   }, [])
 
   return (
     <div className="relative bg-black">
 
       {/* SECTION 1 — Hero */}
-      <section className="min-h-[70vh] flex items-center justify-center pt-20 sm:pt-24 relative overflow-hidden">
-        <div className="absolute inset-0 -z-10" style={getRandomBackgroundStyle(heroBg, 0.5)} />
+      <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div className="absolute inset-0" style={getRandomBackgroundStyle(heroBg, 0.5)} />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black" />
         {/* <div className="hero-gradient absolute inset-0" />
         <div className="grid-pattern absolute inset-0 opacity-30" /> */}
         {/* Animated background elements */}
-        <div className="absolute inset-0 grid-pattern opacity-20" />
+        {/* <div className="absolute inset-0 grid-pattern opacity-20" /> */}
         <motion.div
           className="absolute top-20 left-10 w-72 h-72 bg-bano-green/10 rounded-full blur-3xl"
           animate={{

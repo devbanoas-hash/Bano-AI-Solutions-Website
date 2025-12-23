@@ -50,7 +50,7 @@ export function Hero() {
       />
       {/* Bottom opacity gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black" />
-      {/* <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-bano-navy/60 to-black/80" /> */}
+      <div className="absolute inset-0 bg-gradient-to-bl from-transparent to-black" />
       {/* <div className="hero-gradient absolute inset-0" /> */}
       {/* <div className="grid-pattern absolute inset-0 opacity-30" />   */}
 
