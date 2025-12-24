@@ -333,7 +333,7 @@ export function WhyBano() {
                   initial={{ opacity: 0, x: 20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.1, duration: 0.5 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   className={`py-6 sm:py-8 md:py-10 ${index !== 0 ? 'border-t border-gray-800' : ''} group`}
                 >
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-3 sm:gap-4">

@@ -223,7 +223,7 @@ export default function CaseStudiesPage() {
                       className={`${index % 2 === 1 ? "lg:order-2" : ""}`}
                       initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100, rotate: index % 2 === 0 ? -5 : 5 }}
                       whileInView={{ opacity: 1, x: 0, rotate: 0 }}
-                      viewport={{ once: true, margin: "-100px" }}
+                      viewport={{ once: false, margin: "-100px" }}
                       transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
                     >
                       <motion.div
@@ -247,7 +247,7 @@ export default function CaseStudiesPage() {
                           className="absolute bottom-6 left-6"
                           initial={{ opacity: 0, y: 20 }}
                           whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true }}
+                          viewport={{ once: false }}
                           transition={{ delay: 0.3 }}
                         >
                           <motion.span
@@ -270,14 +270,14 @@ export default function CaseStudiesPage() {
                       className={`${index % 2 === 1 ? "lg:order-1" : ""}`}
                       initial={{ opacity: 0, x: index % 2 === 0 ? 100 : -100 }}
                       whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, margin: "-100px" }}
+                      viewport={{ once: false, margin: "-100px" }}
                       transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
                     >
                       <motion.p
                         className="text-muted-foreground text-md mb-2"
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         transition={{ delay: 0.4 }}
                       >
                         {study.client}
@@ -286,7 +286,7 @@ export default function CaseStudiesPage() {
                         className="text-2xl font-bold mb-6"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         transition={{ delay: 0.5, duration: 0.6 }}
                         whileHover={{ scale: 1.02 }}
                       >
@@ -296,7 +296,7 @@ export default function CaseStudiesPage() {
                         className="text-muted-foreground mb-8 leading-relaxed text-base"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         transition={{ delay: 0.6, duration: 0.6 }}
                       >
                         {study.description}
@@ -306,7 +306,7 @@ export default function CaseStudiesPage() {
                         className="flex flex-col sm:flex-row gap-4"
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         transition={{ delay: 0.7, duration: 0.6 }}
                       >
                         <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -337,7 +337,7 @@ export default function CaseStudiesPage() {
             className="mt-24"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           >
             <motion.div
@@ -378,7 +378,7 @@ export default function CaseStudiesPage() {
             className="text-center mb-12 sm:mb-16"
             initial={{ opacity: 0, y: -30 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: false, margin: "-100px" }}
             transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
           >
             <motion.span
@@ -415,13 +415,13 @@ export default function CaseStudiesPage() {
             <motion.div
               initial={{ opacity: 0, x: -50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: false, margin: "-100px" }}
               transition={{ duration: 0.8, ease: [0.25, 0.4, 0.25, 1] }}
             >
               <div className="space-y-4">
                 {freeResources.map((resource, index) => {
                   const ref = useRef(null)
-                  const isInView = useInView(ref, { once: true, margin: "-50px" })
+                  const isInView = useInView(ref, { once: false, margin: "-50px" })
 
                   return (
                     <motion.div
@@ -478,7 +478,7 @@ export default function CaseStudiesPage() {
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: false, margin: "-100px" }}
               transition={{ duration: 0.8, delay: 0.2, ease: [0.25, 0.4, 0.25, 1] }}
             >
               <FreeResourceForm />

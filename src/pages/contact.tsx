@@ -158,7 +158,7 @@ export default function ContactPage() {
                     className="text-xl font-bold mb-1 relative z-10"
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                     transition={{ delay: 0.1 }}
                   >
                     <span className="text-gradient">Đăng ký tư vấn</span>
@@ -167,7 +167,7 @@ export default function ContactPage() {
                     className="text-muted-foreground text-sm mb-3 relative z-10"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                     transition={{ delay: 0.2 }}
                   >
                     Hãy đăng ký tư vấn để chúng tôi có thể hỗ trợ bạn tốt hơn.

@@ -222,7 +222,7 @@ export default function BlogPage({ params }: BlogPageProps = {}) {
                     key={index}
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: "-100px" }}
+                    viewport={{ once: false, margin: "-100px" }}
                     transition={{ delay: index * 0.1, duration: 0.6 }}
                     className="mb-12 text-justify"
                   >
@@ -250,7 +250,7 @@ export default function BlogPage({ params }: BlogPageProps = {}) {
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ delay: 0.3, duration: 0.6 }}
                 className="sticky top-24"
               >
@@ -265,7 +265,7 @@ export default function BlogPage({ params }: BlogPageProps = {}) {
                         key={otherPost.id}
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        viewport={{ once: false }}
                         transition={{ delay: 0.4 + index * 0.1, duration: 0.6 }}
                       >
                         <Link

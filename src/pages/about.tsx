@@ -132,7 +132,7 @@ export default function AboutPage() {
               className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block"
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.6 }}
             >
               Cam Kết Giá Trị
@@ -141,7 +141,7 @@ export default function AboutPage() {
               className="text-3xl font-bold mb-6"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.8, delay: 0.1 }}
             >
               Bano <span className="text-gradient">không</span> phải một đơn vị <span className="text-gradient">bán AI</span>
@@ -150,7 +150,7 @@ export default function AboutPage() {
               className="text-base text-muted-foreground max-w-3xl mx-auto mb-8"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               Chúng tôi là người đồng hành chiến lược, giúp doanh nghiệp đạt được:
@@ -160,7 +160,7 @@ export default function AboutPage() {
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" staggerDelay={0.15}>
             {valueCommitments.map((commitment, index) => {
               const cardRef = useRef(null)
-              const isInView = useInView(cardRef, { once: true, margin: "-50px" })
+              const isInView = useInView(cardRef, { once: false, margin: "-50px" })
 
               return (
                 <StaggerItem key={index}>
@@ -236,7 +236,7 @@ export default function AboutPage() {
               <motion.div
                 initial={{ scale: 0 }}
                 whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ type: "spring", stiffness: 200, delay: 0.2 }}
               >
                 <CheckCircle className="w-12 h-12 text-bano-green mx-auto mb-4 relative z-10" />
@@ -245,7 +245,7 @@ export default function AboutPage() {
                 className="text-lg md:text-xl font-semibold italic text-foreground relative z-10"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 transition={{ delay: 0.3 }}
               >
                 "Bano tạo ra giải pháp thật sự phù hợp với doanh nghiệp - không dư thừa, không phức tạp, không làm bạn
@@ -270,7 +270,7 @@ export default function AboutPage() {
               className="text-3xl font-bold mb-12"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               transition={{ delay: 0.2, duration: 0.6 }}
             >
               Tầm nhìn & <span className="text-gradient">Sứ mệnh</span>
@@ -333,7 +333,7 @@ export default function AboutPage() {
                     className="relative z-10"
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                     transition={{ delay: item.delay + 0.2 }}
                   >
                     {item.description}
@@ -374,7 +374,7 @@ export default function AboutPage() {
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" staggerDelay={0.15}>
             {reasons.map((reason, index) => {
               const cardRef = useRef(null)
-              const isInView = useInView(cardRef, { once: true, margin: "-50px" })
+              const isInView = useInView(cardRef, { once: false, margin: "-50px" })
 
               return (
                 <StaggerItem key={reason.id}>
@@ -437,7 +437,7 @@ export default function AboutPage() {
                       className="group cursor-pointer"
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
+                      viewport={{ once: false }}
                       transition={{ delay: index * 0.1 }}
                     >
                       <div className="aspect-square rounded-2xl overflow-hidden relative">
@@ -458,7 +458,7 @@ export default function AboutPage() {
                 <motion.div
                   initial={{ opacity: 0, x: 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ delay: 0.4, duration: 0.6 }}
                   className="space-y-4"
                 >
@@ -491,7 +491,7 @@ export default function AboutPage() {
                       className="group cursor-pointer"
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
+                      viewport={{ once: false }}
                       transition={{ delay: index * 0.1 }}
                     >
                       <div className="aspect-square rounded-2xl overflow-hidden relative">
@@ -512,7 +512,7 @@ export default function AboutPage() {
                 <motion.div
                   initial={{ opacity: 0, x: 30 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                   transition={{ delay: 0.4, duration: 0.6 }}
                   className="space-y-4"
                 >
