@@ -21,6 +21,8 @@ interface ScrollState {
   isScrolling: boolean
   lastScrollTime: number
   lastScrollPosition: number // Track last scroll position to detect direction
+  accumulatedDeltaY: number // Accumulate deltaY for touchpad smooth scrolling
+  lastWheelTime: number // Track time of last wheel event
 }
 
 export class SnapScroll {
@@ -31,10 +33,14 @@ export class SnapScroll {
     isScrolling: false,
     lastScrollTime: 0,
     lastScrollPosition: 0,
+    accumulatedDeltaY: 0,
+    lastWheelTime: 0,
   }
   private viewportHeight: number = 0
   private scrollDebounceTime: number = 500 // ms to wait before allowing next scroll
   private wheelHandler: ((e: WheelEvent) => void) | null = null
+  private accumulatedDeltaThreshold: number = 50 // Minimum accumulated deltaY to trigger scroll
+  private wheelAccumulationTimeout: number = 150 // ms to wait before processing accumulated delta
 
   constructor() {
     this.viewportHeight = window.innerHeight
@@ -319,6 +325,42 @@ export class SnapScroll {
   }
 
   /**
+   * Process accumulated wheel delta and trigger scroll if threshold is met
+   */
+  private processAccumulatedDelta() {
+    if (this.state.isScrolling) {
+      return
+    }
+
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop
+    const now = Date.now()
+    
+    // Check if enough time has passed since last scroll
+    if (now - this.state.lastScrollTime < this.scrollDebounceTime) {
+      return
+    }
+
+    // Check if accumulated delta meets threshold
+    if (Math.abs(this.state.accumulatedDeltaY) < this.accumulatedDeltaThreshold) {
+      return
+    }
+
+    // Update current section before determining direction
+    this.updateCurrentSection()
+
+    const direction = this.state.accumulatedDeltaY > 0 ? 'down' : 'up'
+    const targetScroll = this.getTargetScrollPosition(direction)
+    
+    // Only scroll if target is different from current position
+    if (Math.abs(targetScroll - scrollTop) > 10) {
+      this.state.lastScrollTime = now
+      this.state.lastScrollPosition = scrollTop
+      this.state.accumulatedDeltaY = 0 // Reset accumulated delta
+      this.scrollTo(targetScroll)
+    }
+  }
+
+  /**
    * Handle wheel event
    */
   private handleWheel = (e: WheelEvent) => {
@@ -346,26 +388,58 @@ export class SnapScroll {
     const now = Date.now()
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop
     
-    // Debounce rapid scroll events
-    if (now - this.state.lastScrollTime < this.scrollDebounceTime) {
-      return
-    }
-
-    if (this.state.isScrolling) {
-      return
-    }
-
-    // Update current section before determining direction
-    this.updateCurrentSection()
-
-    const direction = e.deltaY > 0 ? 'down' : 'up'
-    const targetScroll = this.getTargetScrollPosition(direction)
+    // Detect if this is likely a touchpad (many small deltaY values) or mouse wheel (few large deltaY values)
+    const isLikelyTouchpad = Math.abs(e.deltaY) < 100 && e.deltaMode === 0
     
-    // Only scroll if target is different from current position
-    if (Math.abs(targetScroll - scrollTop) > 10) {
-      this.state.lastScrollTime = now
-      this.state.lastScrollPosition = scrollTop
-      this.scrollTo(targetScroll)
+    if (this.state.isScrolling) {
+      // If scrolling, accumulate delta but don't process yet
+      if (isLikelyTouchpad) {
+        this.state.accumulatedDeltaY += e.deltaY
+      }
+      return
+    }
+
+    if (isLikelyTouchpad) {
+      // For touchpad: accumulate deltaY and process after a delay
+      // If direction changed, reset accumulation
+      if (
+        (this.state.accumulatedDeltaY > 0 && e.deltaY < 0) ||
+        (this.state.accumulatedDeltaY < 0 && e.deltaY > 0)
+      ) {
+        this.state.accumulatedDeltaY = 0
+      }
+      
+      this.state.accumulatedDeltaY += e.deltaY
+      this.state.lastWheelTime = now
+      
+      // Clear any existing timeout
+      if ((this as any).accumulationTimeout) {
+        clearTimeout((this as any).accumulationTimeout)
+      }
+      
+      // Process accumulated delta after a short delay
+      ;(this as any).accumulationTimeout = setTimeout(() => {
+        this.processAccumulatedDelta()
+      }, this.wheelAccumulationTimeout)
+    } else {
+      // For mouse wheel: process immediately if debounce time has passed
+      if (now - this.state.lastScrollTime < this.scrollDebounceTime) {
+        return
+      }
+
+      // Update current section before determining direction
+      this.updateCurrentSection()
+
+      const direction = e.deltaY > 0 ? 'down' : 'up'
+      const targetScroll = this.getTargetScrollPosition(direction)
+      
+      // Only scroll if target is different from current position
+      if (Math.abs(targetScroll - scrollTop) > 10) {
+        this.state.lastScrollTime = now
+        this.state.lastScrollPosition = scrollTop
+        this.state.accumulatedDeltaY = 0 // Reset accumulated delta
+        this.scrollTo(targetScroll)
+      }
     }
   }
 
@@ -434,6 +508,12 @@ export class SnapScroll {
     if (this.wheelHandler) {
       window.removeEventListener('wheel', this.wheelHandler as EventListener)
       this.wheelHandler = null
+    }
+    
+    // Clear any pending accumulation timeout
+    if ((this as any).accumulationTimeout) {
+      clearTimeout((this as any).accumulationTimeout)
+      ;(this as any).accumulationTimeout = null
     }
   }
 }
