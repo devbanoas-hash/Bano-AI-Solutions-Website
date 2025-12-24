@@ -339,7 +339,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Strategic Approach - Timeline */}
-      <section className="py-16 sm:py-20 md:py-28 relative" ref={timelineRef}>
+      <section className="relative py-16 sm:py-20 md:py-28 flex items-center justify-center" ref={timelineRef}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal className="text-center mb-12 sm:mb-16 md:mb-20">
             <span className="text-bano-green text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3 sm:mb-4 block">
@@ -394,7 +394,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Core Services - Completely redesigned with new content */}
-      <section className="py-16 sm:py-20 md:py-28 relative">
+      <section className="relative min-h-screen flex items-center justify-center">
         {/* <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/10 to-background" /> */}
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -479,14 +479,8 @@ export default function ServicesPage() {
       </section>
 
       {/* Why Trust Bano - 5 Pillars */}
-      <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
-        {/* <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/5 to-background" /> */}
-
-        {/* Background decorative elements */}
-        {/* <div className="absolute top-1/4 left-0 w-96 h-96 bg-bano-green/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-1/4 right-0 w-96 h-96 bg-bano-water/10 rounded-full blur-3xl" /> */}
-
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="relative min-h-screen flex items-center justify-center">
+        <div className="container px-4 sm:px-6 lg:px-8 relative z-10">
           <ScrollReveal className="text-center mb-12 sm:mb-16">
             <span className="text-bano-green text-xs sm:text-sm font-semibold uppercase tracking-wider mb-3 sm:mb-4 block">
               Tại sao chọn Bano

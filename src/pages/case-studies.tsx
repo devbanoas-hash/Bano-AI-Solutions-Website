@@ -372,7 +372,7 @@ export default function CaseStudiesPage() {
       </section>
 
       {/* SECTION 3 — Tài Nguyên Miễn Phí */}
-      <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-12 sm:mb-16"

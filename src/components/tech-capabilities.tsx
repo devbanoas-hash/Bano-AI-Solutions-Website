@@ -195,7 +195,7 @@ export function TechCapabilities() {
   }, [hoveredCapability, isInView]);
 
   return (
-    <section ref={sectionRef} className="py-16 sm:py-20 md:py-28 relative overflow-hidden min-h-[800px] flex flex-col justify-center bg-black">
+    <section ref={sectionRef} className="relative overflow-hidden min-h-screen flex flex-col justify-center bg-black">
       
       {/* === POPUP MODAL === */}
       <AnimatePresence mode="wait">
@@ -237,7 +237,7 @@ export function TechCapabilities() {
                   <div className="absolute inset-0 opacity-15">
                     <img 
                       src={hoveredCapability.image} 
-                      className="w-full h-full object-cover" 
+                      className="w-full object-cover" 
                       alt="" 
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/60" />
@@ -356,7 +356,7 @@ export function TechCapabilities() {
         }}
         transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
       >
-        <ScrollReveal className="text-center mb-16">
+        <ScrollReveal className="text-center">
           <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-4 block">
             Năng lực công nghệ
           </span>
@@ -397,7 +397,7 @@ export function TechCapabilities() {
             className="!py-12 tech-swiper w-full"
           >
             {capabilities.map((capability, index) => (
-              <SwiperSlide key={index} className="h-auto">
+              <SwiperSlide key={index}>
                 <motion.div
                   onMouseMove={resetAutoOpenTimer}
                   onTouchStart={resetAutoOpenTimer}

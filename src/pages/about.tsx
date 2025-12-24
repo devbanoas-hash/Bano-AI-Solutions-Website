@@ -96,7 +96,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 2 — Cam Kết Giá Trị Của Bano */}
-      <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center">
         {/* Animated background */}
         <motion.div
           className="absolute top-0 right-0 w-96 h-96 bg-bano-green/5 rounded-full blur-3xl"
@@ -257,7 +257,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 3 — Vision / Mission */}
-      <section className="py-12 sm:py-16 md:py-24 relative overflow-hidden">  
+      <section className="relative min-h-screen flex items-center justify-center">  
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <motion.div
             className="text-center mb-12 sm:mb-16"
@@ -357,7 +357,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 4 — Lợi Thế Cốt Lõi */}
-      <section className="py-16 sm:py-20 md:py-28 relative overflow-hidden">
+      <section className="relative min-h-screen flex flex-col items-center justify-center">
         <ScrollReveal className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <span className="text-bano-green text-sm font-semibold uppercase tracking-wider mb-3 block">
@@ -415,7 +415,7 @@ export default function AboutPage() {
       </section>
 
       {/* SECTION 5 — Team */}
-      <section className="py-12 sm:py-16 md:py-24 relative">
+      <section className="relative py-16 sm:py-20 md:py-28 min-h-screen flex items-center justify-center">
         {/* <div className="absolute inset-0 bg-gradient-to-b from-background via-bano-navy/20 to-background" /> */}
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">

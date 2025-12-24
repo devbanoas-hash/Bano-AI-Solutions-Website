@@ -50,7 +50,7 @@ export class SnapScroll {
 
   /**
    * Find all sections on the page
-   * Sections are identified by <section> tags or elements with data-section attribute
+   * Sections are identified by <section> tags, <footer> tags, or elements with data-section attribute
    */
   private findSections(): HTMLElement[] {
     const sections = Array.from(document.querySelectorAll('section'))
@@ -58,8 +58,11 @@ export class SnapScroll {
     // Also check for elements with data-section attribute
     const dataSections = Array.from(document.querySelectorAll('[data-section]'))
     
+    // Include footer as a section
+    const footers = Array.from(document.querySelectorAll('footer'))
+    
     // Combine and deduplicate
-    const allSections = [...sections, ...dataSections] as HTMLElement[]
+    const allSections = [...sections, ...dataSections, ...footers] as HTMLElement[]
     const uniqueSections = Array.from(new Set(allSections))
     
     // Sort by position in DOM
@@ -99,6 +102,23 @@ export class SnapScroll {
   private updateCurrentSection() {
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop
     const viewportMiddle = scrollTop + this.viewportHeight / 2
+    const maxScroll = document.documentElement.scrollHeight - this.viewportHeight
+
+    // Check if we're at the bottom of the page (near footer)
+    if (scrollTop >= maxScroll - 50 && this.sections.length > 0) {
+      // Set to last section (footer)
+      const lastIndex = this.sections.length - 1
+      if (this.state.currentSectionIndex !== lastIndex) {
+        this.state.currentSectionIndex = lastIndex
+        const lastSection = this.sections[lastIndex]
+        if (lastSection.isLong) {
+          this.state.longSectionScrollStep = 2
+        } else {
+          this.state.longSectionScrollStep = 0
+        }
+      }
+      return
+    }
 
     for (let i = 0; i < this.sections.length; i++) {
       const section = this.sections[i]
@@ -169,6 +189,12 @@ export class SnapScroll {
             this.state.currentSectionIndex = nextIndex
             this.state.longSectionScrollStep = 0
             return this.sections[nextIndex].top
+          } else {
+            // At last section, allow scrolling to bottom of page
+            const maxScroll = Math.max(0, document.documentElement.scrollHeight - this.viewportHeight)
+            if (scrollTop < maxScroll - 10) {
+              return maxScroll
+            }
           }
         }
       } else {
@@ -208,6 +234,12 @@ export class SnapScroll {
           this.state.currentSectionIndex = nextIndex
           this.state.longSectionScrollStep = 0
           return this.sections[nextIndex].top
+        } else {
+          // At last section, allow scrolling to bottom of page
+          const maxScroll = Math.max(0, document.documentElement.scrollHeight - this.viewportHeight)
+          if (scrollTop < maxScroll - 10) {
+            return maxScroll
+          }
         }
       } else {
         const prevIndex = this.state.currentSectionIndex - 1
@@ -223,6 +255,14 @@ export class SnapScroll {
             return prevSection.top
           }
         }
+      }
+    }
+
+    // If we're at the last section and scrolling down, allow scrolling to bottom
+    if (direction === 'down' && this.state.currentSectionIndex === this.sections.length - 1) {
+      const maxScroll = Math.max(0, document.documentElement.scrollHeight - this.viewportHeight)
+      if (scrollTop < maxScroll - 10) {
+        return maxScroll
       }
     }
 

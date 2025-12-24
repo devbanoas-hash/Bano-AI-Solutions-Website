@@ -16,7 +16,7 @@ const CTASection = ({
   buttonLink: string;
 }) => {
   return (
-    <section className="py-16 sm:py-20 md:py-28 relative bg-black overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Ambient glow effects */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Main green glow - top left */}
@@ -163,7 +163,7 @@ const CTASection = ({
 
             {/* Content */}
             <div className="relative z-10">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-white via-green-100 to-white bg-clip-text text-transparent">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-6 bg-gradient-to-r from-white via-green-100 to-white bg-clip-text text-transparent">
                 {title}
               </h2>
               <p className="mx-auto mb-8 text-base sm:text-lg text-gray-300/90 max-w-2xl leading-relaxed">

@@ -125,7 +125,7 @@ export default function ContactPage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2 }}
-            className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto px-4"
+            className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-4xl mx-auto px-4"
           >
             Chia sẻ thách thức của bạn, chúng tôi sẽ đề xuất giải pháp AI phù hợp nhất.
           </motion.p>
@@ -133,7 +133,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-12 sm:py-16 relative z-10">
+      <section className="relative min-h-screen flex items-center justify-center">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 md:gap-12">
             {/* Form */}
@@ -381,7 +381,7 @@ export default function ContactPage() {
       </section>
 
       {/* Map Placeholder */}
-      <section className="py-12 sm:py-16 relative">
+      <section className="relative min-h-screen flex items-center justify-center">
         <ScrollReveal className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 relative z-10">
         <div className="text-center mb-8">
           <h3 className="text-3xl font-bold mb-2">
