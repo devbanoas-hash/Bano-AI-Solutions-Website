@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState, useRef } from "react"
 import { RefreshCw, Zap, CheckCircle2, ArrowRight } from "lucide-react"
 import Hourglass from "./Hourglass"
 import { api } from "../../configs/axios"
@@ -20,11 +20,17 @@ const Roadmap: React.FC<RoadmapProps> = ({ industry, userState, onReset }) => {
   const [loading, setLoading] = useState(true)
   const [roadmapData, setRoadmapData] = useState<RoadmapData | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const hasFetchedRef = useRef(false)
 
   useEffect(() => {
+    // Prevent double calls
+    if (hasFetchedRef.current) return
+    hasFetchedRef.current = true
+
     let isMounted = true
 
     async function fetchRoadmap() {
+      if (!isMounted) return
       setLoading(true)
       setError(null)
       setRoadmapData(null)
@@ -50,33 +56,39 @@ const Roadmap: React.FC<RoadmapProps> = ({ industry, userState, onReset }) => {
       }
 
       try {
-        const [response] = await Promise.all([
-          api.post("/", submissionData),
-          new Promise((resolve) => setTimeout(resolve, 4000)),
-        ])
+        const { data: response } = await api.post("/", submissionData)
 
-        const { data } = response
-        const normalized: RoadmapData | null =
-          data?.output ? (data as RoadmapData) : data ? ({ output: data } as RoadmapData) : null
-
-        if (!normalized?.output?.roadmap) {
+        if (!response || !Array.isArray(response) || !response[0]?.output) {
           throw new Error("Invalid response structure")
         }
 
-        if (!isMounted) return
-        setRoadmapData(normalized)
-      } catch (e) {
+        // Map response to match RoadmapData type structure
+        const mappedData: RoadmapData = {
+          output: response[0].output
+        }
+
+        if (!mappedData.output?.roadmap) {
+          throw new Error("Invalid roadmap data")
+        }
+
+        setRoadmapData(mappedData)
+      }
+      catch (e) {
+        console.log("Error fetching roadmap:", e)
         if (!isMounted) return
         setError("Không thể tạo lộ trình lúc này. Vui lòng thử lại.")
-      } finally {
-        if (!isMounted) return
-        setLoading(false)
+      }
+      finally {
+        if (isMounted) {
+          setLoading(false)
+        }
       }
     }
 
     fetchRoadmap()
     return () => {
       isMounted = false
+      hasFetchedRef.current = false
     }
   }, [industry.id, industry.name, selectedPainPoints, userPhone])
 

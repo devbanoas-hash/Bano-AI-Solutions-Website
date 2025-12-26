@@ -39,8 +39,8 @@ export class SnapScroll {
   private viewportHeight: number = 0
   private scrollDebounceTime: number = 500 // ms to wait before allowing next scroll
   private wheelHandler: ((e: WheelEvent) => void) | null = null
-  private accumulatedDeltaThreshold: number = 50 // Minimum accumulated deltaY to trigger scroll
-  private wheelAccumulationTimeout: number = 150 // ms to wait before processing accumulated delta
+  private accumulatedDeltaThreshold: number = 30 // Minimum accumulated deltaY to trigger scroll (reduced for faster response)
+  private wheelAccumulationTimeout: number = 10 // ms to wait before processing accumulated delta (reduced for instant response)
 
   constructor() {
     this.viewportHeight = window.innerHeight
@@ -400,7 +400,7 @@ export class SnapScroll {
     }
 
     if (isLikelyTouchpad) {
-      // For touchpad: accumulate deltaY and process after a delay
+      // For touchpad: accumulate deltaY and process immediately if threshold is met
       // If direction changed, reset accumulation
       if (
         (this.state.accumulatedDeltaY > 0 && e.deltaY < 0) ||
@@ -417,10 +417,16 @@ export class SnapScroll {
         clearTimeout((this as any).accumulationTimeout)
       }
       
-      // Process accumulated delta after a short delay
-      ;(this as any).accumulationTimeout = setTimeout(() => {
+      // Check if threshold is met immediately
+      if (Math.abs(this.state.accumulatedDeltaY) >= this.accumulatedDeltaThreshold) {
+        // Process immediately if threshold reached
         this.processAccumulatedDelta()
-      }, this.wheelAccumulationTimeout)
+      } else {
+        // Otherwise, process after a very short delay for smooth accumulation
+        ;(this as any).accumulationTimeout = setTimeout(() => {
+          this.processAccumulatedDelta()
+        }, this.wheelAccumulationTimeout)
+      }
     } else {
       // For mouse wheel: process immediately if debounce time has passed
       if (now - this.state.lastScrollTime < this.scrollDebounceTime) {
