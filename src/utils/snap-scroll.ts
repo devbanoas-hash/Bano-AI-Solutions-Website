@@ -17,7 +17,7 @@ interface SectionInfo {
 
 interface ScrollState {
   currentSectionIndex: number
-  longSectionScrollStep: number // 0: start, 1: middle, 2: end
+  longSectionScrollStep: number // 0: start, 1: middle
   isScrolling: boolean
   lastScrollTime: number
   lastScrollPosition: number // Track last scroll position to detect direction
@@ -39,8 +39,8 @@ export class SnapScroll {
   private viewportHeight: number = 0
   private scrollDebounceTime: number = 500 // ms to wait before allowing next scroll
   private wheelHandler: ((e: WheelEvent) => void) | null = null
-  private accumulatedDeltaThreshold: number = 30 // Minimum accumulated deltaY to trigger scroll (reduced for faster response)
-  private wheelAccumulationTimeout: number = 10 // ms to wait before processing accumulated delta (reduced for instant response)
+  private accumulatedDeltaThreshold: number = 50 // Minimum accumulated deltaY to trigger scroll
+  private wheelAccumulationTimeout: number = 150 // ms to wait before processing accumulated delta
 
   constructor() {
     this.viewportHeight = window.innerHeight
@@ -118,7 +118,7 @@ export class SnapScroll {
         this.state.currentSectionIndex = lastIndex
         const lastSection = this.sections[lastIndex]
         if (lastSection.isLong) {
-          this.state.longSectionScrollStep = 2
+          this.state.longSectionScrollStep = 1
         } else {
           this.state.longSectionScrollStep = 0
         }
@@ -134,22 +134,18 @@ export class SnapScroll {
         
         // Reset long section scroll step if we're in a new section
         if (i !== prevIndex) {
-          // Determine scroll step based on position in section
+          // Determine scroll step based on position in section (only 0 or 1)
           const sectionStart = section.top
           const sectionMiddle = section.top + section.height / 2
-          const sectionEnd = section.bottom - this.viewportHeight
           
           if (section.isLong) {
             const distanceFromStart = Math.abs(scrollTop - sectionStart)
             const distanceFromMiddle = Math.abs(scrollTop - sectionMiddle)
-            const distanceFromEnd = Math.abs(scrollTop - sectionEnd)
             
-            if (distanceFromStart < distanceFromMiddle && distanceFromStart < distanceFromEnd) {
+            if (distanceFromStart < distanceFromMiddle) {
               this.state.longSectionScrollStep = 0
-            } else if (distanceFromMiddle < distanceFromEnd) {
-              this.state.longSectionScrollStep = 1
             } else {
-              this.state.longSectionScrollStep = 2
+              this.state.longSectionScrollStep = 1
             }
           } else {
             this.state.longSectionScrollStep = 0
@@ -175,7 +171,6 @@ export class SnapScroll {
     if (currentSection.isLong) {
       const sectionStart = currentSection.top
       const sectionMiddle = currentSection.top + currentSection.height / 2 - this.viewportHeight / 2
-      const sectionEnd = currentSection.bottom - this.viewportHeight
 
       if (direction === 'down') {
         // Step 0 (start) -> Step 1 (middle)
@@ -183,12 +178,7 @@ export class SnapScroll {
           this.state.longSectionScrollStep = 1
           return sectionMiddle
         }
-        // Step 1 (middle) -> Step 2 (end)
-        else if (this.state.longSectionScrollStep === 1) {
-          this.state.longSectionScrollStep = 2
-          return sectionEnd
-        }
-        // Step 2 (end) -> Next section
+        // Step 1 (middle) -> Next section
         else {
           const nextIndex = this.state.currentSectionIndex + 1
           if (nextIndex < this.sections.length) {
@@ -205,13 +195,8 @@ export class SnapScroll {
         }
       } else {
         // Scrolling up
-        // Step 2 (end) -> Step 1 (middle)
-        if (this.state.longSectionScrollStep === 2) {
-          this.state.longSectionScrollStep = 1
-          return sectionMiddle
-        }
         // Step 1 (middle) -> Step 0 (start)
-        else if (this.state.longSectionScrollStep === 1) {
+        if (this.state.longSectionScrollStep === 1) {
           this.state.longSectionScrollStep = 0
           return sectionStart
         }
@@ -221,10 +206,10 @@ export class SnapScroll {
           if (prevIndex >= 0) {
             this.state.currentSectionIndex = prevIndex
             const prevSection = this.sections[prevIndex]
-            // If previous section is also long, go to its end
+            // If previous section is also long, go to its middle (step 1)
             if (prevSection.isLong) {
-              this.state.longSectionScrollStep = 2
-              return prevSection.bottom - this.viewportHeight
+              this.state.longSectionScrollStep = 1
+              return prevSection.top + prevSection.height / 2 - this.viewportHeight / 2
             } else {
               this.state.longSectionScrollStep = 0
               return prevSection.top
@@ -252,10 +237,10 @@ export class SnapScroll {
         if (prevIndex >= 0) {
           this.state.currentSectionIndex = prevIndex
           const prevSection = this.sections[prevIndex]
-          // If previous section is long, go to its end
+          // If previous section is long, go to its middle (step 1)
           if (prevSection.isLong) {
-            this.state.longSectionScrollStep = 2
-            return prevSection.bottom - this.viewportHeight
+            this.state.longSectionScrollStep = 1
+            return prevSection.top + prevSection.height / 2 - this.viewportHeight / 2
           } else {
             this.state.longSectionScrollStep = 0
             return prevSection.top
@@ -353,10 +338,14 @@ export class SnapScroll {
     
     // Only scroll if target is different from current position
     if (Math.abs(targetScroll - scrollTop) > 10) {
+      // Reset accumulated delta IMMEDIATELY before scrolling to prevent multiple triggers
+      this.state.accumulatedDeltaY = 0
       this.state.lastScrollTime = now
       this.state.lastScrollPosition = scrollTop
-      this.state.accumulatedDeltaY = 0 // Reset accumulated delta
       this.scrollTo(targetScroll)
+    } else {
+      // If target is same as current, reset accumulation to prevent stuck state
+      this.state.accumulatedDeltaY = 0
     }
   }
 
@@ -392,21 +381,22 @@ export class SnapScroll {
     const isLikelyTouchpad = Math.abs(e.deltaY) < 100 && e.deltaMode === 0
     
     if (this.state.isScrolling) {
-      // If scrolling, accumulate delta but don't process yet
-      if (isLikelyTouchpad) {
-        this.state.accumulatedDeltaY += e.deltaY
-      }
+      // If scrolling, ignore all wheel events to prevent accumulation during scroll
       return
     }
 
     if (isLikelyTouchpad) {
-      // For touchpad: accumulate deltaY and process immediately if threshold is met
+      // For touchpad: accumulate deltaY and process after accumulation period
       // If direction changed, reset accumulation
       if (
         (this.state.accumulatedDeltaY > 0 && e.deltaY < 0) ||
         (this.state.accumulatedDeltaY < 0 && e.deltaY > 0)
       ) {
         this.state.accumulatedDeltaY = 0
+        // Clear timeout when direction changes
+        if ((this as any).accumulationTimeout) {
+          clearTimeout((this as any).accumulationTimeout)
+        }
       }
       
       this.state.accumulatedDeltaY += e.deltaY
@@ -417,16 +407,11 @@ export class SnapScroll {
         clearTimeout((this as any).accumulationTimeout)
       }
       
-      // Check if threshold is met immediately
-      if (Math.abs(this.state.accumulatedDeltaY) >= this.accumulatedDeltaThreshold) {
-        // Process immediately if threshold reached
+      // Always use timeout to batch wheel events and prevent multiple scrolls
+      // This ensures we only scroll once per gesture, not multiple times
+      ;(this as any).accumulationTimeout = setTimeout(() => {
         this.processAccumulatedDelta()
-      } else {
-        // Otherwise, process after a very short delay for smooth accumulation
-        ;(this as any).accumulationTimeout = setTimeout(() => {
-          this.processAccumulatedDelta()
-        }, this.wheelAccumulationTimeout)
-      }
+      }, this.wheelAccumulationTimeout)
     } else {
       // For mouse wheel: process immediately if debounce time has passed
       if (now - this.state.lastScrollTime < this.scrollDebounceTime) {
@@ -556,4 +541,3 @@ export function refreshSnapScroll() {
     snapScrollInstance.refresh()
   }
 }
-
